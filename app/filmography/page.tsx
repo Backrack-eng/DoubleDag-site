@@ -613,7 +613,7 @@ export default function FilmographyPage() {
 
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <a
-              href="https://www.imdb.com/"
+              href="https://www.imdb.com/name/nm3118409/?ref_=nv_sr_srsg_0_tt_2_nm_6_in_0_q_ben%20bacharach"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex h-12 items-center justify-center rounded-full bg-white px-6 text-sm font-medium text-black transition hover:opacity-90"
