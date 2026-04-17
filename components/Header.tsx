@@ -23,16 +23,22 @@ export default function Header() {
             alt="Double Dag Productions"
             width={640}
             height={160}
-            className="object-contain transition duration-300 group-hover:opacity-80]"
+            className="object-contain transition duration-300 group-hover:opacity-80"
           />
         </Link>
 
-        <nav className="flex gap-6 text-sm">
+        <nav className="flex flex-wrap items-center justify-end gap-x-5 gap-y-2 text-sm">
           <Link href="/" className={linkClass("/")}>
             Home
           </Link>
           <Link href="/filmography" className={linkClass("/filmography")}>
             Filmography
+          </Link>
+          <Link href="/pricing" className={linkClass("/pricing")}>
+            Pricing
+          </Link>
+          <Link href="/research" className={linkClass("/research")}>
+            Research
           </Link>
         </nav>
       </div>

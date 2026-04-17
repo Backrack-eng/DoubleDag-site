@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
 type GalleryImageItem = {
@@ -251,6 +252,23 @@ export default function FilmographyPage() {
             <strong>educational programming</strong>, and{" "}
             <strong>digital storytelling</strong> for major institutions,
             platforms, and audiences.
+          </p>
+          <p className="mt-6 max-w-3xl text-sm leading-7 text-neutral-400">
+            Planning a project? Explore{" "}
+            <Link
+              href="/pricing"
+              className="font-medium text-violet-300 underline-offset-4 transition hover:text-violet-200 hover:underline"
+            >
+              editing rates &amp; packages
+            </Link>{" "}
+            or{" "}
+            <Link
+              href="/research"
+              className="font-medium text-violet-300 underline-offset-4 transition hover:text-violet-200 hover:underline"
+            >
+              research &amp; fact checking
+            </Link>{" "}
+            by L. Viola Kozak, PhD.
           </p>
         </section>
 
@@ -611,7 +629,7 @@ export default function FilmographyPage() {
             institutional, branded, and digital media projects.
           </p>
 
-          <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+          <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
             <a
               href="https://www.imdb.com/name/nm3118409/?ref_=nv_sr_srsg_0_tt_2_nm_6_in_0_q_ben%20bacharach"
               target="_blank"
@@ -636,6 +654,20 @@ export default function FilmographyPage() {
             >
               Get in Touch
             </a>
+
+            <Link
+              href="/pricing"
+              className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
+            >
+              View Pricing
+            </Link>
+
+            <Link
+              href="/research"
+              className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
+            >
+              Research Services
+            </Link>
           </div>
         </section>
       </main>

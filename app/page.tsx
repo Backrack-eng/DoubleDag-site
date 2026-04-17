@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import Player from "@vimeo/player";
 
 export default function Home() {
@@ -68,13 +69,27 @@ export default function Home() {
             feature work for respected clients and platforms.
           </p>
 
-          <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+          <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
             <a
               href="/filmography"
               className="inline-flex h-12 items-center justify-center rounded-full bg-white px-6 text-sm font-medium text-black transition hover:opacity-90"
             >
               View Filmography
             </a>
+
+            <Link
+              href="/pricing"
+              className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
+            >
+              View Pricing
+            </Link>
+
+            <Link
+              href="/research"
+              className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
+            >
+              Research &amp; Fact Checking
+            </Link>
 
             <a
               href="mailto:hello@doubledagproductions.com"
@@ -242,6 +257,23 @@ export default function Home() {
               and a deep respect for story, performance, pacing, and emotional
               clarity.
             </p>
+            <p className="mt-6 text-sm text-neutral-400">
+              Need{" "}
+              <Link
+                href="/pricing"
+                className="font-medium text-violet-300 underline-offset-4 transition hover:text-violet-200 hover:underline"
+              >
+                editing rates &amp; packages
+              </Link>
+              , or{" "}
+              <Link
+                href="/research"
+                className="font-medium text-violet-300 underline-offset-4 transition hover:text-violet-200 hover:underline"
+              >
+                PhD-level research &amp; fact checking
+              </Link>
+              ? Both are part of how Double Dag supports serious productions.
+            </p>
           </div>
 
           <div className="group rounded-3xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10">
@@ -317,30 +349,44 @@ export default function Home() {
               inquiries, get in touch directly.
             </p>
 
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-  <a
-    href="mailto:hello@doubledagproductions.com"
-    className="inline-flex h-12 items-center justify-center rounded-full bg-white px-6 text-sm font-medium text-black transition hover:opacity-90"
-  >
-    Email Double Dag
-  </a>
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+              <a
+                href="mailto:hello@doubledagproductions.com"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-white px-6 text-sm font-medium text-black transition hover:opacity-90"
+              >
+                Email Double Dag
+              </a>
 
-  <a
-    href="https://www.linkedin.com/in/doubledag/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
-  >
-    LinkedIn
-  </a>
+              <a
+                href="https://www.linkedin.com/in/doubledag/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
+              >
+                LinkedIn
+              </a>
 
-  <a
-    href="/filmography"
-    className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
-  >
-    Explore Full Filmography
-  </a>
-</div>
+              <a
+                href="/filmography"
+                className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
+              >
+                Explore Full Filmography
+              </a>
+
+              <Link
+                href="/pricing"
+                className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
+              >
+                Services &amp; Pricing
+              </Link>
+
+              <Link
+                href="/research"
+                className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
+              >
+                Research Services
+              </Link>
+            </div>
           </div>
         </section>
       </main>
