@@ -337,6 +337,55 @@ export default function Home() {
         </section>
 
         <section className="border-t border-white/10 py-14">
+          <div className="mb-8">
+            <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
+              Tools
+            </p>
+            <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+              Check out tools designed to make your workflow easier.
+            </h2>
+            <p className="mt-4 max-w-3xl text-base leading-8 text-neutral-300">
+              From everyday thinking to professional post-production, these
+              tools are built to streamline the way you work.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="group flex h-full flex-col rounded-3xl border border-white/10 bg-white/5 p-6 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10">
+              <h3 className="text-xl font-semibold">Thinkonaut</h3>
+              <p className="mt-3 flex-1 text-sm leading-7 text-neutral-300 transition group-hover:text-neutral-200">
+                A clean, powerful space for capturing thoughts, organizing
+                ideas, and turning them into something actionable.
+              </p>
+              <a
+                href="https://www.thinkonaut.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 inline-flex h-12 w-fit items-center justify-center rounded-full bg-white px-6 text-sm font-medium text-black transition hover:opacity-90"
+              >
+                Visit Thinkonaut
+              </a>
+            </div>
+
+            <div className="group flex h-full flex-col rounded-3xl border border-white/10 bg-white/5 p-6 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10">
+              <h3 className="text-xl font-semibold">AutoThirds</h3>
+              <p className="mt-3 flex-1 text-sm leading-7 text-neutral-300 transition group-hover:text-neutral-200">
+                Built for editors and producers, AutoThirds helps you quickly
+                generate clean, professional lower thirds and on-screen text.
+              </p>
+              <a
+                href="https://www.autothirds.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 inline-flex h-12 w-fit items-center justify-center rounded-full bg-white px-6 text-sm font-medium text-black transition hover:opacity-90"
+              >
+                Visit AutoThirds
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-t border-white/10 py-14">
           <div className="max-w-3xl">
             <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
               Contact
