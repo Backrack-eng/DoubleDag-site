@@ -374,7 +374,7 @@ export default function Home() {
                 generate clean, professional lower thirds and on-screen text.
               </p>
               <a
-                href="https://autothirds.app"
+                href="https://autothirds.com/
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-6 inline-flex h-12 w-fit items-center justify-center rounded-full bg-white px-6 text-sm font-medium text-black transition hover:opacity-90"
