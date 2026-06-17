@@ -304,6 +304,18 @@ export default function FilmographyPage() {
               </div>
             ))}
           </div>
+
+          <div className="mx-auto mt-8 max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-white/5">
+            <div className="relative w-full pt-[56.25%]">
+              <iframe
+                src="https://player.vimeo.com/video/1202301769?title=0&byline=0&portrait=0"
+                className="absolute left-0 top-0 h-full w-full"
+                allow="fullscreen; picture-in-picture"
+                allowFullScreen
+                title="Filmography reel"
+              />
+            </div>
+          </div>
         </section>
 
         <div className="mb-10 h-px w-full bg-gradient-to-r from-violet-500/0 via-violet-400/40 to-violet-500/0" />
