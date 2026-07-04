@@ -350,7 +350,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             <div className="group flex h-full flex-col rounded-3xl border border-white/10 bg-white/5 p-6 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10">
               <h3 className="text-xl font-semibold">Thinkonaut</h3>
               <p className="mt-3 flex-1 text-sm leading-7 text-neutral-300 transition group-hover:text-neutral-200">
@@ -381,6 +381,20 @@ export default function Home() {
               >
                 Visit AutoThirds
               </a>
+            </div>
+
+            <div className="group flex h-full flex-col rounded-3xl border border-white/10 bg-white/5 p-6 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10">
+              <h3 className="text-xl font-semibold">RVA Street Games</h3>
+              <p className="mt-3 flex-1 text-sm leading-7 text-neutral-300 transition group-hover:text-neutral-200">
+                Explore Richmond through Street View. Play GeoGuesser or
+                Navigator — pin random locations or hunt down local landmarks.
+              </p>
+              <Link
+                href="/rva-street-games"
+                className="mt-6 inline-flex h-12 w-fit items-center justify-center rounded-full bg-white px-6 text-sm font-medium text-black transition hover:opacity-90"
+              >
+                Play RVA Street Games
+              </Link>
             </div>
           </div>
         </section>
