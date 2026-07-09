@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Player from "@vimeo/player";
+import { PhotographyScroller } from "./components/PhotographyScroller";
 
 export default function Home() {
   const weavingIframeRef = useRef<HTMLIFrameElement | null>(null);
@@ -439,6 +440,13 @@ export default function Home() {
           </div>
         </section>
       </main>
+
+      <section className="border-t border-white/10 pb-16 pt-10">
+        <p className="mb-6 text-center text-sm text-neutral-400">
+          Photography by Ben Bacharach-White
+        </p>
+        <PhotographyScroller />
+      </section>
     </div>
   );
 }
