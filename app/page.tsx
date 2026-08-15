@@ -79,13 +79,6 @@ export default function Home() {
             </a>
 
             <Link
-              href="/pricing"
-              className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
-            >
-              View Pricing
-            </Link>
-
-            <Link
               href="/research"
               className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
             >
@@ -261,19 +254,12 @@ export default function Home() {
             <p className="mt-6 text-sm text-neutral-400">
               Need{" "}
               <Link
-                href="/pricing"
-                className="font-medium text-violet-300 underline-offset-4 transition hover:text-violet-200 hover:underline"
-              >
-                editing rates &amp; packages
-              </Link>
-              , or{" "}
-              <Link
                 href="/research"
                 className="font-medium text-violet-300 underline-offset-4 transition hover:text-violet-200 hover:underline"
               >
                 PhD-level research &amp; fact checking
               </Link>
-              ? Both are part of how Double Dag supports serious productions.
+              ? It&apos;s part of how Double Dag supports serious productions.
             </p>
           </div>
 
@@ -424,19 +410,23 @@ export default function Home() {
               </a>
 
               <Link
-                href="/pricing"
-                className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
-              >
-                Services &amp; Pricing
-              </Link>
-
-              <Link
                 href="/research"
                 className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
               >
                 Research Services
               </Link>
             </div>
+
+            <p className="mt-8 text-sm text-neutral-500">
+              Please{" "}
+              <a
+                href="mailto:hello@doubledagproductions.com"
+                className="transition hover:text-violet-400"
+              >
+                contact me
+              </a>{" "}
+              for a current price sheet.
+            </p>
           </div>
         </section>
       </main>
