@@ -256,13 +256,6 @@ export default function FilmographyPage() {
           <p className="mt-6 max-w-3xl text-sm leading-7 text-neutral-400">
             Planning a project? Explore{" "}
             <Link
-              href="/pricing"
-              className="font-medium text-violet-300 underline-offset-4 transition hover:text-violet-200 hover:underline"
-            >
-              editing rates &amp; packages
-            </Link>{" "}
-            or{" "}
-            <Link
               href="/research"
               className="font-medium text-violet-300 underline-offset-4 transition hover:text-violet-200 hover:underline"
             >
@@ -666,13 +659,6 @@ export default function FilmographyPage() {
             >
               Get in Touch
             </a>
-
-            <Link
-              href="/pricing"
-              className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
-            >
-              View Pricing
-            </Link>
 
             <Link
               href="/research"

@@ -34,9 +34,6 @@ export default function Header() {
           <Link href="/filmography" className={linkClass("/filmography")}>
             Filmography
           </Link>
-          <Link href="/pricing" className={linkClass("/pricing")}>
-            Pricing
-          </Link>
           <Link href="/research" className={linkClass("/research")}>
             Research
           </Link>

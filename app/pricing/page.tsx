@@ -5,6 +5,10 @@ export const metadata: Metadata = {
   title: "Editing Rates & Services | Double Dag Productions",
   description:
     "Transparent video editing rates for documentary, series, branded, and digital content. Day rates, project packages, retainers, and add-ons from Emmy-recognized editor Ben Bacharach-White.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 function BulletList({ items }: { items: string[] }) {
