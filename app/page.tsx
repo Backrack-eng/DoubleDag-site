@@ -109,7 +109,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="featured-reel mx-1 sm:mx-2">
+          <div className="featured-reel mx-1 my-2 sm:mx-3 sm:my-4">
             <div className="featured-reel__frame">
               <div className="relative w-full pt-[56.25%]">
                 <iframe
