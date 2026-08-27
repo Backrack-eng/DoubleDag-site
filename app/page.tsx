@@ -112,10 +112,10 @@ export default function Home() {
           <div className="featured-reel mx-1 my-2 sm:mx-3 sm:my-4">
             <div className="featured-reel__ring">
               <div className="featured-reel__frame">
-                <div className="relative w-full pt-[56.25%]">
+                <div className="featured-reel__media relative w-full pt-[56.25%]">
                   <iframe
                     src="https://player.vimeo.com/video/889986920?title=0&byline=0&portrait=0&badge=0&autoplay=1&muted=0"
-                    className="absolute left-0 top-0 h-full w-full"
+                    className="featured-reel__player absolute left-0 top-0 h-full w-full"
                     allow="autoplay; fullscreen; picture-in-picture"
                     allowFullScreen
                     title="Ben Bacharach-White Demo Reel"
