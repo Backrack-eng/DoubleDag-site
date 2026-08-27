@@ -53,6 +53,10 @@ body {
 }
 
 /* Featured reel: floating frame with ambient glow + light border */
+:root {
+  --featured-reel-radius: 1rem;
+}
+
 @keyframes reel-float {
   0%,
   100% {
