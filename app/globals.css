@@ -110,24 +110,23 @@ body {
   overflow: hidden;
   border-radius: 1.65rem;
   padding: 4px;
-  background: #1a1228;
 }
 
 .featured-reel__ring::before {
   content: "";
   position: absolute;
-  inset: -60%;
+  inset: -50%;
+  z-index: 0;
   background: conic-gradient(
     from 0deg,
-    rgba(255, 255, 255, 0.08),
-    rgba(221, 214, 254, 1),
-    rgba(255, 255, 255, 0.9),
-    rgba(167, 139, 250, 0.75),
-    rgba(255, 255, 255, 0.08),
-    rgba(196, 181, 253, 1),
-    rgba(255, 255, 255, 0.08)
+    #ffffff 0deg,
+    rgba(221, 214, 254, 0.95) 40deg,
+    rgba(139, 92, 246, 0.35) 120deg,
+    rgba(255, 255, 255, 0.08) 180deg,
+    rgba(196, 181, 253, 0.95) 260deg,
+    #ffffff 360deg
   );
-  animation: reel-border-spin 4.5s linear infinite;
+  animation: reel-border-spin 3s linear infinite;
   pointer-events: none;
 }
 
