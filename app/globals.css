@@ -59,7 +59,7 @@ body {
   --featured-reel-inner-radius: calc(
     var(--featured-reel-radius) - var(--featured-reel-border)
   );
-  --featured-reel-clip-inset: 1px;
+  --featured-reel-clip-inset: 2px;
 }
 
 @property --reel-angle {
@@ -141,12 +141,13 @@ body {
   animation: reel-angle-spin 6s linear infinite;
 }
 
-.featured-reel__frame {
+.featured-reel__frame,
+.featured-reel-turquoise__frame {
   position: relative;
   z-index: 1;
   aspect-ratio: 16 / 9;
   width: 100%;
-  overflow: hidden;
+  overflow: clip;
   border-radius: var(--featured-reel-inner-radius);
   background: #0a0a0a;
   transform: translateZ(0);
@@ -157,23 +158,25 @@ body {
   );
 }
 
-.featured-reel__frame::after {
+.featured-reel__frame::after,
+.featured-reel-turquoise__frame::after {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 3;
   border-radius: inherit;
   pointer-events: none;
   box-shadow:
-    inset 0 0 0 1px #0a0a0a,
-    inset 0 0 0 2px rgba(10, 10, 10, 0.98);
+    inset 0 0 0 3px #0a0a0a,
+    inset 0 0 0 4px rgba(10, 10, 10, 0.98);
 }
 
-.featured-reel__media {
+.featured-reel__media,
+.featured-reel-turquoise__media {
   position: absolute;
   inset: 0;
-  overflow: hidden;
-  border-radius: var(--featured-reel-inner-radius);
+  overflow: clip;
+  border-radius: inherit;
   transform: translateZ(0);
   background: #0a0a0a;
   clip-path: inset(0 round var(--featured-reel-inner-radius));
@@ -181,12 +184,17 @@ body {
   backface-visibility: hidden;
 }
 
-.featured-reel__media iframe {
+.featured-reel__media iframe,
+.featured-reel-turquoise__media iframe {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   border: 0;
+  border-radius: inherit;
+  clip-path: inset(0 round var(--featured-reel-inner-radius));
+  transform: translateZ(0) scale(1.008);
+  transform-origin: center;
 }
 
 /* Previous work reel: same treatment, turquoise accent */
@@ -235,54 +243,6 @@ body {
   background-clip: padding-box, border-box;
   -webkit-background-clip: padding-box, border-box;
   animation: reel-angle-spin 6s linear infinite;
-}
-
-.featured-reel-turquoise__frame {
-  position: relative;
-  z-index: 1;
-  aspect-ratio: 16 / 9;
-  width: 100%;
-  overflow: hidden;
-  border-radius: var(--featured-reel-inner-radius);
-  background: #0a0a0a;
-  transform: translateZ(0);
-  contain: paint;
-  clip-path: inset(
-    var(--featured-reel-clip-inset) round
-      calc(var(--featured-reel-inner-radius) - var(--featured-reel-clip-inset))
-  );
-}
-
-.featured-reel-turquoise__frame::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  border-radius: inherit;
-  pointer-events: none;
-  box-shadow:
-    inset 0 0 0 1px #0a0a0a,
-    inset 0 0 0 2px rgba(10, 10, 10, 0.98);
-}
-
-.featured-reel-turquoise__media {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  border-radius: var(--featured-reel-inner-radius);
-  transform: translateZ(0);
-  background: #0a0a0a;
-  clip-path: inset(0 round var(--featured-reel-inner-radius));
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-
-.featured-reel-turquoise__media iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
