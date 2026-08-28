@@ -59,13 +59,12 @@ body {
   --featured-reel-inner-radius: calc(
     var(--featured-reel-radius) - var(--featured-reel-border)
   );
-  --featured-reel-clip-inset: 2px;
 }
 
-@property --reel-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
+@keyframes reel-border-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes reel-float {
@@ -85,12 +84,6 @@ body {
   }
   50% {
     opacity: 1;
-  }
-}
-
-@keyframes reel-angle-spin {
-  to {
-    --reel-angle: 360deg;
   }
 }
 
@@ -120,25 +113,34 @@ body {
   pointer-events: none;
 }
 
-.featured-reel__ring {
+.featured-reel__ring,
+.featured-reel-turquoise__ring {
   position: relative;
   overflow: hidden;
-  border: var(--featured-reel-border) solid transparent;
   border-radius: var(--featured-reel-radius);
-  background:
-    linear-gradient(#0a0a0a, #0a0a0a) padding-box,
-    conic-gradient(
-      from var(--reel-angle, 0deg),
-      #ffffff 0deg,
-      rgba(221, 214, 254, 1) 40deg,
-      rgba(167, 139, 250, 0.95) 120deg,
-      rgba(196, 181, 253, 0.85) 180deg,
-      rgba(196, 181, 253, 1) 260deg,
-      #ffffff 360deg
-    ) border-box;
-  background-clip: padding-box, border-box;
-  -webkit-background-clip: padding-box, border-box;
-  animation: reel-angle-spin 6s linear infinite;
+  padding: var(--featured-reel-border);
+}
+
+.featured-reel__ring::before,
+.featured-reel-turquoise__ring::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  z-index: 0;
+  animation: reel-border-spin 6s linear infinite;
+  pointer-events: none;
+}
+
+.featured-reel__ring::before {
+  background: conic-gradient(
+    from 0deg,
+    #ffffff 0deg,
+    rgba(221, 214, 254, 1) 40deg,
+    rgba(167, 139, 250, 0.95) 120deg,
+    rgba(196, 181, 253, 0.85) 180deg,
+    rgba(196, 181, 253, 1) 260deg,
+    #ffffff 360deg
+  );
 }
 
 .featured-reel__frame,
@@ -152,23 +154,6 @@ body {
   background: #0a0a0a;
   transform: translateZ(0);
   contain: paint;
-  clip-path: inset(
-    var(--featured-reel-clip-inset) round
-      calc(var(--featured-reel-inner-radius) - var(--featured-reel-clip-inset))
-  );
-}
-
-.featured-reel__frame::after,
-.featured-reel-turquoise__frame::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  border-radius: inherit;
-  pointer-events: none;
-  box-shadow:
-    inset 0 0 0 3px #0a0a0a,
-    inset 0 0 0 4px rgba(10, 10, 10, 0.98);
 }
 
 .featured-reel__media,
@@ -224,63 +209,43 @@ body {
   pointer-events: none;
 }
 
-.featured-reel-turquoise__ring {
-  position: relative;
-  overflow: hidden;
-  border: var(--featured-reel-border) solid transparent;
-  border-radius: var(--featured-reel-radius);
-  background:
-    linear-gradient(#0a0a0a, #0a0a0a) padding-box,
-    conic-gradient(
-      from var(--reel-angle, 0deg),
-      rgba(153, 246, 228, 0.85) 0deg,
-      rgba(20, 184, 166, 1) 40deg,
-      rgba(13, 148, 136, 0.98) 120deg,
-      rgba(15, 118, 110, 0.92) 180deg,
-      rgba(17, 94, 89, 1) 260deg,
-      rgba(153, 246, 228, 0.85) 360deg
-    ) border-box;
-  background-clip: padding-box, border-box;
-  -webkit-background-clip: padding-box, border-box;
-  animation: reel-angle-spin 6s linear infinite;
+.featured-reel-turquoise__ring::before {
+  background: conic-gradient(
+    from 0deg,
+    rgba(153, 246, 228, 0.85) 0deg,
+    rgba(20, 184, 166, 1) 40deg,
+    rgba(13, 148, 136, 0.98) 120deg,
+    rgba(15, 118, 110, 0.92) 180deg,
+    rgba(17, 94, 89, 1) 260deg,
+    rgba(153, 246, 228, 0.85) 360deg
+  );
 }
 
 @media (prefers-reduced-motion: reduce) {
   .featured-reel,
   .featured-reel::before,
-  .featured-reel__ring {
-    animation: none;
-  }
-
-  .featured-reel__ring {
-    background:
-      linear-gradient(#0a0a0a, #0a0a0a) padding-box,
-      linear-gradient(
-        135deg,
-        rgba(196, 181, 253, 0.95),
-        rgba(255, 255, 255, 0.4),
-        rgba(167, 139, 250, 0.8)
-      ) border-box;
-    background-clip: padding-box, border-box;
-    -webkit-background-clip: padding-box, border-box;
-  }
-
   .featured-reel-turquoise,
   .featured-reel-turquoise::before,
-  .featured-reel-turquoise__ring {
+  .featured-reel__ring::before,
+  .featured-reel-turquoise__ring::before {
     animation: none;
   }
 
-  .featured-reel-turquoise__ring {
-    background:
-      linear-gradient(#0a0a0a, #0a0a0a) padding-box,
-      linear-gradient(
-        135deg,
-        rgba(13, 148, 136, 0.95),
-        rgba(20, 184, 166, 0.55),
-        rgba(15, 118, 110, 0.9)
-      ) border-box;
-    background-clip: padding-box, border-box;
-    -webkit-background-clip: padding-box, border-box;
+  .featured-reel__ring::before {
+    background: linear-gradient(
+      135deg,
+      rgba(196, 181, 253, 0.95),
+      rgba(255, 255, 255, 0.4),
+      rgba(167, 139, 250, 0.8)
+    );
+  }
+
+  .featured-reel-turquoise__ring::before {
+    background: linear-gradient(
+      135deg,
+      rgba(13, 148, 136, 0.95),
+      rgba(20, 184, 166, 0.55),
+      rgba(15, 118, 110, 0.9)
+    );
   }
 }
