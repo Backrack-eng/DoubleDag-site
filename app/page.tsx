@@ -125,15 +125,19 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
-            <div className="relative w-full pt-[56.25%]">
-              <iframe
-                src="https://player.vimeo.com/video/57553817?fl=pl&fe=cm&autoplay=1&muted=1&loop=1"
-                className="absolute left-0 top-0 h-full w-full"
-                allow="autoplay; fullscreen; picture-in-picture"
-                allowFullScreen
-                title="Previous Work (2006 - 2012)"
-              />
+          <div className="featured-reel-turquoise mx-1 my-2 sm:mx-3 sm:my-4">
+            <div className="featured-reel-turquoise__ring">
+              <div className="featured-reel-turquoise__frame">
+                <div className="featured-reel-turquoise__media">
+                  <iframe
+                    src="https://player.vimeo.com/video/57553817?fl=pl&fe=cm&autoplay=1&muted=1&loop=1"
+                    className="featured-reel-turquoise__player"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    allowFullScreen
+                    title="Previous Work (2006 - 2012)"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </section>

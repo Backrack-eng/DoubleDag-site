@@ -189,6 +189,102 @@ body {
   border: 0;
 }
 
+/* Previous work reel: same treatment, turquoise accent */
+.featured-reel-turquoise {
+  position: relative;
+  isolation: isolate;
+  animation: reel-float 6.875s ease-in-out infinite;
+  box-shadow:
+    0 22px 50px rgba(0, 0, 0, 0.55),
+    0 10px 28px rgba(45, 212, 191, 0.28),
+    0 0 60px rgba(94, 234, 212, 0.22);
+}
+
+.featured-reel-turquoise::before {
+  content: "";
+  position: absolute;
+  inset: -10% -5% -14%;
+  z-index: -1;
+  border-radius: 40%;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(153, 246, 228, 0.48) 0%,
+    rgba(45, 212, 191, 0.24) 42%,
+    transparent 72%
+  );
+  animation: reel-glow-pulse 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.featured-reel-turquoise__ring {
+  position: relative;
+  overflow: hidden;
+  border: var(--featured-reel-border) solid transparent;
+  border-radius: var(--featured-reel-radius);
+  background:
+    linear-gradient(#0a0a0a, #0a0a0a) padding-box,
+    conic-gradient(
+      from var(--reel-angle, 0deg),
+      #ffffff 0deg,
+      rgba(204, 251, 241, 1) 40deg,
+      rgba(45, 212, 191, 0.95) 120deg,
+      rgba(94, 234, 212, 0.85) 180deg,
+      rgba(153, 246, 228, 1) 260deg,
+      #ffffff 360deg
+    ) border-box;
+  background-clip: padding-box, border-box;
+  -webkit-background-clip: padding-box, border-box;
+  animation: reel-angle-spin 6s linear infinite;
+}
+
+.featured-reel-turquoise__frame {
+  position: relative;
+  z-index: 1;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--featured-reel-inner-radius);
+  background: #0a0a0a;
+  transform: translateZ(0);
+  contain: paint;
+  clip-path: inset(
+    var(--featured-reel-clip-inset) round
+      calc(var(--featured-reel-inner-radius) - var(--featured-reel-clip-inset))
+  );
+}
+
+.featured-reel-turquoise__frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 1px #0a0a0a,
+    inset 0 0 0 2px rgba(10, 10, 10, 0.98);
+}
+
+.featured-reel-turquoise__media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: var(--featured-reel-inner-radius);
+  transform: translateZ(0);
+  background: #0a0a0a;
+  clip-path: inset(0 round var(--featured-reel-inner-radius));
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.featured-reel-turquoise__media iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .featured-reel,
   .featured-reel::before,
@@ -204,6 +300,25 @@ body {
         rgba(196, 181, 253, 0.95),
         rgba(255, 255, 255, 0.4),
         rgba(167, 139, 250, 0.8)
+      ) border-box;
+    background-clip: padding-box, border-box;
+    -webkit-background-clip: padding-box, border-box;
+  }
+
+  .featured-reel-turquoise,
+  .featured-reel-turquoise::before,
+  .featured-reel-turquoise__ring {
+    animation: none;
+  }
+
+  .featured-reel-turquoise__ring {
+    background:
+      linear-gradient(#0a0a0a, #0a0a0a) padding-box,
+      linear-gradient(
+        135deg,
+        rgba(153, 246, 228, 0.95),
+        rgba(255, 255, 255, 0.4),
+        rgba(45, 212, 191, 0.8)
       ) border-box;
     background-clip: padding-box, border-box;
     -webkit-background-clip: padding-box, border-box;
