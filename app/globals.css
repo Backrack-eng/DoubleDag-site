@@ -54,11 +54,9 @@ body {
 
 /* Featured reel: floating frame with ambient glow + light border */
 :root {
-  --featured-reel-radius: 1rem;
+  --featured-reel-radius: 0;
   --featured-reel-border: 4px;
-  --featured-reel-inner-radius: calc(
-    var(--featured-reel-radius) - var(--featured-reel-border) + 0.5px
-  );
+  --featured-reel-inner-radius: 0;
 }
 
 @property --reel-angle {
@@ -159,8 +157,7 @@ body {
   position: relative;
   z-index: 1;
   aspect-ratio: 16 / 9;
-  width: calc(100% + 1px);
-  margin: -0.5px;
+  width: 100%;
   overflow: hidden;
   border-radius: var(--featured-reel-inner-radius);
   background: #0a0a0a;
@@ -181,7 +178,6 @@ body {
   width: 100%;
   height: 100%;
   border: 0;
-  border-radius: var(--featured-reel-inner-radius);
 }
 
 /* Previous work reel: same treatment, turquoise accent */
