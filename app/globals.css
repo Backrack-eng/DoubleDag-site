@@ -116,19 +116,28 @@ body {
 .featured-reel__ring,
 .featured-reel-turquoise__ring {
   position: relative;
-  overflow: hidden;
+  isolation: isolate;
   border-radius: var(--featured-reel-radius);
-  padding: var(--featured-reel-border);
 }
 
 .featured-reel__ring::before,
 .featured-reel-turquoise__ring::before {
   content: "";
   position: absolute;
-  inset: -50%;
-  z-index: 0;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  padding: var(--featured-reel-border);
   animation: reel-border-spin 6s linear infinite;
   pointer-events: none;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
 }
 
 .featured-reel__ring::before {
@@ -209,12 +218,7 @@ body {
   pointer-events: none;
 }
 
-.featured-reel-turquoise__ring {
-  background: rgb(13, 148, 136);
-}
-
 .featured-reel-turquoise__ring::before {
-  inset: -55%;
   background: conic-gradient(
     from 0deg,
     #ffffff 0deg,
