@@ -61,9 +61,15 @@ body {
   );
 }
 
-@keyframes reel-border-spin {
+@property --reel-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes reel-angle-spin {
   to {
-    transform: rotate(360deg);
+    --reel-angle: 360deg;
   }
 }
 
@@ -116,24 +122,25 @@ body {
 .featured-reel__ring,
 .featured-reel-turquoise__ring {
   position: relative;
-  overflow: hidden;
   border-radius: var(--featured-reel-radius);
   padding: var(--featured-reel-border);
+  isolation: isolate;
 }
 
 .featured-reel__ring::before,
 .featured-reel-turquoise__ring::before {
   content: "";
   position: absolute;
-  inset: -50%;
+  inset: 0;
   z-index: 0;
-  animation: reel-border-spin 6s linear infinite;
+  border-radius: inherit;
+  animation: reel-angle-spin 6s linear infinite;
   pointer-events: none;
 }
 
 .featured-reel__ring::before {
   background: conic-gradient(
-    from 0deg,
+    from var(--reel-angle),
     #ffffff 0deg,
     rgba(221, 214, 254, 1) 40deg,
     rgba(167, 139, 250, 0.95) 120deg,
@@ -152,7 +159,8 @@ body {
   overflow: hidden;
   border-radius: var(--featured-reel-inner-radius);
   background: #0a0a0a;
-  transform: translateZ(0);
+  isolation: isolate;
+  contain: paint;
 }
 
 .featured-reel__media,
@@ -197,9 +205,13 @@ body {
   pointer-events: none;
 }
 
+.featured-reel-turquoise__ring {
+  background: rgb(13, 148, 136);
+}
+
 .featured-reel-turquoise__ring::before {
   background: conic-gradient(
-    from 0deg,
+    from var(--reel-angle),
     #ffffff 0deg,
     rgba(204, 251, 241, 1) 40deg,
     rgba(20, 184, 166, 1) 120deg,
