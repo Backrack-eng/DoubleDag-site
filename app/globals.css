@@ -116,28 +116,19 @@ body {
 .featured-reel__ring,
 .featured-reel-turquoise__ring {
   position: relative;
-  isolation: isolate;
+  overflow: hidden;
   border-radius: var(--featured-reel-radius);
+  padding: var(--featured-reel-border);
 }
 
 .featured-reel__ring::before,
 .featured-reel-turquoise__ring::before {
   content: "";
   position: absolute;
-  inset: 0;
-  z-index: 2;
-  border-radius: inherit;
-  padding: var(--featured-reel-border);
+  inset: -50%;
+  z-index: 0;
   animation: reel-border-spin 6s linear infinite;
   pointer-events: none;
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask-composite: exclude;
 }
 
 .featured-reel__ring::before {
