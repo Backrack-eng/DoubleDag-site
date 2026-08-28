@@ -55,7 +55,13 @@ body {
 /* Featured reel: floating frame with ambient glow + light border */
 :root {
   --featured-reel-radius: 1rem;
-  --featured-reel-inner-radius: calc(var(--featured-reel-radius) - 4px);
+  --featured-reel-border: 4px;
+}
+
+@property --reel-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
 }
 
 @keyframes reel-float {
@@ -78,9 +84,9 @@ body {
   }
 }
 
-@keyframes reel-border-spin {
+@keyframes reel-angle-spin {
   to {
-    transform: rotate(360deg);
+    --reel-angle: 360deg;
   }
 }
 
@@ -114,16 +120,18 @@ body {
   position: relative;
   overflow: hidden;
   border-radius: var(--featured-reel-radius);
-  padding: 4px;
+  background: #0a0a0a;
 }
 
 .featured-reel__ring::before {
   content: "";
   position: absolute;
-  inset: -50%;
-  z-index: 0;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  padding: var(--featured-reel-border);
   background: conic-gradient(
-    from 0deg,
+    from var(--reel-angle, 0deg),
     #ffffff 0deg,
     rgba(221, 214, 254, 0.95) 40deg,
     rgba(139, 92, 246, 0.35) 120deg,
@@ -131,26 +139,33 @@ body {
     rgba(196, 181, 253, 0.95) 260deg,
     #ffffff 360deg
   );
-  animation: reel-border-spin 6s linear infinite;
+  animation: reel-angle-spin 6s linear infinite;
   pointer-events: none;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
 }
 
 .featured-reel__frame {
   position: relative;
   z-index: 1;
   overflow: hidden;
-  border-radius: var(--featured-reel-inner-radius);
+  border-radius: var(--featured-reel-radius);
   background: #0a0a0a;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
-  clip-path: inset(0 round var(--featured-reel-inner-radius));
+  clip-path: inset(0 round var(--featured-reel-radius));
   transform: translateZ(0);
   contain: paint;
 }
 
 .featured-reel__media {
   overflow: hidden;
-  border-radius: var(--featured-reel-inner-radius);
-  clip-path: inset(0 round var(--featured-reel-inner-radius));
+  border-radius: var(--featured-reel-radius);
+  clip-path: inset(0 round var(--featured-reel-radius));
   transform: translateZ(0);
   background: #0a0a0a;
 }
@@ -158,9 +173,9 @@ body {
 .featured-reel__media iframe {
   display: block;
   border: 0;
-  border-radius: var(--featured-reel-inner-radius);
-  clip-path: inset(0 round var(--featured-reel-inner-radius));
-  transform: scale(1.015);
+  border-radius: var(--featured-reel-radius);
+  clip-path: inset(0 round var(--featured-reel-radius));
+  transform: scale(1.035);
   transform-origin: center;
 }
 
@@ -171,7 +186,8 @@ body {
     animation: none;
   }
 
-  .featured-reel__ring {
+  .featured-reel__ring::before {
+    animation: none;
     background: linear-gradient(
       135deg,
       rgba(196, 181, 253, 0.95),
