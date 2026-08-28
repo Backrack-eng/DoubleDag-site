@@ -209,15 +209,20 @@ body {
   pointer-events: none;
 }
 
+.featured-reel-turquoise__ring {
+  background: rgb(13, 148, 136);
+}
+
 .featured-reel-turquoise__ring::before {
+  inset: -55%;
   background: conic-gradient(
     from 0deg,
-    rgba(153, 246, 228, 0.85) 0deg,
-    rgba(20, 184, 166, 1) 40deg,
-    rgba(13, 148, 136, 0.98) 120deg,
-    rgba(15, 118, 110, 0.92) 180deg,
-    rgba(17, 94, 89, 1) 260deg,
-    rgba(153, 246, 228, 0.85) 360deg
+    #ffffff 0deg,
+    rgba(204, 251, 241, 1) 40deg,
+    rgba(20, 184, 166, 1) 120deg,
+    rgba(13, 148, 136, 0.95) 180deg,
+    rgba(15, 118, 110, 1) 260deg,
+    #ffffff 360deg
   );
 }
 
