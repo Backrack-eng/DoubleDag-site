@@ -56,6 +56,10 @@ body {
 :root {
   --featured-reel-radius: 1rem;
   --featured-reel-border: 4px;
+  --featured-reel-inner-radius: calc(
+    var(--featured-reel-radius) - var(--featured-reel-border)
+  );
+  --featured-reel-clip-inset: 1px;
 }
 
 @property --reel-angle {
@@ -119,80 +123,92 @@ body {
 .featured-reel__ring {
   position: relative;
   overflow: hidden;
+  border: var(--featured-reel-border) solid transparent;
   border-radius: var(--featured-reel-radius);
-  background: #0a0a0a;
-}
-
-.featured-reel__ring::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  border-radius: inherit;
-  padding: var(--featured-reel-border);
-  background: conic-gradient(
-    from var(--reel-angle, 0deg),
-    #ffffff 0deg,
-    rgba(221, 214, 254, 0.95) 40deg,
-    rgba(139, 92, 246, 0.35) 120deg,
-    rgba(255, 255, 255, 0.08) 180deg,
-    rgba(196, 181, 253, 0.95) 260deg,
-    #ffffff 360deg
-  );
+  background:
+    linear-gradient(#0a0a0a, #0a0a0a) padding-box,
+    conic-gradient(
+      from var(--reel-angle, 0deg),
+      #ffffff 0deg,
+      rgba(221, 214, 254, 1) 40deg,
+      rgba(167, 139, 250, 0.95) 120deg,
+      rgba(196, 181, 253, 0.85) 180deg,
+      rgba(196, 181, 253, 1) 260deg,
+      #ffffff 360deg
+    ) border-box;
+  background-clip: padding-box, border-box;
+  -webkit-background-clip: padding-box, border-box;
   animation: reel-angle-spin 6s linear infinite;
-  pointer-events: none;
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask-composite: exclude;
 }
 
 .featured-reel__frame {
   position: relative;
   z-index: 1;
+  aspect-ratio: 16 / 9;
+  width: 100%;
   overflow: hidden;
-  border-radius: var(--featured-reel-radius);
+  border-radius: var(--featured-reel-inner-radius);
   background: #0a0a0a;
-  clip-path: inset(0 round var(--featured-reel-radius));
   transform: translateZ(0);
   contain: paint;
+  clip-path: inset(
+    var(--featured-reel-clip-inset) round
+      calc(var(--featured-reel-inner-radius) - var(--featured-reel-clip-inset))
+  );
+}
+
+.featured-reel__frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 1px #0a0a0a,
+    inset 0 0 0 2px rgba(10, 10, 10, 0.98);
 }
 
 .featured-reel__media {
+  position: absolute;
+  inset: 0;
   overflow: hidden;
-  border-radius: var(--featured-reel-radius);
-  clip-path: inset(0 round var(--featured-reel-radius));
+  border-radius: var(--featured-reel-inner-radius);
   transform: translateZ(0);
   background: #0a0a0a;
+  clip-path: inset(0 round var(--featured-reel-inner-radius));
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .featured-reel__media iframe {
-  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(100% + 24px);
+  height: calc(100% + 24px);
   border: 0;
-  border-radius: var(--featured-reel-radius);
-  clip-path: inset(0 round var(--featured-reel-radius));
-  transform: scale(1.035);
+  transform: translate(-50%, -50%) scale(1.025);
   transform-origin: center;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .featured-reel,
   .featured-reel::before,
-  .featured-reel__ring::before {
+  .featured-reel__ring {
     animation: none;
   }
 
-  .featured-reel__ring::before {
-    animation: none;
-    background: linear-gradient(
-      135deg,
-      rgba(196, 181, 253, 0.95),
-      rgba(255, 255, 255, 0.4),
-      rgba(167, 139, 250, 0.8)
-    );
+  .featured-reel__ring {
+    background:
+      linear-gradient(#0a0a0a, #0a0a0a) padding-box,
+      linear-gradient(
+        135deg,
+        rgba(196, 181, 253, 0.95),
+        rgba(255, 255, 255, 0.4),
+        rgba(167, 139, 250, 0.8)
+      ) border-box;
+    background-clip: padding-box, border-box;
+    -webkit-background-clip: padding-box, border-box;
   }
 }
