@@ -31,6 +31,9 @@ export default function Header() {
           <Link href="/" className={linkClass("/")}>
             Home
           </Link>
+          <Link href="/creators" className={linkClass("/creators")}>
+            Creators
+          </Link>
           <Link href="/filmography" className={linkClass("/filmography")}>
             Filmography
           </Link>

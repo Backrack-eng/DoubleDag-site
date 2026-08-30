@@ -78,6 +78,13 @@ export default function Home() {
               View Filmography
             </a>
 
+            <a
+              href="mailto:info@DoubleDagProductions.com?subject=Pricing%20Sheet%20Request"
+              className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
+            >
+              Request Pricing Sheet
+            </a>
+
             <Link
               href="/research"
               className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
@@ -261,6 +268,13 @@ export default function Home() {
             </p>
             <p className="mt-6 text-sm text-neutral-400">
               Need{" "}
+              <a
+                href="mailto:info@DoubleDagProductions.com?subject=Pricing%20Sheet%20Request"
+                className="font-medium text-violet-300 underline-offset-4 transition hover:text-violet-200 hover:underline"
+              >
+                a pricing sheet
+              </a>
+              , or{" "}
               <Link
                 href="/research"
                 className="font-medium text-violet-300 underline-offset-4 transition hover:text-violet-200 hover:underline"
@@ -415,6 +429,13 @@ export default function Home() {
                 className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
               >
                 Explore Full Filmography
+              </a>
+
+              <a
+                href="mailto:info@DoubleDagProductions.com?subject=Pricing%20Sheet%20Request"
+                className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
+              >
+                Request Pricing Sheet
               </a>
 
               <Link

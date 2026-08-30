@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BulletList } from "../../components/BulletList";
 
 export const metadata: Metadata = {
   title: "Editing Rates & Services | Double Dag Productions",
@@ -10,19 +11,6 @@ export const metadata: Metadata = {
     follow: false,
   },
 };
-
-function BulletList({ items }: { items: string[] }) {
-  return (
-    <ul className="mt-4 space-y-2 text-sm leading-7 text-neutral-300">
-      {items.map((item) => (
-        <li key={item} className="flex gap-2">
-          <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-violet-400/80" aria-hidden />
-          <span>{item}</span>
-        </li>
-      ))}
-    </ul>
-  );
-}
 
 export default function PricingPage() {
   return (
@@ -106,7 +94,10 @@ export default function PricingPage() {
           </p>
 
           <div className="mt-10 grid gap-6 lg:grid-cols-2">
-            <div className="rounded-3xl border border-violet-400/15 bg-white/5 p-8 backdrop-blur-sm transition duration-300 hover:border-violet-300/30">
+            <div
+              id="short-form-social"
+              className="rounded-3xl border border-violet-400/15 bg-white/5 p-8 backdrop-blur-sm transition duration-300 hover:border-violet-300/30"
+            >
               <p className="text-xs uppercase tracking-widest text-violet-300/90">
                 Short-Form / Social
               </p>
@@ -127,7 +118,10 @@ export default function PricingPage() {
               </p>
             </div>
 
-            <div className="rounded-3xl border border-violet-400/15 bg-white/5 p-8 backdrop-blur-sm transition duration-300 hover:border-violet-300/30">
+            <div
+              id="long-form-youtube"
+              className="rounded-3xl border border-violet-400/15 bg-white/5 p-8 backdrop-blur-sm transition duration-300 hover:border-violet-300/30"
+            >
               <p className="text-xs uppercase tracking-widest text-violet-300/90">
                 Long-Form / YouTube / Branded Content
               </p>

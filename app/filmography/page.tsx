@@ -254,7 +254,14 @@ export default function FilmographyPage() {
             platforms, and audiences.
           </p>
           <p className="mt-6 max-w-3xl text-sm leading-7 text-neutral-400">
-            Planning a project? Explore{" "}
+            Planning a project?{" "}
+            <a
+              href="mailto:info@DoubleDagProductions.com?subject=Pricing%20Sheet%20Request"
+              className="font-medium text-violet-300 underline-offset-4 transition hover:text-violet-200 hover:underline"
+            >
+              Request a pricing sheet
+            </a>{" "}
+            or explore{" "}
             <Link
               href="/research"
               className="font-medium text-violet-300 underline-offset-4 transition hover:text-violet-200 hover:underline"
@@ -658,6 +665,13 @@ export default function FilmographyPage() {
               className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
             >
               Get in Touch
+            </a>
+
+            <a
+              href="mailto:info@DoubleDagProductions.com?subject=Pricing%20Sheet%20Request"
+              className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
+            >
+              Request Pricing Sheet
             </a>
 
             <Link

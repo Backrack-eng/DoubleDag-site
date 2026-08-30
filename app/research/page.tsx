@@ -219,6 +219,12 @@ export default function ResearchPage() {
             >
               Inquire About Research
             </a>
+            <a
+              href="mailto:info@DoubleDagProductions.com?subject=Pricing%20Sheet%20Request"
+              className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-8 text-sm font-medium text-white transition hover:bg-white/10"
+            >
+              Request Pricing Sheet
+            </a>
             <Link
               href="/"
               className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-8 text-sm font-medium text-white transition hover:bg-white/10"
