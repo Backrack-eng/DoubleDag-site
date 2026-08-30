@@ -7,30 +7,11 @@ type GalleryImageItem = {
   kind: "image";
   src: string;
   alt: string;
-  featured?: "top" | "bottom" | "large" | "wide";
 };
-
-type GalleryVideoItem = {
-  kind: "video";
-  src: string;
-  alt: string;
-};
-
-type GalleryPairItem = {
-  kind: "pair";
-  images: {
-    src: string;
-    alt: string;
-  }[];
-};
-
-type GalleryItem = GalleryImageItem | GalleryVideoItem | GalleryPairItem;
-
-type Shape = "landscape" | "portrait" | "square";
 
 export default function FilmographyPage() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const [imageShapes, setImageShapes] = useState<Record<string, Shape>>({});
+  const [slideIndex, setSlideIndex] = useState(0);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -49,114 +30,86 @@ export default function FilmographyPage() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [lightboxIndex]);
 
-  const galleryItems: GalleryItem[] = useMemo(
+  // TODO: Ben, replace generic alt tags with real descriptions when you have a minute.
+  const behindTheScenesItems: GalleryImageItem[] = useMemo(
     () => [
-      {
-        kind: "image",
-        src: "/projects/Timeline1.webp",
-        alt: "Timeline still 1",
-        featured: "top",
-      },
-      {
-        kind: "pair",
-        images: [
-          {
-            src: "/projects/MnR-poster.webp",
-            alt: "Mock and Roll poster",
-          },
-          {
-            src: "/projects/Premiere-Cup.webp",
-            alt: "Premiere cup",
-          },
-        ],
-      },
-  
+      { kind: "image", src: "/projects/Timeline1.webp", alt: "Timeline still 1" },
+      { kind: "image", src: "/projects/MnR-poster.webp", alt: "Mock and Roll poster" },
+      { kind: "image", src: "/projects/Premiere-Cup.webp", alt: "Premiere cup" },
       { kind: "image", src: "/projects/Ben-cam.webp", alt: "Ben on camera" },
       { kind: "image", src: "/projects/Ben-edit.webp", alt: "Ben editing" },
       { kind: "image", src: "/projects/Ben-Tony.webp", alt: "Ben and Tony" },
-      {
-        kind: "image",
-        src: "/projects/MnR-crew.webp",
-        alt: "Mock and Roll crew",
-      },
+      { kind: "image", src: "/projects/MnR-crew.webp", alt: "Mock and Roll crew" },
       { kind: "image", src: "/projects/NAB.webp", alt: "NAB" },
       { kind: "image", src: "/projects/Outdoor.webp", alt: "Outdoor still" },
+      { kind: "image", src: "/projects/Timeline2.webp", alt: "Timeline still 2" },
       {
         kind: "image",
         src: "/projects/DSCN2267.JPG",
-        alt: "Gallery still DSCN2267",
+        alt: "Behind the scenes on a Double Dag production",
       },
       {
         kind: "image",
         src: "/projects/IMG_1679.jpeg",
-        alt: "Gallery still IMG 1679",
-      },
-      {
-        kind: "video",
-        src: "/projects/EmmyWinner.mp4",
-        alt: "Emmy Winner video",
+        alt: "Behind the scenes on a Double Dag production",
       },
       {
         kind: "image",
         src: "/projects/IMG_3002.jpeg",
-        alt: "Gallery still IMG 3002",
+        alt: "Behind the scenes on a Double Dag production",
       },
       {
         kind: "image",
         src: "/projects/IMG_3049.jpeg",
-        alt: "Gallery still IMG 3049",
+        alt: "Behind the scenes on a Double Dag production",
       },
       {
         kind: "image",
         src: "/projects/IMG_4627.JPG",
-        alt: "Gallery still IMG 4627",
+        alt: "Behind the scenes on a Double Dag production",
       },
       {
         kind: "image",
         src: "/projects/IMG_4713.jpeg",
-        alt: "Gallery still IMG 4713",
+        alt: "Behind the scenes on a Double Dag production",
       },
       {
         kind: "image",
         src: "/projects/IMG_8134.JPG",
-        alt: "Gallery still IMG 8134",
+        alt: "Behind the scenes on a Double Dag production",
       },
       {
         kind: "image",
         src: "/projects/IMG_8846.JPG",
-        alt: "Gallery still IMG 8846",
+        alt: "Behind the scenes on a Double Dag production",
       },
       {
         kind: "image",
         src: "/projects/IMG_8920.JPG",
-        alt: "Gallery still IMG 8920",
+        alt: "Behind the scenes on a Double Dag production",
       },
       {
         kind: "image",
         src: "/projects/IMG_9989.JPG",
-        alt: "Gallery still IMG 9989",
-      },
-      {
-        kind: "image",
-        src: "/projects/Timeline2.webp",
-        alt: "Timeline still 2",
-        featured: "bottom",
+        alt: "Behind the scenes on a Double Dag production",
       },
     ],
     []
   );
 
-  const lightboxImages = galleryItems.flatMap((item) => {
-    if (item.kind === "image") return [item];
-    if (item.kind === "pair") {
-      return item.images.map((img) => ({
-        kind: "image" as const,
-        src: img.src,
-        alt: img.alt,
-      }));
-    }
-    return [];
-  });
+  useEffect(() => {
+    if (lightboxIndex !== null) return;
+
+    const timer = window.setInterval(() => {
+      setSlideIndex((current) =>
+        current === behindTheScenesItems.length - 1 ? 0 : current + 1
+      );
+    }, 10000);
+
+    return () => window.clearInterval(timer);
+  }, [lightboxIndex, behindTheScenesItems.length]);
+
+  const lightboxImages = behindTheScenesItems;
 
   const getLightboxItem = () => {
     if (lightboxIndex === null) return null;
@@ -182,58 +135,6 @@ export default function FilmographyPage() {
     });
   };
 
-  const registerShape = (src: string, img: HTMLImageElement) => {
-    const { naturalWidth, naturalHeight } = img;
-    if (!naturalWidth || !naturalHeight) return;
-
-    let shape: Shape = "landscape";
-    const ratio = naturalWidth / naturalHeight;
-
-    if (ratio < 0.9) {
-      shape = "portrait";
-    } else if (ratio > 1.15) {
-      shape = "landscape";
-    } else {
-      shape = "square";
-    }
-
-    setImageShapes((prev) => (prev[src] === shape ? prev : { ...prev, [src]: shape }));
-  };
-
-  const getTileClasses = (item: GalleryItem) => {
-    if (item.kind === "pair") {
-      return "md:col-span-12 grid grid-cols-2 gap-2";
-    }
-  
-    if (item.kind === "image" && item.featured === "top") {
-      return "md:col-span-12";
-    }
-  
-    if (item.kind === "image" && item.featured === "bottom") {
-      return "md:col-span-12";
-    }
-  
-    if (item.kind === "image" && item.featured === "wide") {
-      return "md:col-span-6 h-[260px]";
-    }
-  
-    if (item.kind === "video") {
-      return "md:col-span-12 h-[680px]";
-    }
-  
-    const shape = item.kind === "image" ? imageShapes[item.src] : undefined;
-  
-    if (shape === "portrait") {
-      return "md:col-span-3 h-[320px]";
-    }
-  
-    if (shape === "square") {
-      return "md:col-span-3 h-[260px]";
-    }
-  
-    return "md:col-span-3 h-[240px]";
-  };
-
   const lightboxItem = getLightboxItem();
 
   return (
@@ -256,7 +157,7 @@ export default function FilmographyPage() {
           <p className="mt-6 max-w-3xl text-sm leading-7 text-neutral-400">
             Planning a project?{" "}
             <a
-              href="mailto:info@DoubleDagProductions.com?subject=Pricing%20Sheet%20Request"
+              href="mailto:hello@doubledagproductions.com?subject=Pricing%20Request"
               className="font-medium text-violet-300 underline-offset-4 transition hover:text-violet-200 hover:underline"
             >
               Request a pricing sheet
@@ -548,49 +449,9 @@ export default function FilmographyPage() {
         </section>
 
         <section className="border-t border-white/10 py-14">
-  <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
-    Visual Highlights
-  </p>
-
-  <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-    A glimpse into the work.
-  </h2>
-
-  <div className="mt-10 grid grid-cols-1 gap-2 md:grid-cols-12 auto-rows-auto">
-    {galleryItems.map((item) => {
-      const tileClasses = getTileClasses(item);
-
-      if (item.kind === "pair") {
-        return (
-          <div key={item.images[0].src} className={tileClasses}>
-            {item.images.map((img) => (
-              <button
-                key={img.src}
-                type="button"
-                onClick={() => openLightboxBySrc(img.src)}
-                className="overflow-hidden rounded-2xl border border-white/5 text-left cursor-zoom-in"
-              >
-                <img
-                  src={img.src}
-                  alt={img.alt}
-                  loading="lazy"
-                  onLoad={(e) => registerShape(img.src, e.currentTarget)}
-                  className="h-[320px] md:h-[420px] w-full object-contain transition duration-500 hover:scale-105"
-                />
-              </button>
-            ))}
-          </div>
-        );
-      }
-
-      if (item.kind === "video") {
-        return (
-          <div
-            key={item.src}
-            className={`relative overflow-hidden rounded-2xl border border-white/5 ${tileClasses}`}
-          >
+          <div className="relative h-[680px] overflow-hidden rounded-2xl border border-white/5">
             <video
-              src={item.src}
+              src="/projects/EmmyWinner.mp4"
               autoPlay
               loop
               muted
@@ -598,35 +459,47 @@ export default function FilmographyPage() {
               className="h-full w-full object-contain"
             />
           </div>
-        );
-      }
+        </section>
 
-      const isTimeline =
-        item.featured === "top" || item.featured === "bottom";
-
-      return (
-        <button
-          key={item.src}
-          type="button"
-          onClick={() => openLightboxBySrc(item.src)}
-          className={`overflow-hidden rounded-2xl border border-white/5 text-left cursor-zoom-in ${tileClasses}`}
-        >
-          <img
-            src={item.src}
-            alt={item.alt}
-            loading="lazy"
-            onLoad={(e) => registerShape(item.src, e.currentTarget)}
-            className={
-              isTimeline
-                ? "w-full h-auto object-contain transition duration-500 hover:scale-105"
-                : "h-full w-full object-contain transition duration-500 hover:scale-105"
-            }
-          />
-        </button>
-      );
-    })}
-  </div>
-</section>
+        <section className="border-t border-white/10 py-14">
+          <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
+            Behind the Scenes
+          </p>
+          <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+            On set, off script.
+          </h2>
+          <div
+            className="relative mt-10 overflow-hidden rounded-3xl border border-white/10 bg-neutral-900/70"
+            aria-roledescription="carousel"
+            aria-label="Behind the scenes photos"
+          >
+            <div className="relative aspect-[16/10] w-full">
+              {behindTheScenesItems.map((item, index) => (
+                <button
+                  key={item.src}
+                  type="button"
+                  onClick={() => openLightboxBySrc(item.src)}
+                  className={`absolute inset-0 cursor-zoom-in transition-opacity duration-700 ${
+                    index === slideIndex
+                      ? "opacity-100"
+                      : "pointer-events-none opacity-0"
+                  }`}
+                  aria-hidden={index !== slideIndex}
+                  tabIndex={index === slideIndex ? 0 : -1}
+                >
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    className="h-full w-full object-cover"
+                  />
+                </button>
+              ))}
+            </div>
+            <p className="sr-only" aria-live="polite">
+              Image {slideIndex + 1} of {behindTheScenesItems.length}
+            </p>
+          </div>
+        </section>
 
         <section className="rounded-3xl border border-violet-400/10 bg-white/5 p-8">
           <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
@@ -636,7 +509,7 @@ export default function FilmographyPage() {
             Want the full credit range?
           </h2>
           <p className="mt-6 max-w-3xl text-base leading-8 text-neutral-300">
-            This page highlights selected work, but Ben&apos;s broader portfolio
+            This page highlights selected work, but my broader portfolio
             includes extensive credits across documentary, educational,
             institutional, branded, and digital media projects.
           </p>
@@ -668,7 +541,7 @@ export default function FilmographyPage() {
             </a>
 
             <a
-              href="mailto:info@DoubleDagProductions.com?subject=Pricing%20Sheet%20Request"
+              href="mailto:hello@doubledagproductions.com?subject=Pricing%20Request"
               className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
             >
               Request Pricing Sheet

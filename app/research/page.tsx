@@ -5,6 +5,13 @@ export const metadata: Metadata = {
   title: "Research & Fact Checking | L. Viola Kozak, PhD | Double Dag Productions",
   description:
     "Premium research and fact checking for documentary, educational, branded, and scripted content. PhD-level rigor, clear sourcing, and production-ready support from L. Viola Kozak.",
+  openGraph: {
+    title:
+      "Research & Fact Checking | L. Viola Kozak, PhD | Double Dag Productions",
+    description:
+      "Premium research and fact checking for documentary, educational, branded, and scripted content.",
+    images: ["/banner2.png"],
+  },
 };
 
 const expertiseTags = [
@@ -43,6 +50,10 @@ export default function ResearchPage() {
             teams who want the latter — rigorous inquiry, careful verification,
             and sourcing you can stand behind — delivered with the pace and
             pragmatism real productions require.
+          </p>
+          <p className="mt-6 max-w-3xl text-base leading-8 text-neutral-300">
+            L. Viola Kozak, PhD is my partner at Double Dag Productions, and leads
+            our research and fact-checking work.
           </p>
         </section>
 
@@ -220,7 +231,7 @@ export default function ResearchPage() {
               Inquire About Research
             </a>
             <a
-              href="mailto:info@DoubleDagProductions.com?subject=Pricing%20Sheet%20Request"
+              href="mailto:hello@doubledagproductions.com?subject=Pricing%20Request"
               className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-8 text-sm font-medium text-white transition hover:bg-white/10"
             >
               Request Pricing Sheet

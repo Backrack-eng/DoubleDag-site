@@ -64,10 +64,10 @@ export default function Home() {
           </h1>
 
           <p className="mt-6 max-w-3xl text-lg leading-8 text-neutral-300 sm:text-xl">
-            Ben Bacharach-White is an Emmy-recognized editor and post-production
-            professional with more than two decades of experience crafting
-            documentaries, educational series, branded storytelling, and
-            feature work for respected clients and platforms.
+            I&apos;m an Emmy-recognized editor and post-production professional
+            with more than two decades of experience crafting documentaries,
+            educational series, branded storytelling, and feature work for
+            respected clients and platforms.
           </p>
 
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
@@ -79,7 +79,7 @@ export default function Home() {
             </a>
 
             <a
-              href="mailto:info@DoubleDagProductions.com?subject=Pricing%20Sheet%20Request"
+              href="mailto:hello@doubledagproductions.com?subject=Pricing%20Request"
               className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
             >
               Request Pricing Sheet
@@ -121,7 +121,7 @@ export default function Home() {
               <div className="featured-reel__frame">
                 <div className="featured-reel__media">
                   <iframe
-                    src="https://player.vimeo.com/video/889986920?title=0&byline=0&portrait=0&badge=0&autoplay=1&muted=0"
+                    src="https://player.vimeo.com/video/889986920?title=0&byline=0&portrait=0&badge=0&autoplay=1&muted=1"
                     className="featured-reel__player"
                     allow="autoplay; fullscreen; picture-in-picture"
                     allowFullScreen
@@ -255,21 +255,20 @@ export default function Home() {
               A seasoned editor with a wide creative range.
             </h2>
             <p className="mt-6 max-w-3xl text-base leading-8 text-neutral-300">
-              Double Dag Productions is the creative home of Ben
-              Bacharach-White, a seasoned post-production professional whose
-              work spans documentary, music, history, science, travel, culinary,
-              educational programming, branded storytelling, social media, and
-              feature film.
+              Double Dag Productions is my creative home. My work spans
+              documentary, music, history, science, travel, culinary, educational
+              programming, branded storytelling, social media, and feature
+              film.
             </p>
             <p className="mt-4 max-w-3xl text-base leading-8 text-neutral-300">
-              His approach combines strong editorial instincts, technical polish,
-              and a deep respect for story, performance, pacing, and emotional
-              clarity.
+              My approach combines strong editorial instincts, technical
+              polish, and a deep respect for story, performance, pacing, and
+              emotional clarity.
             </p>
             <p className="mt-6 text-sm text-neutral-400">
               Need{" "}
               <a
-                href="mailto:info@DoubleDagProductions.com?subject=Pricing%20Sheet%20Request"
+                href="mailto:hello@doubledagproductions.com?subject=Pricing%20Request"
                 className="font-medium text-violet-300 underline-offset-4 transition hover:text-violet-200 hover:underline"
               >
                 a pricing sheet
@@ -346,55 +345,6 @@ export default function Home() {
         </section>
 
         <section className="border-t border-white/10 py-14">
-          <div className="mb-8">
-            <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
-              Tools
-            </p>
-            <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-              Check out tools designed to make your workflow easier.
-            </h2>
-            <p className="mt-4 max-w-3xl text-base leading-8 text-neutral-300">
-              From everyday thinking to professional post-production, these
-              tools are built to streamline the way you work.
-            </p>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="group flex h-full flex-col rounded-3xl border border-white/10 bg-white/5 p-6 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10">
-              <h3 className="text-xl font-semibold">Thinkonaut</h3>
-              <p className="mt-3 flex-1 text-sm leading-7 text-neutral-300 transition group-hover:text-neutral-200">
-                A clean, powerful space for capturing thoughts, organizing
-                ideas, and turning them into something actionable.
-              </p>
-              <a
-                href="https://www.thinkonaut.app"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-6 inline-flex h-12 w-fit items-center justify-center rounded-full bg-white px-6 text-sm font-medium text-black transition hover:opacity-90"
-              >
-                Visit Thinkonaut
-              </a>
-            </div>
-
-            <div className="group flex h-full flex-col rounded-3xl border border-white/10 bg-white/5 p-6 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10">
-              <h3 className="text-xl font-semibold">AutoThirds</h3>
-              <p className="mt-3 flex-1 text-sm leading-7 text-neutral-300 transition group-hover:text-neutral-200">
-                Built for editors and producers, AutoThirds helps you quickly
-                generate clean, professional lower thirds and on-screen text.
-              </p>
-              <a
-                href="https://autothirds.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-6 inline-flex h-12 w-fit items-center justify-center rounded-full bg-white px-6 text-sm font-medium text-black transition hover:opacity-90"
-              >
-                Visit AutoThirds
-              </a>
-            </div>
-          </div>
-        </section>
-
-        <section className="border-t border-white/10 py-14">
           <div className="max-w-3xl">
             <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
               Contact
@@ -432,7 +382,7 @@ export default function Home() {
               </a>
 
               <a
-                href="mailto:info@DoubleDagProductions.com?subject=Pricing%20Sheet%20Request"
+                href="mailto:hello@doubledagproductions.com?subject=Pricing%20Request"
                 className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
               >
                 Request Pricing Sheet

@@ -40,6 +40,12 @@ export default function Header() {
           <Link href="/research" className={linkClass("/research")}>
             Research
           </Link>
+          <Link
+            href="/creative-technologist"
+            className={linkClass("/creative-technologist")}
+          >
+            Creative Technologist
+          </Link>
         </nav>
       </div>
     </header>
