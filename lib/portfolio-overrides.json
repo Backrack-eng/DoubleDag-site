@@ -44,98 +44,98 @@
     "order": 90,
     "thumbnailTime": "11s"
   },
+  "8be235f273aae7fa86cb13d95fd46b93": {
+    "title": "The Chesfsters",
+    "order": 100
+  },
   "ecdaa3539a4fc2ec8d262505700a05ba": {
     "title": "Archaeological Mysteries",
-    "order": 100
+    "order": 110
   },
   "7e7f780089fa702e5427fee2b5e011e1": {
     "title": "Understanding Artificial Intelligence",
-    "order": 110
-  },
-  "390e589cee07f747aa6056dcd8713948": {
-    "title": "Double Dag Logo",
-    "order": 120,
-    "hidden": true
-  },
-  "3c4c0b6cde8a59f49d986aaac31d8484": {
-    "title": "The Agency",
-    "order": 130
+    "order": 120
   },
   "8d6b0388d1bb7144550cff30bf900038": {
     "title": "Great Tours DC",
-    "order": 150
+    "order": 130
   },
   "16831b133d581f911413c4d6bd005bf2": {
     "title": "Urban Legends",
-    "order": 160
+    "order": 140
   },
   "a0d5ed24ac55e4d2a9eb3b441628719c": {
     "title": "Geological Events",
+    "order": 150
+  },
+  "b2028b3579fb6b00029fc1cc067a3edc": {
+    "title": "Linear Algebra",
+    "order": 160
+  },
+  "34007a1e569b6d188ea3c1974165ee03": {
+    "title": "Botanist Eye",
     "order": 170
+  },
+  "fa61dbc3569d6f947cd8955d82b69d80": {
+    "title": "Outdoor Fundamentals",
+    "order": 180
+  },
+  "1e1ed7cfa45cf4e6c02a9b001f7805bb": {
+    "title": "Life Of Jesus History Revealed",
+    "order": 190
+  },
+  "3c4c0b6cde8a59f49d986aaac31d8484": {
+    "title": "The Agency",
+    "order": 200
   },
   "6e17f20b7d7564f7c248665e07bebbad": {
     "title": "The Secret World Of Espionage",
-    "order": 180
-  },
-  "b38cb3012655f81b15251d431f364c36": {
-    "title": "The Banjo: Music, History and Heritage_Sample Edit",
-    "order": 190
-  },
-  "6a6705ced54b8829c14c7607906bce44": {
-    "title": "Reporting 911 and Why it Still Matters_Sample Edit",
-    "order": 200
-  },
-  "be6c7d79482614ebf509ff25f442789a": {
-    "title": "Going to the Devil",
     "order": 210
   },
   "7030cc8c533a627da65a84bb2808db4c": {
     "title": "10 Great What Ifs",
     "order": 220
   },
-  "b2028b3579fb6b00029fc1cc067a3edc": {
-    "title": "Linear Algebra",
+  "be6c7d79482614ebf509ff25f442789a": {
+    "title": "Going to the Devil",
     "order": 230
   },
-  "34007a1e569b6d188ea3c1974165ee03": {
-    "title": "Botanist Eye",
+  "6a6705ced54b8829c14c7607906bce44": {
+    "title": "Reporting 911 and Why it Still Matters_Sample Edit",
     "order": 240
   },
-  "1e1ed7cfa45cf4e6c02a9b001f7805bb": {
-    "title": "Life Of Jesus History Revealed",
+  "b38cb3012655f81b15251d431f364c36": {
+    "title": "The Banjo: Music, History and Heritage_Sample Edit",
     "order": 250
-  },
-  "fa61dbc3569d6f947cd8955d82b69d80": {
-    "title": "Outdoor Fundamentals",
-    "order": 260
-  },
-  "8be235f273aae7fa86cb13d95fd46b93": {
-    "title": "The Chesfsters",
-    "order": 270
-  },
-  "bb59f02a4d3d5dd200a33f4775d71a5e": {
-    "title": "Loss & Love music video",
-    "order": 280
-  },
-  "6cd866031ec8242a88b8618fded702b3": {
-    "title": "Sexy Mutha F*#%ers Stand Up Special Trailer",
-    "order": 290,
-    "hidden": true
   },
   "24cdd7ec061d47672d9106e352b9d2a1": {
     "title": "Pinklon Thomas Interview 2011",
-    "order": 300
+    "order": 260
+  },
+  "bb59f02a4d3d5dd200a33f4775d71a5e": {
+    "title": "Loss & Love music video",
+    "order": 270
+  },
+  "6cd866031ec8242a88b8618fded702b3": {
+    "title": "Sexy Mutha F*#%ers Stand Up Special Trailer",
+    "order": 280,
+    "hidden": false
   },
   "decbbab0603fb1d59eb91e0f3abc1d84": {
     "title": "Sheriff Training Workout",
-    "order": 310
+    "order": 290
   },
   "62bbe1860e3977f21ce67bbd09a1dcf6": {
     "title": "Alex Ortiz Gangsta Poet",
-    "order": 320
+    "order": 300
   },
   "ddeb6d07f295cac1b2555f918c033444": {
     "title": "Prop Firm Match",
-    "order": 330
+    "order": 310
+  },
+  "390e589cee07f747aa6056dcd8713948": {
+    "title": "Double Dag Logo",
+    "order": 320,
+    "hidden": true
   }
 }
