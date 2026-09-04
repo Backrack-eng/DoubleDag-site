@@ -84,8 +84,24 @@ async function main() {
 
   const payload = await response.json();
   const videos = Array.isArray(payload.result) ? payload.result : [];
+  const liveUids = new Set(
+    videos.map((video) => video?.uid).filter(Boolean),
+  );
 
   const overrides = JSON.parse(readFileSync(OVERRIDES_PATH, "utf8"));
+  const removed = [];
+
+  for (const uid of Object.keys(overrides)) {
+    if (liveUids.has(uid)) {
+      continue;
+    }
+
+    const title = overrides[uid]?.title ?? uid;
+    delete overrides[uid];
+    removed.push({ uid, title });
+    console.log(`Removed ${uid} (${title}) — no longer exists in Stream`);
+  }
+
   let nextOrder = highestOrder(overrides) + 10;
   const added = [];
 
@@ -104,18 +120,21 @@ async function main() {
 
   writeFileSync(OVERRIDES_PATH, `${JSON.stringify(overrides, null, 2)}\n`);
 
-  if (added.length === 0) {
-    console.log("No new Stream videos to add.");
-    return;
+  if (added.length > 0) {
+    console.log(`\nAdded ${added.length} new video(s):\n`);
+    console.table(
+      added.map(({ uid, filename, title }) => ({
+        uid,
+        filename,
+        title,
+      })),
+    );
   }
 
-  console.log(`Added ${added.length} new video(s):\n`);
-  console.table(
-    added.map(({ uid, filename, title }) => ({
-      uid,
-      filename,
-      title,
-    })),
+  const addedLabel = added.length === 1 ? "video" : "videos";
+  const removedVerb = removed.length === 1 ? "exists" : "exist";
+  console.log(
+    `Added ${added.length} new ${addedLabel}, removed ${removed.length} that no longer ${removedVerb} in Stream.`,
   );
 }
 

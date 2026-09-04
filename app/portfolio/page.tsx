@@ -42,7 +42,7 @@ export default async function PortfolioPage() {
           <section className="mb-16">
             <div className="mx-auto max-w-4xl">
               <p className="mb-6 text-sm uppercase tracking-[0.3em] text-violet-300/80">
-                2023 Demo Reel
+                Demo Reel
               </p>
               <div className="featured-reel group mx-1 my-2 sm:mx-3 sm:my-4">
                 <div className="featured-reel__ring">

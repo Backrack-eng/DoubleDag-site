@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type DragEvent } from "react";
 
 export const dynamic = "force-dynamic";
 
@@ -33,6 +33,7 @@ export default function PortfolioAdminPage() {
   );
   const [message, setMessage] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -72,7 +73,11 @@ export default function PortfolioAdminPage() {
         }
 
         if (!cancelled) {
-          setRows(toRows(data as Record<string, object>));
+          setRows(
+            toRows(data as Record<string, object>).sort(
+              (a, b) => a.order - b.order,
+            ),
+          );
           setStatus("ready");
           setMessage(null);
         }
@@ -93,6 +98,35 @@ export default function PortfolioAdminPage() {
   function updateRow(uid: string, patch: Partial<OverrideRow>) {
     setRows((current) =>
       current.map((row) => (row.uid === uid ? { ...row, ...patch } : row)),
+    );
+  }
+
+  function handleDragStart(index: number, event: DragEvent<HTMLTableRowElement>) {
+    event.dataTransfer.effectAllowed = "move";
+    event.dataTransfer.setData("text/plain", String(index));
+    setDraggedIndex(index);
+  }
+
+  function handleDragOver(index: number, event: DragEvent<HTMLTableRowElement>) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+    if (draggedIndex === null || draggedIndex === index) {
+      return;
+    }
+
+    setRows((current) => {
+      const next = [...current];
+      const [moved] = next.splice(draggedIndex, 1);
+      next.splice(index, 0, moved);
+      return next;
+    });
+    setDraggedIndex(index);
+  }
+
+  function handleDragEnd() {
+    setDraggedIndex(null);
+    setRows((current) =>
+      current.map((row, index) => ({ ...row, order: index * 10 })),
     );
   }
 
@@ -130,8 +164,6 @@ export default function PortfolioAdminPage() {
       setSaving(false);
     }
   }
-
-  const sortedRows = [...rows].sort((a, b) => a.order - b.order);
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-100">
@@ -178,6 +210,9 @@ export default function PortfolioAdminPage() {
             <table className="w-full min-w-[720px] border-collapse text-left text-sm">
               <thead className="border-b border-white/10 bg-white/5 text-xs uppercase tracking-wider text-neutral-400">
                 <tr>
+                  <th className="w-8 px-2 py-3 font-medium">
+                    <span className="sr-only">Reorder</span>
+                  </th>
                   <th className="px-4 py-3 font-medium">UID</th>
                   <th className="px-4 py-3 font-medium">Title</th>
                   <th className="px-4 py-3 font-medium">Order</th>
@@ -186,11 +221,25 @@ export default function PortfolioAdminPage() {
                 </tr>
               </thead>
               <tbody>
-                {sortedRows.map((row) => (
+                {rows.map((row, i) => (
                   <tr
                     key={row.uid}
-                    className="border-b border-white/10 last:border-b-0"
+                    draggable={true}
+                    onDragStart={(event) => handleDragStart(i, event)}
+                    onDragOver={(event) => handleDragOver(i, event)}
+                    onDragEnd={handleDragEnd}
+                    className={`border-b border-white/10 last:border-b-0 ${
+                      i === draggedIndex ? "opacity-40" : ""
+                    }`}
                   >
+                    <td className="w-8 px-0 py-3 align-middle">
+                      <div
+                        className="cursor-grab select-none px-2 text-neutral-500"
+                        aria-label={`Reorder ${row.title}`}
+                      >
+                        ⠿
+                      </div>
+                    </td>
                     <td className="px-4 py-3 align-middle">
                       <code className="font-mono text-xs text-neutral-500">
                         {row.uid}
@@ -206,17 +255,8 @@ export default function PortfolioAdminPage() {
                         className="w-full rounded-md border border-white/15 bg-neutral-900 px-3 py-2 text-neutral-100 outline-none focus:border-violet-400/60"
                       />
                     </td>
-                    <td className="w-28 px-4 py-3 align-middle">
-                      <input
-                        type="number"
-                        value={row.order}
-                        onChange={(event) =>
-                          updateRow(row.uid, {
-                            order: Number(event.target.value),
-                          })
-                        }
-                        className="w-full rounded-md border border-white/15 bg-neutral-900 px-3 py-2 text-neutral-100 outline-none focus:border-violet-400/60"
-                      />
+                    <td className="w-20 px-4 py-3 align-middle tabular-nums text-neutral-400">
+                      {row.order}
                     </td>
                     <td className="w-20 px-4 py-3 text-center align-middle">
                       <input
