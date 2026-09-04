@@ -38,21 +38,31 @@ export default async function PortfolioPage() {
           </p>
         </section>
 
-        {featured && (
+        {featured.length > 0 && (
           <section className="mb-16">
-            <div className="mx-auto max-w-4xl">
-              <p className="mb-6 text-sm uppercase tracking-[0.3em] text-violet-300/80">
-                Demo Reel
-              </p>
-              <div className="featured-reel group mx-1 my-2 sm:mx-3 sm:my-4">
-                <div className="featured-reel__ring">
-                  <div className="featured-reel__frame">
-                    <div className="featured-reel__media">
-                      <ClickToPlayVideo video={featured} />
+            <p className="mb-6 text-sm uppercase tracking-[0.3em] text-violet-300/80">
+              Demo Reel
+            </p>
+            <div className="scrollbar-hide flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 -mx-6 px-6 sm:-mx-10 sm:px-10 lg:-mx-16 lg:px-16">
+              {featured.map((video) => (
+                <div
+                  key={video.uid}
+                  className="w-[85vw] shrink-0 snap-center sm:w-[520px]"
+                >
+                  <div className="featured-reel group mx-1 my-2 sm:mx-3 sm:my-4">
+                    <div className="featured-reel__ring">
+                      <div className="featured-reel__frame">
+                        <div className="featured-reel__media">
+                          <ClickToPlayVideo video={video} />
+                        </div>
+                      </div>
                     </div>
                   </div>
+                  <p className="mt-3 px-1 text-sm font-medium text-neutral-200 sm:px-3">
+                    {video.title}
+                  </p>
                 </div>
-              </div>
+              ))}
             </div>
           </section>
         )}

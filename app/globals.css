@@ -237,6 +237,14 @@ body {
   animation: emmyBlink 1s steps(2, jump-none) infinite;
 }
 
+@utility scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .featured-reel,
   .featured-reel::before,

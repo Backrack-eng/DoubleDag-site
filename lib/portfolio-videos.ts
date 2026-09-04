@@ -105,7 +105,7 @@ export async function getPortfolioVideos(): Promise<PortfolioVideo[]> {
 }
 
 export function extractFeatured(videos: PortfolioVideo[]) {
-  const featured = videos.find((v) => v.featured) ?? null;
+  const featured = videos.filter((v) => v.featured);
   const rest = videos.filter((v) => !v.featured);
   return { featured, rest };
 }
