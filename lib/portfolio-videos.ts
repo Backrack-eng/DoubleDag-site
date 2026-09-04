@@ -1,3 +1,5 @@
+import OVERRIDES from "./portfolio-overrides.json";
+
 export interface PortfolioVideo {
   uid: string;
   title: string;
@@ -7,58 +9,20 @@ export interface PortfolioVideo {
   width: number | null;
   height: number | null;
   orientation: "landscape" | "portrait";
+  emmyBadge?: boolean;
+  featured?: boolean;
 }
 
-const OVERRIDES: Record<
-  string,
-  {
-    title: string;
-    order: number;
-    hidden?: boolean;
-    thumbnailTime?: string | null;
-  }
-> = {
-  "066a9989e5e134d2816590ebf77751b8": {
-    title: "Demo Reel 2023",
-    order: 0,
-    thumbnailTime: null,
-  },
-  "a42a57c872cd17d7e4da780d17a380dd": {
-    title: "Mock and Roll — 30 Sec Trailer",
-    order: 10,
-  },
-  "415cb57aea41d58299ed11870fd21e26": { title: "Reporting 911", order: 20 },
-  "d3cad11639aa7927a4687d44a0dc12a3": { title: "The Banjo", order: 30 },
-  "e421e6122b84e8f7b372676b9ba2bc5e": { title: "Mayan World", order: 40 },
-  "cf532871a841fb0c63618f5deceaf514": {
-    title: "Grills Gone Wild",
-    order: 50,
-    thumbnailTime: "11s",
-  },
-  "be6c7d79482614ebf509ff25f442789a": { title: "Going to the Devil", order: 60 },
-  "ecdaa3539a4fc2ec8d262505700a05ba": {
-    title: "Archaeological Mysteries — Promo",
-    order: 70,
-  },
-  "7e7f780089fa702e5427fee2b5e011e1": {
-    title: "Artificial Intelligence — Promo",
-    order: 80,
-  },
-  "ddeb6d07f295cac1b2555f918c033444": {
-    title: "Prop Firm Match",
-    order: 90,
-  }, // TODO: real title
-  "390e589cee07f747aa6056dcd8713948": {
-    title: "Double Dag Logo",
-    order: 999,
-    hidden: true,
-  },
-  "78ce0177456a85c04cada42dfeb24d5e": {
-    title: "Mayan World (small)",
-    order: 999,
-    hidden: true,
-  },
+type OverrideEntry = {
+  title: string;
+  order: number;
+  hidden?: boolean;
+  thumbnailTime?: string | null;
+  emmyBadge?: boolean;
+  featured?: boolean;
 };
+
+const overrides = OVERRIDES as Record<string, OverrideEntry>;
 
 interface StreamVideo {
   uid: string;
@@ -88,10 +52,10 @@ export async function getPortfolioVideos(): Promise<PortfolioVideo[]> {
 
   return data.result
     .filter((video) => video.status.state === "ready")
-    .filter((video) => !OVERRIDES[video.uid]?.hidden)
+    .filter((video) => !overrides[video.uid]?.hidden)
     .sort((a, b) => {
-      const aOrder = OVERRIDES[a.uid]?.order;
-      const bOrder = OVERRIDES[b.uid]?.order;
+      const aOrder = overrides[a.uid]?.order;
+      const bOrder = overrides[b.uid]?.order;
       const aHasOrder = aOrder !== undefined;
       const bHasOrder = bOrder !== undefined;
 
@@ -114,7 +78,7 @@ export async function getPortfolioVideos(): Promise<PortfolioVideo[]> {
         width !== null && height !== null && height > width
           ? "portrait"
           : "landscape";
-      const override = OVERRIDES[video.uid];
+      const override = overrides[video.uid];
       const baseThumbnailUrl = `https://videodelivery.net/${video.uid}/thumbnails/thumbnail.jpg`;
       const thumbnailUrl =
         override?.thumbnailTime === null
@@ -134,8 +98,16 @@ export async function getPortfolioVideos(): Promise<PortfolioVideo[]> {
         width,
         height,
         orientation,
+        emmyBadge: override?.emmyBadge ?? false,
+        featured: override?.featured ?? false,
       };
     });
+}
+
+export function extractFeatured(videos: PortfolioVideo[]) {
+  const featured = videos.find((v) => v.featured) ?? null;
+  const rest = videos.filter((v) => !v.featured);
+  return { featured, rest };
 }
 
 export function groupByOrientation(videos: PortfolioVideo[]) {

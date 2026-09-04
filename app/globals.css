@@ -223,6 +223,20 @@ body {
   );
 }
 
+@keyframes emmyBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.emmy-badge {
+  animation: emmyBlink 1s steps(2, jump-none) infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .featured-reel,
   .featured-reel::before,

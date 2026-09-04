@@ -6,8 +6,9 @@
   "dev": "next dev",
   "build": "next build",
   "start": "next start",
-  "lint": "next lint",
-  "deploy": "npm run build && git add . && git commit -m \"Update site\" && git push"
+    "lint": "next lint",
+    "sync-videos": "node scripts/sync-portfolio-overrides.mjs",
+    "deploy": "npm run build && git add . && git commit -m \"Update site\" && git push"
    
   },
   "dependencies": {

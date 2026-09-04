@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import {
+  extractFeatured,
   getPortfolioVideos,
   groupByOrientation,
 } from "../../lib/portfolio-videos";
-import PortfolioGrid from "./PortfolioGrid";
+import PortfolioGrid, { ClickToPlayVideo } from "./PortfolioGrid";
 
 export const metadata: Metadata = {
   title: "Video Portfolio | Double Dag Productions",
@@ -17,7 +18,8 @@ export const metadata: Metadata = {
 
 export default async function PortfolioPage() {
   const videos = await getPortfolioVideos();
-  const { landscape, portrait } = groupByOrientation(videos);
+  const { featured, rest } = extractFeatured(videos);
+  const { landscape, portrait } = groupByOrientation(rest);
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-100">
@@ -35,6 +37,25 @@ export default async function PortfolioPage() {
             play.
           </p>
         </section>
+
+        {featured && (
+          <section className="mb-16">
+            <div className="mx-auto max-w-4xl">
+              <p className="mb-6 text-sm uppercase tracking-[0.3em] text-violet-300/80">
+                2023 Demo Reel
+              </p>
+              <div className="featured-reel group mx-1 my-2 sm:mx-3 sm:my-4">
+                <div className="featured-reel__ring">
+                  <div className="featured-reel__frame">
+                    <div className="featured-reel__media">
+                      <ClickToPlayVideo video={featured} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         <PortfolioGrid videos={landscape} />
 
