@@ -5,6 +5,10 @@ Offline CLI: pick a subject ROI, track it with CSRT, smooth the path, then
 either crop a digitally-stabilized/centered output or write a tracking-preview
 overlay. Final video is encoded with ffmpeg (libx264), not cv2.VideoWriter.
 
+Setup (local, not part of the Next.js site deploy):
+    pip install opencv-contrib-python
+    ffmpeg must be available on PATH
+
 Known limitations (Phase 1):
 - Single subject only, no multi-target support.
 - No automatic recovery when the tracker drifts or the subject is occluded
