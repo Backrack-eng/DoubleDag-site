@@ -213,7 +213,9 @@ def track_subject(video_path, roi, start_frame):
         sys.exit(f"error: could not read frame {start_frame} from {video_path}")
 
     tracker = create_csrt_tracker()
-    if not tracker.init(frame, (x, y, w, h)):
+    # OpenCV 4 returns True/False; OpenCV 5 returns None on success. Only False is failure.
+    init_ok = tracker.init(frame, (x, y, w, h))
+    if init_ok is False:
         cap.release()
         sys.exit("error: CSRT tracker failed to initialize on the selected ROI")
 
