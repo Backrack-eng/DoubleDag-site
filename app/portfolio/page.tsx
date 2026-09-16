@@ -34,15 +34,26 @@ export default async function PortfolioPage() {
       <main className="mx-auto w-full max-w-6xl px-6 py-16 sm:px-10 lg:px-16 animate-fade-in-up">
         {/* Hero */}
         <section className="border-b border-white/10 pb-16">
-          <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
+          <div className="w-40 sm:w-48 lg:w-56">
+            <img
+              src="/Portfolio_avatar.png"
+              alt="Ben Bacharach-White"
+              className="hero-avatar w-full h-auto select-none"
+            />
+          </div>
+
+          <p className="hero-eyebrow-shadow relative z-10 -mt-8 sm:-mt-10 mb-4 text-sm font-medium uppercase tracking-[0.3em]">
             Senior Editor &amp; Creative Technologist · Double Dag Productions, Petersburg, VA
           </p>
+
           <h1 className="max-w-4xl text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
             24+ years of editing and post-production for documentary, educational, and branded storytelling.
           </h1>
+
           <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-300">
             Emmy Award-winning editorial work on Weaving Nature (PBS American Masters), a Webby Award for John Lewis: Witness to History, and three Telly Awards, including a Gold Telly for Urban Legends Explained, just to name a few. Clients include PBS, Smithsonian, and National Geographic.
           </p>
+
           <a
             href="mailto:hello@doubledagproductions.com"
             className="mt-10 inline-flex h-12 items-center justify-center rounded-full bg-white px-6 text-sm font-medium text-black transition hover:opacity-90"
