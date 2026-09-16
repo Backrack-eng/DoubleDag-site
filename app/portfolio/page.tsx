@@ -1,3 +1,5 @@
+import { statSync } from "node:fs";
+import { join } from "node:path";
 import type { Metadata } from "next";
 import {
   extractFeatured,
@@ -28,6 +30,7 @@ export default async function PortfolioPage() {
 
   const highlightWork = landscape.slice(0, 3);
   const selectedWork = landscape.slice(3);
+  const avatarSrc = `/Portfolio_avatar.png?v=${Math.round(statSync(join(process.cwd(), "public/Portfolio_avatar.png")).mtimeMs)}`;
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-100">
@@ -36,9 +39,9 @@ export default async function PortfolioPage() {
         <section className="border-b border-white/10 pb-16">
           <div className="w-40 sm:w-48 lg:w-56">
             <img
-              src="/Portfolio_avatar.png"
+              src={avatarSrc}
               alt="Ben Bacharach-White"
-              className="hero-avatar w-full h-auto select-none"
+              className="w-full h-auto select-none"
             />
           </div>
 

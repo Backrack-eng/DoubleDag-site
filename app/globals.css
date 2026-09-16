@@ -68,11 +68,6 @@ body {
     0 -1px 2px #000;
 }
 
-.hero-avatar {
-  /* Flip first, then shift left so the circle (not the swoosh) meets the text. */
-  transform: translateX(-16.6%) scaleX(-1);
-}
-
 /* Featured reel: floating frame with ambient glow + light border */
 :root {
   --featured-reel-radius: 0;
