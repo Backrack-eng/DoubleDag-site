@@ -49,8 +49,9 @@ export async function getPortfolioVideos(): Promise<PortfolioVideo[]> {
   );
 
   const data = (await response.json()) as StreamListResponse;
+  const result = data.result ?? [];
 
-  return data.result
+  return result
     .filter((video) => video.status.state === "ready")
     .filter((video) => !overrides[video.uid]?.hidden)
     .sort((a, b) => {

@@ -170,19 +170,53 @@ export default function Home() {
                 />
               </div>
             </div>
+            <p className="mt-4 text-sm leading-7 text-neutral-300">
+              A 20-minute documentary made with Maryland Public Television for
+              PBS American Masters. It follows Maryland artist David Bacharach
+              building The Mounds, an outdoor installation that turns weaving
+              and metalsmithing into a statement on climate change and land,
+              air, and water damage. I was sole editor from concept to final
+              cut. The subject and his story were strong going in, but shaping
+              that into a real narrative in the edit was the hard part, and I
+              was also running post-production start to finish, working around
+              camera operator issues along the way. Color correcting a film
+              shot entirely outdoors is its own fight, and this one tested me.
+              PBS American Masters picked it up as the first entry in their
+              Shorts series, and it won an Emmy. Still the project I&apos;m
+              proudest of.
+            </p>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
-            <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
-              <div className="relative w-full pt-[56.25%]">
-                <iframe
-                  src="https://player.vimeo.com/video/852486359?title=0&byline=0&portrait=0"
-                  className="absolute left-0 top-0 h-full w-full"
-                  allow="fullscreen; picture-in-picture"
-                  loading="lazy"
-                  title="Reporting 9/11 and Why It Still Matters"
-                />
+            <div>
+              <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+                <div className="relative w-full pt-[56.25%]">
+                  <iframe
+                    src="https://player.vimeo.com/video/852486359?title=0&byline=0&portrait=0"
+                    className="absolute left-0 top-0 h-full w-full"
+                    allow="fullscreen; picture-in-picture"
+                    loading="lazy"
+                    title="Reporting 9/11 and Why It Still Matters"
+                  />
+                </div>
               </div>
+              <p className="mt-4 text-sm leading-7 text-neutral-300">
+                An 80-minute feature documentary for The Great Courses, made in
+                partnership with the 9/11 Museum and released on YouTube. It
+                tells the story of the attacks through the journalists who were
+                reporting live from New York as it happened, some of them from
+                ground zero. Building the film meant going through nearly all
+                the raw 9/11 footage that exists, plus upscaling the old
+                material to 4K so it would cut cleanly against the rest of the
+                presentation. I was sole editor, on a deadline locked to the
+                20th anniversary, with some of the biggest names in American
+                journalism watching the cut. Notes came from an internal
+                producer, two producers at the 9/11 Museum, a third-party media
+                team, and senior leadership, all at once, so keeping everyone
+                aligned took real communication. Long hours, weekends, high
+                stakes. One of the toughest and most rewarding projects
+                I&apos;ve done.
+              </p>
             </div>
 
             <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
@@ -197,16 +231,34 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 md:col-span-2">
-              <div className="relative w-full pt-[56.25%]">
-                <iframe
-                  src="https://player.vimeo.com/video/852487298?title=0&byline=0&portrait=0"
-                  className="absolute left-0 top-0 h-full w-full"
-                  allow="fullscreen; picture-in-picture"
-                  loading="lazy"
-                  title="The Banjo: Music, History, and Heritage"
-                />
+            <div className="md:col-span-2">
+              <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5">
+                <div className="relative w-full pt-[56.25%]">
+                  <iframe
+                    src="https://player.vimeo.com/video/852487298?title=0&byline=0&portrait=0"
+                    className="absolute left-0 top-0 h-full w-full"
+                    allow="fullscreen; picture-in-picture"
+                    loading="lazy"
+                    title="The Banjo: Music, History, and Heritage"
+                  />
+                </div>
               </div>
+              <p className="mt-4 text-sm leading-7 text-neutral-300">
+                A 10-episode docuseries for Wondrium, around 5 hours total plus
+                live musical performances woven through the series. Hosted by
+                musician and MacArthur &quot;genius grant&quot; recipient
+                Rhiannon Giddens, it traces the banjo&apos;s roots from
+                Afro-Caribbean culture through bluegrass, folk, and jazz, with
+                appearances from artists like Bill Monroe, Earl Scruggs, and
+                Béla Fleck. Production hit some snags: footage came in soft,
+                color and lighting inconsistent across shoots. As sole editor,
+                through several producer changes, it fell on me to save it.
+                That meant regrading footage, rebuilding scenes, cleaning up
+                audio, and using advanced editing techniques to reframe bad
+                shots, relight them, and clean up the picture. I was eventually
+                bumped up to assistant producer so I could help fix problems
+                from every angle, not just the timeline.
+              </p>
             </div>
           </div>
         </section>
