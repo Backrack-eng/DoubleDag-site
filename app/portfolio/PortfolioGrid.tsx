@@ -66,6 +66,13 @@ function VideoCard({
         }
       >
         <ClickToPlayVideo video={video} />
+        {video.emmyBadge && (
+          <img
+            src="/emmy-winner-badge.png"
+            alt="Emmy Winner"
+            className="emmy-badge pointer-events-none absolute right-2 bottom-2 w-1/3 max-w-[180px] select-none"
+          />
+        )}
       </div>
       <div className="p-5">
         <h2 className="text-base font-medium text-white">{video.title}</h2>
@@ -74,14 +81,12 @@ function VideoCard({
             {formatDuration(video.duration)}
           </p>
         )}
+        {video.caption && (
+          <p className="mt-3 text-sm leading-7 text-neutral-300">
+            {video.caption}
+          </p>
+        )}
       </div>
-      {video.emmyBadge && (
-        <img
-          src="/emmy-winner-badge.png"
-          alt="Emmy Winner"
-          className="emmy-badge pointer-events-none absolute right-2 bottom-2 w-1/3 max-w-[180px] select-none"
-        />
-      )}
     </article>
   );
 }
