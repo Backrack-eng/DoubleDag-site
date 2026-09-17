@@ -9,6 +9,7 @@ export interface PortfolioVideo {
   width: number | null;
   height: number | null;
   orientation: "landscape" | "portrait";
+  caption?: string;
   emmyBadge?: boolean;
   featured?: boolean;
 }
@@ -18,6 +19,7 @@ type OverrideEntry = {
   order: number;
   hidden?: boolean;
   thumbnailTime?: string | null;
+  caption?: string;
   emmyBadge?: boolean;
   featured?: boolean;
 };
@@ -99,6 +101,7 @@ export async function getPortfolioVideos(): Promise<PortfolioVideo[]> {
         width,
         height,
         orientation,
+        caption: override?.caption,
         emmyBadge: override?.emmyBadge ?? false,
         featured: override?.featured ?? false,
       };
