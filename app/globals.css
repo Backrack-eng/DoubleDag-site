@@ -54,18 +54,18 @@ body {
 
 .hero-eyebrow-shadow {
   color: #f5f3ff;
-  -webkit-text-stroke: 2px #000;
+  -webkit-text-stroke: 1px #000;
   paint-order: stroke fill;
   text-shadow:
-    0 0 3px #000,
+    0 0 1.5px #000,
+    0 0 4px #000,
     0 0 8px #000,
-    0 0 16px #000,
-    0 0 28px #000,
-    0 0 44px #000,
-    1px 0 2px #000,
-    -1px 0 2px #000,
-    0 1px 2px #000,
-    0 -1px 2px #000;
+    0 0 14px #000,
+    0 0 22px #000,
+    0.5px 0 1px #000,
+    -0.5px 0 1px #000,
+    0 0.5px 1px #000,
+    0 -0.5px 1px #000;
 }
 
 /* Featured reel: floating frame with ambient glow + light border */
