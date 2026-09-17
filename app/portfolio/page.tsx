@@ -46,7 +46,7 @@ export default async function PortfolioPage() {
           </div>
 
           <p className="hero-eyebrow-shadow relative z-10 -mt-8 sm:-mt-10 mb-4 text-sm font-medium uppercase tracking-[0.3em]">
-            Senior Editor &amp; Creative Technologist · Double Dag Productions, Petersburg, VA
+            Post Production Specialist &amp; Creative Technologist · Headquartered in Petersburg, VA
           </p>
 
           <h1 className="max-w-4xl text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
