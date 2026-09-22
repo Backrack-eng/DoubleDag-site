@@ -51,6 +51,12 @@ export default function ContentPricingPage() {
               Email Me
             </a>
             <Link
+              href="/portfolio"
+              className="inline-flex h-12 items-center justify-center px-2 text-sm font-medium text-violet-300 underline-offset-4 transition hover:text-violet-200 hover:underline sm:px-4"
+            >
+              View Portfolio
+            </Link>
+            <Link
               href="/filmography"
               className="inline-flex h-12 items-center justify-center px-2 text-sm font-medium text-violet-300 underline-offset-4 transition hover:text-violet-200 hover:underline sm:px-4"
             >
