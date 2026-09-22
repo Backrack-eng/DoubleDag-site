@@ -533,6 +533,13 @@ export default function FilmographyPage() {
               LinkedIn
             </a>
 
+            <Link
+              href="/portfolio"
+              className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
+            >
+              Portfolio
+            </Link>
+
             <a
               href="mailto:hello@doubledagproductions.com"
               className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white transition hover:bg-white/10"
