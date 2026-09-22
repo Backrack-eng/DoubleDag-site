@@ -24,8 +24,9 @@ export default function ContentPricingPage() {
             your format below to see how it breaks down.
           </p>
           <p className="mt-6 max-w-3xl text-base leading-8 text-neutral-400">
-            20+ years cutting documentaries, docuseries, and branded work for
-            PBS, Smithsonian, and National Geographic. Emmy-recognized.
+            Emmy winner for PBS American Masters. Two decades in the edit bay for
+            The Great Courses, Smithsonian, and National Geographic, plus brand
+            films and client work in between.
           </p>
         </section>
 
