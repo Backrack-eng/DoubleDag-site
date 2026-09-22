@@ -37,7 +37,7 @@ function TierCard({ tier }: { tier: PricingTier }) {
 }
 
 export default function GenreAccordion() {
-  const [openId, setOpenId] = useState<string>("youtube");
+  const [openId, setOpenId] = useState<string>("");
 
   return (
     <div className="space-y-4">
