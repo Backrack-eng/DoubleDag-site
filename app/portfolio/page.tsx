@@ -1,6 +1,7 @@
 import { statSync } from "node:fs";
 import { join } from "node:path";
 import type { Metadata } from "next";
+import { FEATURED_WORK_COUNT } from "../../lib/portfolio-constants";
 import {
   extractFeatured,
   getPortfolioVideos,
@@ -28,8 +29,8 @@ export default async function PortfolioPage() {
     featured[0];
   const archiveReel = featured.find((v) => v.uid !== mainReel?.uid);
 
-  const highlightWork = landscape.slice(0, 3);
-  const selectedWork = landscape.slice(3);
+  const highlightWork = landscape.slice(0, FEATURED_WORK_COUNT);
+  const selectedWork = landscape.slice(FEATURED_WORK_COUNT);
   const avatarSrc = `/Portfolio_avatar.png?v=${Math.round(statSync(join(process.cwd(), "public/Portfolio_avatar.png")).mtimeMs)}`;
 
   return (

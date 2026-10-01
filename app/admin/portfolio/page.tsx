@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, type DragEvent } from "react";
+import { FEATURED_WORK_COUNT } from "../../../lib/portfolio-constants";
 
 export const dynamic = "force-dynamic";
 
@@ -33,7 +34,7 @@ const SECTIONS: {
   {
     id: "highlight",
     title: "Featured Work",
-    hint: "Up to three clips. These are the first landscape videos after the demo reels.",
+    hint: `Up to ${FEATURED_WORK_COUNT} clips. These are the first landscape videos after the demo reels.`,
   },
   {
     id: "selected",
@@ -69,21 +70,24 @@ function partitionRows(rows: OverrideRow[]): Groups {
 
   return {
     demo,
-    highlight: rest.slice(0, 3),
-    selected: rest.slice(3),
+    highlight: rest.slice(0, FEATURED_WORK_COUNT),
+    selected: rest.slice(FEATURED_WORK_COUNT),
     hidden,
   };
 }
 
 function capHighlight(groups: Groups): Groups {
-  if (groups.highlight.length <= 3) {
+  if (groups.highlight.length <= FEATURED_WORK_COUNT) {
     return groups;
   }
 
   return {
     ...groups,
-    highlight: groups.highlight.slice(0, 3),
-    selected: [...groups.highlight.slice(3), ...groups.selected],
+    highlight: groups.highlight.slice(0, FEATURED_WORK_COUNT),
+    selected: [
+      ...groups.highlight.slice(FEATURED_WORK_COUNT),
+      ...groups.selected,
+    ],
   };
 }
 

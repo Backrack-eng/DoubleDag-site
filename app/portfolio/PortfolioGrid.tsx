@@ -10,8 +10,27 @@ function formatDuration(seconds: number): string {
   return `${minutes}:${remainder.toString().padStart(2, "0")}`;
 }
 
+function PlaceholderMedia({ title }: { title: string }) {
+  return (
+    <div
+      className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-neutral-900 via-neutral-950 to-black"
+      aria-label={`${title} — video coming soon`}
+    >
+      <div className="px-6 text-center">
+        <p className="text-xs font-medium uppercase tracking-[0.28em] text-neutral-400">
+          Video coming soon
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export function ClickToPlayVideo({ video }: { video: PortfolioVideo }) {
   const [playing, setPlaying] = useState(false);
+
+  if (video.placeholder || !video.playbackUrl) {
+    return <PlaceholderMedia title={video.title} />;
+  }
 
   if (playing) {
     return (
@@ -82,7 +101,7 @@ function VideoCard({
           </p>
         )}
         {video.caption && (
-          <p className="mt-3 text-sm leading-7 text-neutral-300">
+          <p className="mt-3 whitespace-pre-line text-sm leading-7 text-neutral-300">
             {video.caption}
           </p>
         )}

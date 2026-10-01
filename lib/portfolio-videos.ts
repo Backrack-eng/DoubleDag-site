@@ -1,4 +1,7 @@
+import PLACEHOLDERS from "./portfolio-placeholders.json";
 import OVERRIDES from "./portfolio-overrides.json";
+
+export { FEATURED_WORK_COUNT } from "./portfolio-constants";
 
 export interface PortfolioVideo {
   uid: string;
@@ -12,6 +15,8 @@ export interface PortfolioVideo {
   caption?: string;
   emmyBadge?: boolean;
   featured?: boolean;
+  /** True when the entry is listed before a Stream clip is attached. */
+  placeholder?: boolean;
 }
 
 type OverrideEntry = {
@@ -24,7 +29,20 @@ type OverrideEntry = {
   featured?: boolean;
 };
 
+type PlaceholderEntry = {
+  id: string;
+  title: string;
+  order: number;
+  orientation: "landscape" | "portrait";
+  caption?: string;
+  emmyBadge?: boolean;
+};
+
 const overrides = OVERRIDES as Record<string, OverrideEntry>;
+const placeholders = PLACEHOLDERS as PlaceholderEntry[];
+const placeholderOrder = new Map(
+  placeholders.map((entry) => [entry.id, entry.order]),
+);
 
 interface StreamVideo {
   uid: string;
@@ -37,6 +55,10 @@ interface StreamVideo {
 
 interface StreamListResponse {
   result: StreamVideo[];
+}
+
+function entryOrder(uid: string): number | undefined {
+  return overrides[uid]?.order ?? placeholderOrder.get(uid);
 }
 
 export async function getPortfolioVideos(): Promise<PortfolioVideo[]> {
@@ -52,28 +74,11 @@ export async function getPortfolioVideos(): Promise<PortfolioVideo[]> {
 
   const data = (await response.json()) as StreamListResponse;
   const result = data.result ?? [];
+  const createdByUid = new Map(result.map((video) => [video.uid, video.created]));
 
-  return result
+  const streamVideos: PortfolioVideo[] = result
     .filter((video) => video.status.state === "ready")
     .filter((video) => !overrides[video.uid]?.hidden)
-    .sort((a, b) => {
-      const aOrder = overrides[a.uid]?.order;
-      const bOrder = overrides[b.uid]?.order;
-      const aHasOrder = aOrder !== undefined;
-      const bHasOrder = bOrder !== undefined;
-
-      if (aHasOrder && bHasOrder) {
-        return aOrder - bOrder;
-      }
-      if (aHasOrder) {
-        return -1;
-      }
-      if (bHasOrder) {
-        return 1;
-      }
-
-      return Date.parse(b.created) - Date.parse(a.created);
-    })
     .map((video) => {
       const width = video.input?.width ?? null;
       const height = video.input?.height ?? null;
@@ -106,6 +111,43 @@ export async function getPortfolioVideos(): Promise<PortfolioVideo[]> {
         featured: override?.featured ?? false,
       };
     });
+
+  const placeholderVideos: PortfolioVideo[] = placeholders.map((entry) => ({
+    uid: entry.id,
+    title: entry.title,
+    duration: null,
+    thumbnailUrl: "",
+    playbackUrl: "",
+    width: null,
+    height: null,
+    orientation: entry.orientation,
+    caption: entry.caption,
+    emmyBadge: entry.emmyBadge ?? false,
+    featured: false,
+    placeholder: true,
+  }));
+
+  return [...streamVideos, ...placeholderVideos].sort((a, b) => {
+    const aOrder = entryOrder(a.uid);
+    const bOrder = entryOrder(b.uid);
+    const aHasOrder = aOrder !== undefined;
+    const bHasOrder = bOrder !== undefined;
+
+    if (aHasOrder && bHasOrder) {
+      return aOrder - bOrder;
+    }
+    if (aHasOrder) {
+      return -1;
+    }
+    if (bHasOrder) {
+      return 1;
+    }
+
+    return (
+      Date.parse(createdByUid.get(b.uid) ?? "0") -
+      Date.parse(createdByUid.get(a.uid) ?? "0")
+    );
+  });
 }
 
 export function extractFeatured(videos: PortfolioVideo[]) {
