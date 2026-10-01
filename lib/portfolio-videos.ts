@@ -1,5 +1,7 @@
 import OVERRIDES from "./portfolio-overrides.json";
 
+export { FEATURED_WORK_COUNT } from "./portfolio-constants";
+
 export interface PortfolioVideo {
   uid: string;
   title: string;

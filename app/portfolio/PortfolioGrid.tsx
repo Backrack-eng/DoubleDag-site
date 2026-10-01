@@ -82,7 +82,7 @@ function VideoCard({
           </p>
         )}
         {video.caption && (
-          <p className="mt-3 text-sm leading-7 text-neutral-300">
+          <p className="mt-3 whitespace-pre-line text-sm leading-7 text-neutral-300">
             {video.caption}
           </p>
         )}

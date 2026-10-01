@@ -88,8 +88,9 @@
     "order": 190
   },
   "16831b133d581f911413c4d6bd005bf2": {
-    "title": "Urban Legends",
-    "order": 200
+    "title": "Urban Legends Explained",
+    "order": 22,
+    "caption": "12 episodes, 24 to 31 minutes each\nGold Telly Award winner\n\nDr. Sara Cleto and Dr. Brittany Warman dig into why urban legends stick around: Bigfoot and other cryptids, haunted places, creepypasta, and the stories about cars, food, and health. They also look at how these tales spread online and what they say about what scares us.\n\nI edited all 12 episodes. Every one opens with the hosts telling a legend, and I took 2D illustrations from a freelance artist and gave the flat artwork motion in Premiere Pro and After Effects.\n\nFor every story or creature with no images available, I generated the AI images and video myself in Adobe Firefly, the only tool company rules allowed. This was early in the tech, well before the quality you see today, so it took some problem solving to make it hold up on screen."
   },
   "3c4c0b6cde8a59f49d986aaac31d8484": {
     "title": "The Agency",
