@@ -1,8 +1,8 @@
 {
   "066a9989e5e134d2816590ebf77751b8": {
+    "thumbnailTime": null,
     "title": "Demo Reel 2023",
     "order": 0,
-    "thumbnailTime": null,
     "featured": true
   },
   "95c38530eb7336c2fbe7c46129bfe1a2": {
@@ -15,138 +15,171 @@
     "order": 20,
     "caption": "An 80-minute feature documentary for The Great Courses, made in partnership with the 9/11 Museum and released on YouTube. It tells the story of the attacks through the journalists who were reporting live from New York as it happened, some of them from ground zero. Building the film meant going through nearly all the raw 9/11 footage that exists, plus upscaling the old material to 4K so it would cut cleanly against the rest of the presentation. I was sole editor, on a deadline locked to the 20th anniversary, with some of the biggest names in American journalism watching the cut. Notes came from an internal producer, two producers at the 9/11 Museum, a third-party media team, and senior leadership, all at once, so keeping everyone aligned took real communication. Long hours, weekends, high stakes. One of the toughest and most rewarding projects I've done."
   },
+  "16831b133d581f911413c4d6bd005bf2": {
+    "title": "Urban Legends Explained",
+    "order": 30,
+    "caption": "12 episodes, 24 to 31 minutes each\nGold Telly Award winner\n\nDr. Sara Cleto and Dr. Brittany Warman dig into why urban legends stick around: Bigfoot and other cryptids, haunted places, creepypasta, and the stories about cars, food, and health. They also look at how these tales spread online and what they say about what scares us.\n\nI edited all 12 episodes. Every one opens with the hosts telling a legend, and I took 2D illustrations from a freelance artist and gave the flat artwork motion in Premiere Pro and After Effects.\n\nFor every story or creature with no images available, I generated the AI images and video myself in Adobe Firefly, the only tool company rules allowed. This was early in the tech, well before the quality you see today, so it took some problem solving to make it hold up on screen."
+  },
+  "e7274f15ad7f32a49ecae5a7366b05a8": {
+    "title": "Imagining Tomorrow's Entertainment",
+    "order": 40,
+    "caption": "10 episodes, 22 to 30 minutes each\nBuzzie Nominee, Most Innovative Factual Program/Project of the Year (World Congress of Science and Factual Producers)\n\nProfessor Eric R. Williams walks through where entertainment is headed with extended reality: esports, mixed reality sports, interactive storytelling, cinematic VR, the metaverse. He meets the people building it along the way.\n\nI was the sole editor and did some of the graphics. The footage came from all over: 3D objects, 360 cameras, unrendered VR animations and environments, plus cameras of every kind from internal teams and freelance directors and operators shooting around the country. Getting all of that to sit together in one cut took a lot of problem solving and a lot of late nights.\n\nIt was also a blast to work on. Maybe because of the hard parts, honestly. I learned a ton on this one, and I still use it today."
+  },
   "f5eb655a9de65e2d835081d5aa355241": {
     "title": "The Banjo: Music History and Heritage_sample edit",
-    "order": 30,
+    "order": 50,
     "caption": "A 10-episode docuseries for Wondrium, around 5 hours total plus live musical performances woven through the series. Hosted by musician and MacArthur \"genius grant\" recipient Rhiannon Giddens, it traces the banjo's roots from Afro-Caribbean culture through bluegrass, folk, and jazz, with appearances from artists like Bill Monroe, Earl Scruggs, and Béla Fleck. Production hit some snags: footage came in soft, color and lighting inconsistent across shoots. As sole editor, through several producer changes, it fell on me to save it. That meant regrading footage, rebuilding scenes, cleaning up audio, and using advanced editing techniques to reframe bad shots, relight them, and clean up the picture. I was eventually bumped up to assistant producer so I could help fix problems from every angle, not just the timeline."
   },
   "6667b7bf50bcca85faf57aa7a15e0fde": {
     "title": "Weaving Nature Opening Sequence",
-    "order": 40,
+    "order": 60,
     "emmyBadge": true,
     "caption": "A 20-minute documentary made with Maryland Public Television for PBS American Masters. It follows Maryland artist David Bacharach building The Mounds, an outdoor installation that turns weaving and metalsmithing into a statement on climate change and land, air, and water damage. I was sole editor from concept to final cut. The subject and his story were strong going in, but shaping that into a real narrative in the edit was the hard part, and I was also running post-production start to finish, working around camera operator issues along the way. Color correcting a film shot entirely outdoors is its own fight, and this one tested me. PBS American Masters picked it up as the first entry in their Shorts series, and it won an Emmy. Still the project I'm proudest of."
   },
   "24cdd7ec061d47672d9106e352b9d2a1": {
     "title": "Pinklon Thomas Interview 2011",
-    "order": 50
+    "order": 70,
+    "caption": "Producer, Director and Editor, Colorist, audio design"
   },
   "e6a74d702a586c50fae03887dd2bf4c0": {
     "title": "Decorate Like A Designer with Jonathan Adler",
-    "order": 60
+    "order": 80,
+    "caption": "Editor, Colorist"
   },
   "cf532871a841fb0c63618f5deceaf514": {
+    "thumbnailTime": "11s",
     "title": "Grills Gone Wild",
-    "order": 70,
-    "thumbnailTime": "11s"
+    "order": 90,
+    "caption": "Producer, Director and Editor, Colorist, audio design"
   },
   "ebe4d552daad3a4e44dd55883bd3aa3f": {
     "title": "Mock And Roll - Feature Film",
-    "order": 80
+    "order": 100,
+    "caption": "Writer, Director, Editor, Colorist, Audio design"
   },
   "3d24a08bd88fa4ca2c6ed7454aa9a91e": {
     "title": "Weaving Nature End Credits",
-    "order": 90
+    "order": 110,
+    "caption": "Editor, Colorist, Assistant producer"
   },
   "d3cad11639aa7927a4687d44a0dc12a3": {
     "title": "The Banjo: Music, History and Heritage",
-    "order": 100
+    "order": 120,
+    "caption": "Editor, Colorist, Post-Producer"
   },
   "e421e6122b84e8f7b372676b9ba2bc5e": {
     "title": "Exploring the Mayan World",
-    "order": 110
+    "order": 130,
+    "caption": "Editor, Colorist, Post-Producer"
   },
   "415cb57aea41d58299ed11870fd21e26": {
     "title": "Reporting 911 and Why it Still Matters",
-    "order": 120
+    "order": 140,
+    "caption": "Editor, Colorist, Post-Producer"
   },
   "8be235f273aae7fa86cb13d95fd46b93": {
     "title": "The Chesfsters",
-    "order": 130
+    "order": 150,
+    "caption": "Editor, Colorist"
   },
   "1b941abaead007abae3495e47893d205": {
     "title": "The Everyday Gourmet Rediscovering The Lost Art Of Cooking",
-    "order": 140
+    "order": 160,
+    "caption": "Producer/Editor"
   },
   "63d37f5767b94cc9d1c8b34fa5834d5d": {
     "title": "Cooking Across The Ages",
-    "order": 150
+    "order": 170,
+    "caption": "Producer/Editor"
   },
   "8d6b0388d1bb7144550cff30bf900038": {
     "title": "Great Tours DC",
-    "order": 160
+    "order": 180,
+    "caption": "Editor, Colorist"
   },
   "b2028b3579fb6b00029fc1cc067a3edc": {
     "title": "Linear Algebra",
-    "order": 170
+    "order": 190,
+    "caption": "Editor, Colorist"
   },
   "ecdaa3539a4fc2ec8d262505700a05ba": {
     "title": "Archaeological Mysteries",
-    "order": 180
+    "order": 200,
+    "caption": "Editor, Colorist"
   },
   "7e7f780089fa702e5427fee2b5e011e1": {
     "title": "Understanding Artificial Intelligence",
-    "order": 190
-  },
-  "16831b133d581f911413c4d6bd005bf2": {
-    "title": "Urban Legends Explained",
-    "order": 22,
-    "caption": "12 episodes, 24 to 31 minutes each\nGold Telly Award winner\n\nDr. Sara Cleto and Dr. Brittany Warman dig into why urban legends stick around: Bigfoot and other cryptids, haunted places, creepypasta, and the stories about cars, food, and health. They also look at how these tales spread online and what they say about what scares us.\n\nI edited all 12 episodes. Every one opens with the hosts telling a legend, and I took 2D illustrations from a freelance artist and gave the flat artwork motion in Premiere Pro and After Effects.\n\nFor every story or creature with no images available, I generated the AI images and video myself in Adobe Firefly, the only tool company rules allowed. This was early in the tech, well before the quality you see today, so it took some problem solving to make it hold up on screen."
+    "order": 210,
+    "caption": "Editor, Colorist, AI Generation and research"
   },
   "3c4c0b6cde8a59f49d986aaac31d8484": {
     "title": "The Agency",
-    "order": 210
+    "order": 220,
+    "caption": "Editor, Colorist"
   },
   "a0d5ed24ac55e4d2a9eb3b441628719c": {
     "title": "Geological Events",
-    "order": 220
+    "order": 230,
+    "caption": "Editor, Colorist"
   },
   "7030cc8c533a627da65a84bb2808db4c": {
     "title": "10 Great What Ifs",
-    "order": 230
+    "order": 240,
+    "caption": "Editor, Colorist"
   },
   "34007a1e569b6d188ea3c1974165ee03": {
     "title": "Botanist Eye",
-    "order": 240
+    "order": 250,
+    "caption": "Editor, Colorist, Post-Producer"
   },
   "fa61dbc3569d6f947cd8955d82b69d80": {
     "title": "Outdoor Fundamentals",
-    "order": 250
+    "order": 260,
+    "caption": "Editor, Colorist, Location camera operator, graphics"
   },
   "6e17f20b7d7564f7c248665e07bebbad": {
     "title": "The Secret World Of Espionage",
-    "order": 260
+    "order": 270,
+    "caption": "Editor, Colorist"
   },
   "be6c7d79482614ebf509ff25f442789a": {
     "title": "Going to the Devil",
-    "order": 270
+    "order": 280,
+    "caption": "Editor, Colorist"
   },
   "bb59f02a4d3d5dd200a33f4775d71a5e": {
     "title": "Loss & Love music video",
-    "order": 280
+    "order": 290,
+    "caption": "Producer, Director and Editor, Colorist"
   },
   "1e1ed7cfa45cf4e6c02a9b001f7805bb": {
     "title": "Life Of Jesus History Revealed",
-    "order": 290
+    "order": 300,
+    "caption": "Editor"
   },
   "decbbab0603fb1d59eb91e0f3abc1d84": {
     "title": "Sheriff Training Workout",
-    "order": 300
+    "order": 310,
+    "caption": "Producer, Director and Editor, Colorist, audio design"
   },
   "62bbe1860e3977f21ce67bbd09a1dcf6": {
     "title": "Alex Ortiz Gangsta Poet",
-    "order": 310
+    "order": 320,
+    "caption": "Producer, Director and Editor, Colorist, audio design"
   },
   "ddeb6d07f295cac1b2555f918c033444": {
     "title": "Prop Firm Match",
-    "order": 320
+    "order": 330,
+    "caption": "Producer, Director and Editor, Colorist, audio design"
   },
   "6cd866031ec8242a88b8618fded702b3": {
     "title": "Sexy Mutha F*#%ers Stand Up Special Trailer",
-    "order": 330
+    "order": 340,
+    "caption": "Producer, Director and Editor, Colorist, audio design"
   },
   "390e589cee07f747aa6056dcd8713948": {
     "title": "Double Dag Logo",
-    "order": 340,
+    "order": 350,
     "hidden": true
   }
 }

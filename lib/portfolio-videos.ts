@@ -36,6 +36,7 @@ type PlaceholderEntry = {
   orientation: "landscape" | "portrait";
   caption?: string;
   emmyBadge?: boolean;
+  hidden?: boolean;
 };
 
 const overrides = OVERRIDES as Record<string, OverrideEntry>;
@@ -112,7 +113,9 @@ export async function getPortfolioVideos(): Promise<PortfolioVideo[]> {
       };
     });
 
-  const placeholderVideos: PortfolioVideo[] = placeholders.map((entry) => ({
+  const placeholderVideos: PortfolioVideo[] = placeholders
+    .filter((entry) => !entry.hidden)
+    .map((entry) => ({
     uid: entry.id,
     title: entry.title,
     duration: null,

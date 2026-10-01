@@ -12,6 +12,10 @@ type OverrideRow = {
   hidden?: boolean;
   featured?: boolean;
   emmyBadge?: boolean;
+  caption?: string;
+  placeholder?: boolean;
+  orientation?: "landscape" | "portrait";
+  thumbnailTime?: string | null;
   [key: string]: unknown;
 };
 
@@ -34,7 +38,7 @@ const SECTIONS: {
   {
     id: "highlight",
     title: "Featured Work",
-    hint: `Up to ${FEATURED_WORK_COUNT} clips. These are the first landscape videos after the demo reels.`,
+    hint: `Up to ${FEATURED_WORK_COUNT} landscape clips after the demo reels, including any “video coming soon” placeholders. Captions show under these cards on the public page.`,
   },
   {
     id: "selected",
@@ -55,11 +59,51 @@ const SECTION_OPTIONS: { id: SectionId; label: string }[] = [
   { id: "hidden", label: "Hidden" },
 ];
 
+function isPlaceholder(row: OverrideRow) {
+  return Boolean(row.placeholder) || row.uid.startsWith("placeholder-");
+}
+
 function toRows(data: Record<string, object>): OverrideRow[] {
   return Object.entries(data).map(([uid, entry]) => ({
     uid,
     ...entry,
   })) as OverrideRow[];
+}
+
+function placeholderRows(entries: unknown): OverrideRow[] {
+  if (!Array.isArray(entries)) {
+    return [];
+  }
+
+  return entries.flatMap((entry) => {
+    if (entry === null || typeof entry !== "object") {
+      return [];
+    }
+    const item = entry as {
+      id?: unknown;
+      title?: unknown;
+      order?: unknown;
+      caption?: unknown;
+      emmyBadge?: unknown;
+      hidden?: unknown;
+      orientation?: unknown;
+    };
+    if (typeof item.id !== "string" || typeof item.title !== "string") {
+      return [];
+    }
+    return [
+      {
+        uid: item.id,
+        title: item.title,
+        order: typeof item.order === "number" ? item.order : 0,
+        caption: typeof item.caption === "string" ? item.caption : undefined,
+        emmyBadge: Boolean(item.emmyBadge),
+        hidden: Boolean(item.hidden),
+        orientation: item.orientation === "portrait" ? "portrait" : "landscape",
+        placeholder: true,
+      },
+    ];
+  });
 }
 
 function partitionRows(rows: OverrideRow[]): Groups {
@@ -91,7 +135,7 @@ function capHighlight(groups: Groups): Groups {
   };
 }
 
-function toOverridesObject(groups: Groups) {
+function toSavePayload(groups: Groups) {
   const ordered: OverrideRow[] = [
     ...groups.demo.map((row) => ({ ...row, featured: true, hidden: false })),
     ...groups.highlight.map((row) => ({
@@ -107,21 +151,59 @@ function toOverridesObject(groups: Groups) {
     ...groups.hidden.map((row) => ({ ...row, featured: false, hidden: true })),
   ].map((row, index) => ({ ...row, order: index * 10 }));
 
-  return Object.fromEntries(
-    ordered.map(({ uid, ...rest }) => {
-      const entry: Record<string, unknown> = { ...rest };
-      if (!entry.featured) {
-        delete entry.featured;
+  const overrides: Record<string, Record<string, unknown>> = {};
+  const placeholders: Record<string, unknown>[] = [];
+
+  for (const row of ordered) {
+    if (isPlaceholder(row)) {
+      const entry: Record<string, unknown> = {
+        id: row.uid,
+        title: row.title,
+        order: row.order,
+        orientation: row.orientation === "portrait" ? "portrait" : "landscape",
+      };
+      if (typeof row.caption === "string" && row.caption.trim()) {
+        entry.caption = row.caption;
       }
-      if (!entry.hidden) {
-        delete entry.hidden;
+      if (row.emmyBadge) {
+        entry.emmyBadge = true;
       }
-      if (!entry.emmyBadge) {
-        delete entry.emmyBadge;
+      if (row.hidden) {
+        entry.hidden = true;
       }
-      return [uid, entry];
-    }),
-  );
+      placeholders.push(entry);
+      continue;
+    }
+
+    const {
+      uid,
+      title,
+      order,
+      featured,
+      hidden,
+      emmyBadge,
+      caption,
+      placeholder: _placeholder,
+      orientation: _orientation,
+      ...extra
+    } = row;
+    const entry: Record<string, unknown> = { ...extra, title, order };
+    if (featured) {
+      entry.featured = true;
+    }
+    if (hidden) {
+      entry.hidden = true;
+    }
+    if (emmyBadge) {
+      entry.emmyBadge = true;
+    }
+    if (typeof caption === "string" && caption.trim()) {
+      entry.caption = caption;
+    }
+    overrides[uid] = entry;
+  }
+
+  return { overrides, placeholders };
 }
 
 function reelRole(row: OverrideRow, demo: OverrideRow[]) {
@@ -180,8 +262,24 @@ export default function PortfolioAdminPage() {
           return;
         }
 
+        const payload = data as {
+          overrides?: Record<string, object>;
+          placeholders?: unknown;
+        };
+        const overrides =
+          payload.overrides &&
+          typeof payload.overrides === "object" &&
+          !Array.isArray(payload.overrides)
+            ? payload.overrides
+            : (data as Record<string, object>);
+
         if (!cancelled) {
-          setGroups(partitionRows(toRows(data as Record<string, object>)));
+          setGroups(
+            partitionRows([
+              ...toRows(overrides),
+              ...placeholderRows(payload.placeholders),
+            ]),
+          );
           setStatus("ready");
           setMessage(null);
         }
@@ -224,7 +322,8 @@ export default function PortfolioAdminPage() {
       if (!moved) {
         return current;
       }
-      next[to].push(moved);
+      const target = isPlaceholder(moved) && to === "demo" ? "highlight" : to;
+      next[target].push(moved);
       return capHighlight(next);
     });
   }
@@ -282,7 +381,7 @@ export default function PortfolioAdminPage() {
       const response = await fetch("/api/admin/overrides", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(toOverridesObject(groups)),
+        body: JSON.stringify(toSavePayload(groups)),
       });
       const data: unknown = await response.json();
 
@@ -441,6 +540,26 @@ export default function PortfolioAdminPage() {
                                 {reelRole(row, groups.demo)}
                               </p>
                             )}
+                            {isPlaceholder(row) && (
+                              <p className="mt-1 text-xs text-neutral-500">
+                                Placeholder — video coming soon
+                              </p>
+                            )}
+                            {(section.id === "highlight" ||
+                              section.id === "selected") && (
+                              <textarea
+                                value={row.caption ?? ""}
+                                onChange={(event) =>
+                                  updateRow(section.id, row.uid, {
+                                    caption: event.target.value,
+                                  })
+                                }
+                                rows={4}
+                                placeholder="Caption shown under this video on the public page"
+                                aria-label={`Caption for ${row.title}`}
+                                className="mt-2 w-full rounded-md border border-white/15 bg-neutral-900 px-3 py-2 text-sm leading-6 text-neutral-100 outline-none focus:border-violet-400/60"
+                              />
+                            )}
                           </td>
                           <td className="w-48 px-4 py-3 align-middle">
                             <select
@@ -455,7 +574,10 @@ export default function PortfolioAdminPage() {
                               aria-label={`Section for ${row.title}`}
                               className="w-full rounded-md border border-white/15 bg-neutral-900 px-3 py-2 text-neutral-100 outline-none focus:border-violet-400/60"
                             >
-                              {SECTION_OPTIONS.map((option) => (
+                              {SECTION_OPTIONS.filter(
+                                (option) =>
+                                  !(isPlaceholder(row) && option.id === "demo"),
+                              ).map((option) => (
                                 <option key={option.id} value={option.id}>
                                   {option.label}
                                 </option>
