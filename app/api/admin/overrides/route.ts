@@ -17,6 +17,50 @@ const LOCAL_ONLY_ERROR = {
   error: "Only available when running locally (npm run dev).",
 };
 
+async function loadOrientations() {
+  const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
+  const token = process.env.CLOUDFLARE_STREAM_API_TOKEN;
+  const orientations: Record<string, "landscape" | "portrait"> = {};
+
+  if (!accountId || !token) {
+    return orientations;
+  }
+
+  const response = await fetch(
+    `https://api.cloudflare.com/client/v4/accounts/${accountId}/stream?per_page=1000`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
+  if (!response.ok) {
+    return orientations;
+  }
+
+  const payload = (await response.json()) as {
+    result?: Array<{
+      uid?: string;
+      input?: { width?: number; height?: number };
+    }>;
+  };
+
+  for (const video of payload.result ?? []) {
+    if (!video.uid) {
+      continue;
+    }
+    const width = video.input?.width;
+    const height = video.input?.height;
+    orientations[video.uid] =
+      width != null && height != null && height > width
+        ? "portrait"
+        : "landscape";
+  }
+
+  return orientations;
+}
+
 export async function GET() {
   if (process.env.NODE_ENV !== "development") {
     return Response.json(LOCAL_ONLY_ERROR, { status: 403 });
@@ -24,7 +68,8 @@ export async function GET() {
 
   const overrides = JSON.parse(fs.readFileSync(OVERRIDES_PATH, "utf8"));
   const placeholders = JSON.parse(fs.readFileSync(PLACEHOLDERS_PATH, "utf8"));
-  return Response.json({ overrides, placeholders });
+  const orientations = await loadOrientations();
+  return Response.json({ overrides, placeholders, orientations });
 }
 
 export async function POST(request: Request) {

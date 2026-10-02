@@ -19,7 +19,7 @@ type OverrideRow = {
   [key: string]: unknown;
 };
 
-type SectionId = "demo" | "highlight" | "selected" | "hidden";
+type SectionId = "demo" | "highlight" | "selected" | "social" | "hidden";
 
 type Groups = Record<SectionId, OverrideRow[]>;
 
@@ -46,6 +46,11 @@ const SECTIONS: {
     hint: "Remaining landscape clips on the portfolio page.",
   },
   {
+    id: "social",
+    title: "Social Cuts",
+    hint: "Vertical / portrait clips. These appear under Social / Vertical on the public page, separate from Featured and Selected Work.",
+  },
+  {
     id: "hidden",
     title: "Hidden",
     hint: "Not shown on the portfolio page.",
@@ -56,11 +61,52 @@ const SECTION_OPTIONS: { id: SectionId; label: string }[] = [
   { id: "demo", label: "Demo Reel" },
   { id: "highlight", label: "Featured Work" },
   { id: "selected", label: "Selected Work" },
+  { id: "social", label: "Social Cuts" },
   { id: "hidden", label: "Hidden" },
 ];
 
 function isPlaceholder(row: OverrideRow) {
   return Boolean(row.placeholder) || row.uid.startsWith("placeholder-");
+}
+
+function isPortrait(row: OverrideRow) {
+  return row.orientation === "portrait";
+}
+
+function cloneGroups(current: Groups): Groups {
+  return {
+    demo: [...current.demo],
+    highlight: [...current.highlight],
+    selected: [...current.selected],
+    social: [...current.social],
+    hidden: [...current.hidden],
+  };
+}
+
+function canPlace(row: OverrideRow, section: SectionId) {
+  if (section === "hidden") {
+    return true;
+  }
+  if (isPlaceholder(row) && section === "demo") {
+    return false;
+  }
+  if (isPortrait(row)) {
+    return section === "social";
+  }
+  return section !== "social";
+}
+
+function resolveTarget(row: OverrideRow, to: SectionId): SectionId {
+  if (canPlace(row, to)) {
+    return to;
+  }
+  if (isPortrait(row)) {
+    return "social";
+  }
+  if (to === "demo" && isPlaceholder(row)) {
+    return "highlight";
+  }
+  return "selected";
 }
 
 function toRows(data: Record<string, object>): OverrideRow[] {
@@ -111,11 +157,14 @@ function partitionRows(rows: OverrideRow[]): Groups {
   const hidden = sorted.filter((row) => row.hidden);
   const demo = sorted.filter((row) => !row.hidden && row.featured);
   const rest = sorted.filter((row) => !row.hidden && !row.featured);
+  const social = rest.filter(isPortrait);
+  const landscape = rest.filter((row) => !isPortrait(row));
 
   return {
     demo,
-    highlight: rest.slice(0, FEATURED_WORK_COUNT),
-    selected: rest.slice(FEATURED_WORK_COUNT),
+    highlight: landscape.slice(0, FEATURED_WORK_COUNT),
+    selected: landscape.slice(FEATURED_WORK_COUNT),
+    social,
     hidden,
   };
 }
@@ -144,6 +193,11 @@ function toSavePayload(groups: Groups) {
       hidden: false,
     })),
     ...groups.selected.map((row) => ({
+      ...row,
+      featured: false,
+      hidden: false,
+    })),
+    ...groups.social.map((row) => ({
       ...row,
       featured: false,
       hidden: false,
@@ -220,6 +274,7 @@ export default function PortfolioAdminPage() {
     demo: [],
     highlight: [],
     selected: [],
+    social: [],
     hidden: [],
   });
   const [status, setStatus] = useState<"loading" | "ready" | "error">(
@@ -265,6 +320,7 @@ export default function PortfolioAdminPage() {
         const payload = data as {
           overrides?: Record<string, object>;
           placeholders?: unknown;
+          orientations?: Record<string, "landscape" | "portrait">;
         };
         const overrides =
           payload.overrides &&
@@ -272,13 +328,24 @@ export default function PortfolioAdminPage() {
           !Array.isArray(payload.overrides)
             ? payload.overrides
             : (data as Record<string, object>);
+        const orientations =
+          payload.orientations &&
+          typeof payload.orientations === "object" &&
+          !Array.isArray(payload.orientations)
+            ? payload.orientations
+            : {};
 
         if (!cancelled) {
           setGroups(
-            partitionRows([
-              ...toRows(overrides),
-              ...placeholderRows(payload.placeholders),
-            ]),
+            partitionRows(
+              [...toRows(overrides), ...placeholderRows(payload.placeholders)].map(
+                (row) => ({
+                  ...row,
+                  orientation:
+                    row.orientation ?? orientations[row.uid] ?? "landscape",
+                }),
+              ),
+            ),
           );
           setStatus("ready");
           setMessage(null);
@@ -312,18 +379,12 @@ export default function PortfolioAdminPage() {
     }
 
     setGroups((current) => {
-      const next: Groups = {
-        demo: [...current.demo],
-        highlight: [...current.highlight],
-        selected: [...current.selected],
-        hidden: [...current.hidden],
-      };
+      const next = cloneGroups(current);
       const [moved] = next[from].splice(index, 1);
       if (!moved) {
         return current;
       }
-      const target = isPlaceholder(moved) && to === "demo" ? "highlight" : to;
-      next[target].push(moved);
+      next[resolveTarget(moved, to)].push(moved);
       return capHighlight(next);
     });
   }
@@ -350,13 +411,12 @@ export default function PortfolioAdminPage() {
     }
 
     setGroups((current) => {
-      const next: Groups = {
-        demo: [...current.demo],
-        highlight: [...current.highlight],
-        selected: [...current.selected],
-        hidden: [...current.hidden],
-      };
+      const moving = current[drag.section][drag.index];
+      if (!moving || !canPlace(moving, section)) {
+        return current;
+      }
 
+      const next = cloneGroups(current);
       const [moved] = next[drag.section].splice(drag.index, 1);
       if (!moved) {
         return current;
@@ -418,8 +478,8 @@ export default function PortfolioAdminPage() {
                 Portfolio Video Editor (local only)
               </h1>
               <p className="mt-1 text-xs text-neutral-500">
-                Vertical clips still appear under Social / Vertical on the
-                public page.
+                Social Cuts is a separate section for vertical clips, matching
+                the public portfolio page.
               </p>
             </div>
             <div className="flex items-center gap-4">
@@ -457,7 +517,14 @@ export default function PortfolioAdminPage() {
         {status === "ready" && (
           <div className="space-y-10">
             {SECTIONS.map((section) => (
-              <section key={section.id}>
+              <section
+                key={section.id}
+                className={
+                  section.id === "social"
+                    ? "border-t border-white/20 pt-10"
+                    : undefined
+                }
+              >
                 <div className="mb-3">
                   <h2 className="text-sm uppercase tracking-[0.3em] text-violet-300/80">
                     {section.title}
@@ -574,9 +641,8 @@ export default function PortfolioAdminPage() {
                               aria-label={`Section for ${row.title}`}
                               className="w-full rounded-md border border-white/15 bg-neutral-900 px-3 py-2 text-neutral-100 outline-none focus:border-violet-400/60"
                             >
-                              {SECTION_OPTIONS.filter(
-                                (option) =>
-                                  !(isPlaceholder(row) && option.id === "demo"),
+                              {SECTION_OPTIONS.filter((option) =>
+                                canPlace(row, option.id),
                               ).map((option) => (
                                 <option key={option.id} value={option.id}>
                                   {option.label}
