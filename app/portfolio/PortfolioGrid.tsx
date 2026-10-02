@@ -1,7 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import type { PortfolioVideo } from "../../lib/portfolio-videos";
+import {
+  buildPlaybackSrc,
+  type PortfolioVideo,
+} from "../../lib/portfolio-videos";
 
 function formatDuration(seconds: number): string {
   const total = Math.round(seconds);
@@ -25,6 +28,12 @@ function PlaceholderMedia({ title }: { title: string }) {
   );
 }
 
+function clickPlaybackSrc(video: PortfolioVideo) {
+  const base = buildPlaybackSrc({ ...video, autoplay: false });
+  const join = base.includes("?") ? "&" : "?";
+  return `${base}${join}autoplay=true`;
+}
+
 export function ClickToPlayVideo({ video }: { video: PortfolioVideo }) {
   const [playing, setPlaying] = useState(false);
 
@@ -32,10 +41,10 @@ export function ClickToPlayVideo({ video }: { video: PortfolioVideo }) {
     return <PlaceholderMedia title={video.title} />;
   }
 
-  if (playing) {
+  if (video.autoplay || playing) {
     return (
       <iframe
-        src={`${video.playbackUrl}?autoplay=true`}
+        src={video.autoplay ? buildPlaybackSrc(video) : clickPlaybackSrc(video)}
         className="absolute inset-0 h-full w-full"
         allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
         allowFullScreen

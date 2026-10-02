@@ -12,6 +12,8 @@ type OverrideRow = {
   hidden?: boolean;
   featured?: boolean;
   emmyBadge?: boolean;
+  loop?: boolean;
+  autoplay?: boolean;
   caption?: string;
   placeholder?: boolean;
   orientation?: "landscape" | "portrait";
@@ -131,6 +133,8 @@ function placeholderRows(entries: unknown): OverrideRow[] {
       order?: unknown;
       caption?: unknown;
       emmyBadge?: unknown;
+      loop?: unknown;
+      autoplay?: unknown;
       hidden?: unknown;
       orientation?: unknown;
     };
@@ -144,6 +148,8 @@ function placeholderRows(entries: unknown): OverrideRow[] {
         order: typeof item.order === "number" ? item.order : 0,
         caption: typeof item.caption === "string" ? item.caption : undefined,
         emmyBadge: Boolean(item.emmyBadge),
+        loop: Boolean(item.loop),
+        autoplay: Boolean(item.autoplay),
         hidden: Boolean(item.hidden),
         orientation: item.orientation === "portrait" ? "portrait" : "landscape",
         placeholder: true,
@@ -222,6 +228,12 @@ function toSavePayload(groups: Groups) {
       if (row.emmyBadge) {
         entry.emmyBadge = true;
       }
+      if (row.loop) {
+        entry.loop = true;
+      }
+      if (row.autoplay) {
+        entry.autoplay = true;
+      }
       if (row.hidden) {
         entry.hidden = true;
       }
@@ -236,6 +248,8 @@ function toSavePayload(groups: Groups) {
       featured,
       hidden,
       emmyBadge,
+      loop,
+      autoplay,
       caption,
       placeholder: _placeholder,
       orientation: _orientation,
@@ -250,6 +264,12 @@ function toSavePayload(groups: Groups) {
     }
     if (emmyBadge) {
       entry.emmyBadge = true;
+    }
+    if (loop) {
+      entry.loop = true;
+    }
+    if (autoplay) {
+      entry.autoplay = true;
     }
     if (typeof caption === "string" && caption.trim()) {
       entry.caption = caption;
@@ -534,7 +554,7 @@ export default function PortfolioAdminPage() {
                   </p>
                 </div>
                 <div className="overflow-x-auto rounded-xl border border-white/10">
-                  <table className="w-full min-w-[860px] border-collapse text-left text-sm">
+                  <table className="w-full min-w-[1020px] border-collapse text-left text-sm">
                     <thead className="border-b border-white/10 bg-white/5 text-xs uppercase tracking-wider text-neutral-400">
                       <tr>
                         <th className="w-8 px-2 py-3 font-medium">
@@ -544,6 +564,8 @@ export default function PortfolioAdminPage() {
                         <th className="px-4 py-3 font-medium">Title</th>
                         <th className="px-4 py-3 font-medium">Section</th>
                         <th className="px-4 py-3 font-medium">Emmy</th>
+                        <th className="px-4 py-3 font-medium">Loop</th>
+                        <th className="px-4 py-3 font-medium">Autoplay</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -554,7 +576,7 @@ export default function PortfolioAdminPage() {
                           }
                         >
                           <td
-                            colSpan={5}
+                            colSpan={7}
                             className="px-4 py-6 text-sm text-neutral-500"
                           >
                             No videos in this section.
@@ -660,6 +682,30 @@ export default function PortfolioAdminPage() {
                                 })
                               }
                               aria-label={`Emmy badge ${row.title}`}
+                            />
+                          </td>
+                          <td className="w-20 px-4 py-3 text-center align-middle">
+                            <input
+                              type="checkbox"
+                              checked={Boolean(row.loop)}
+                              onChange={(event) =>
+                                updateRow(section.id, row.uid, {
+                                  loop: event.target.checked,
+                                })
+                              }
+                              aria-label={`Loop ${row.title}`}
+                            />
+                          </td>
+                          <td className="w-24 px-4 py-3 text-center align-middle">
+                            <input
+                              type="checkbox"
+                              checked={Boolean(row.autoplay)}
+                              onChange={(event) =>
+                                updateRow(section.id, row.uid, {
+                                  autoplay: event.target.checked,
+                                })
+                              }
+                              aria-label={`Autoplay ${row.title}`}
                             />
                           </td>
                         </tr>

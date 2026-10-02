@@ -15,6 +15,8 @@ export interface PortfolioVideo {
   caption?: string;
   emmyBadge?: boolean;
   featured?: boolean;
+  loop?: boolean;
+  autoplay?: boolean;
   /** True when the entry is listed before a Stream clip is attached. */
   placeholder?: boolean;
 }
@@ -27,6 +29,8 @@ type OverrideEntry = {
   caption?: string;
   emmyBadge?: boolean;
   featured?: boolean;
+  loop?: boolean;
+  autoplay?: boolean;
 };
 
 type PlaceholderEntry = {
@@ -110,6 +114,8 @@ export async function getPortfolioVideos(): Promise<PortfolioVideo[]> {
         caption: override?.caption,
         emmyBadge: override?.emmyBadge ?? false,
         featured: override?.featured ?? false,
+        loop: override?.loop ?? false,
+        autoplay: override?.autoplay ?? false,
       };
     });
 
@@ -127,6 +133,8 @@ export async function getPortfolioVideos(): Promise<PortfolioVideo[]> {
     caption: entry.caption,
     emmyBadge: entry.emmyBadge ?? false,
     featured: false,
+    loop: false,
+    autoplay: false,
     placeholder: true,
   }));
 
@@ -151,6 +159,19 @@ export async function getPortfolioVideos(): Promise<PortfolioVideo[]> {
       Date.parse(createdByUid.get(a.uid) ?? "0")
     );
   });
+}
+
+export function buildPlaybackSrc(video: PortfolioVideo) {
+  const params = new URLSearchParams();
+  if (video.autoplay) {
+    params.set("autoplay", "true");
+    params.set("muted", "true"); // browsers block unmuted autoplay, this is required for it to actually play
+  }
+  if (video.loop) {
+    params.set("loop", "true");
+  }
+  const qs = params.toString();
+  return qs ? `${video.playbackUrl}?${qs}` : video.playbackUrl;
 }
 
 export function extractFeatured(videos: PortfolioVideo[]) {

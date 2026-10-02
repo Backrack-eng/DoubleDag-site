@@ -3,7 +3,8 @@
     "thumbnailTime": null,
     "title": "Demo Reel 2023",
     "order": 0,
-    "featured": true
+    "featured": true,
+    "autoplay": true
   },
   "95c38530eb7336c2fbe7c46129bfe1a2": {
     "title": "Demo Reel - 2006-2012",
@@ -179,7 +180,8 @@
   },
   "4215f4af3f5a34958687ed0acfc04897": {
     "title": "Heart and Soil - \"doom scroll break\"",
-    "order": 350
+    "order": 350,
+    "loop": true
   },
   "390e589cee07f747aa6056dcd8713948": {
     "title": "Double Dag Logo",
