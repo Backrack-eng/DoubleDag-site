@@ -21,7 +21,9 @@ export const metadata: Metadata = {
 
 export default async function PortfolioPage() {
   const videos = await getPortfolioVideos();
-  const { featured, rest } = extractFeatured(videos);
+  const youtubeVideos = videos.filter((video) => video.source === "youtube");
+  const streamVideos = videos.filter((video) => video.source !== "youtube");
+  const { featured, rest } = extractFeatured(streamVideos);
   const { landscape, portrait } = groupByOrientation(rest);
 
   const mainReel =
@@ -136,6 +138,20 @@ export default async function PortfolioPage() {
             </h2>
             <div className="mt-10">
               <PortfolioGrid videos={highlightWork} />
+            </div>
+          </section>
+        )}
+
+        {youtubeVideos.length > 0 && (
+          <section className="border-t border-white/10 py-16">
+            <p className="mb-4 text-sm uppercase tracking-[0.3em] text-red-500">
+              Featured on YouTube
+            </p>
+            <h2 className="max-w-2xl text-3xl font-semibold tracking-tight sm:text-4xl">
+              Work published to YouTube, with live view counts
+            </h2>
+            <div className="mt-10">
+              <PortfolioGrid videos={youtubeVideos} />
             </div>
           </section>
         )}

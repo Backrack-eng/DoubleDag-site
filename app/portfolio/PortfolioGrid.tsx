@@ -3,6 +3,7 @@
 import { useState } from "react";
 import {
   buildPlaybackSrc,
+  formatCount,
   type PortfolioVideo,
 } from "../../lib/portfolio-videos";
 
@@ -29,6 +30,21 @@ function PlaceholderMedia({ title }: { title: string }) {
 }
 
 function clickPlaybackSrc(video: PortfolioVideo) {
+  if (video.source === "youtube") {
+    const params = new URLSearchParams();
+    params.set("autoplay", "1");
+    if (video.loop) {
+      const youtubeId =
+        video.youtubeId ??
+        (video.uid.startsWith("youtube:")
+          ? video.uid.slice("youtube:".length)
+          : video.uid);
+      params.set("loop", "1");
+      params.set("playlist", youtubeId);
+    }
+    return `${video.playbackUrl}?${params.toString()}`;
+  }
+
   const base = buildPlaybackSrc({ ...video, autoplay: false });
   const join = base.includes("?") ? "&" : "?";
   return `${base}${join}autoplay=true`;
@@ -107,6 +123,12 @@ function VideoCard({
         {video.duration !== null && (
           <p className="mt-1 text-sm text-neutral-400">
             {formatDuration(video.duration)}
+          </p>
+        )}
+        {video.stats && (
+          <p className="mt-1 text-sm text-neutral-400">
+            {formatCount(video.stats.viewCount)} views ·{" "}
+            {formatCount(video.stats.likeCount)} likes
           </p>
         )}
         {video.caption && (

@@ -18,10 +18,18 @@ type OverrideRow = {
   placeholder?: boolean;
   orientation?: "landscape" | "portrait";
   thumbnailTime?: string | null;
+  source?: "youtube" | "stream";
+  youtubeId?: string;
   [key: string]: unknown;
 };
 
-type SectionId = "demo" | "highlight" | "selected" | "social" | "hidden";
+type SectionId =
+  | "demo"
+  | "highlight"
+  | "selected"
+  | "youtube"
+  | "social"
+  | "hidden";
 
 type Groups = Record<SectionId, OverrideRow[]>;
 
@@ -48,6 +56,11 @@ const SECTIONS: {
     hint: "Remaining landscape clips on the portfolio page.",
   },
   {
+    id: "youtube",
+    title: "Featured on YouTube",
+    hint: "YouTube-linked videos. They appear only in the Featured on YouTube section on the public page, not in the Stream grids. View and like counts are pulled live and are not editable here.",
+  },
+  {
     id: "social",
     title: "Social Cuts",
     hint: "Vertical / portrait clips. These appear under Social / Vertical on the public page, separate from Featured and Selected Work.",
@@ -63,12 +76,30 @@ const SECTION_OPTIONS: { id: SectionId; label: string }[] = [
   { id: "demo", label: "Demo Reel" },
   { id: "highlight", label: "Featured Work" },
   { id: "selected", label: "Selected Work" },
+  { id: "youtube", label: "Featured on YouTube" },
   { id: "social", label: "Social Cuts" },
   { id: "hidden", label: "Hidden" },
 ];
 
 function isPlaceholder(row: OverrideRow) {
   return Boolean(row.placeholder) || row.uid.startsWith("placeholder-");
+}
+
+function isYouTube(row: OverrideRow) {
+  return row.source === "youtube" || row.uid.startsWith("youtube:");
+}
+
+function youtubeWatchUrl(row: OverrideRow): string | null {
+  const youtubeId =
+    typeof row.youtubeId === "string" && row.youtubeId
+      ? row.youtubeId
+      : row.uid.startsWith("youtube:")
+        ? row.uid.slice("youtube:".length)
+        : "";
+  if (!/^[a-zA-Z0-9_-]{11}$/.test(youtubeId)) {
+    return null;
+  }
+  return `https://www.youtube.com/watch?v=${youtubeId}`;
 }
 
 function isPortrait(row: OverrideRow) {
@@ -80,6 +111,7 @@ function cloneGroups(current: Groups): Groups {
     demo: [...current.demo],
     highlight: [...current.highlight],
     selected: [...current.selected],
+    youtube: [...current.youtube],
     social: [...current.social],
     hidden: [...current.hidden],
   };
@@ -88,6 +120,12 @@ function cloneGroups(current: Groups): Groups {
 function canPlace(row: OverrideRow, section: SectionId) {
   if (section === "hidden") {
     return true;
+  }
+  if (isYouTube(row)) {
+    return section === "youtube";
+  }
+  if (section === "youtube") {
+    return false;
   }
   if (isPlaceholder(row) && section === "demo") {
     return false;
@@ -102,6 +140,9 @@ function resolveTarget(row: OverrideRow, to: SectionId): SectionId {
   if (canPlace(row, to)) {
     return to;
   }
+  if (isYouTube(row)) {
+    return "youtube";
+  }
   if (isPortrait(row)) {
     return "social";
   }
@@ -109,6 +150,45 @@ function resolveTarget(row: OverrideRow, to: SectionId): SectionId {
     return "highlight";
   }
   return "selected";
+}
+
+function extractYouTubeId(raw: string): string | null {
+  const input = raw.trim();
+  if (!input) {
+    return null;
+  }
+  if (/^[a-zA-Z0-9_-]{11}$/.test(input)) {
+    return input;
+  }
+
+  const withProtocol = /^https?:\/\//i.test(input)
+    ? input
+    : `https://${input}`;
+  try {
+    const url = new URL(withProtocol);
+    const host = url.hostname.replace(/^www\./i, "").replace(/^m\./i, "");
+    if (host === "youtu.be") {
+      const id = url.pathname.split("/").filter(Boolean)[0] ?? "";
+      return /^[a-zA-Z0-9_-]{11}$/.test(id) ? id : null;
+    }
+    if (host === "youtube.com" || host === "youtube-nocookie.com") {
+      const fromQuery = url.searchParams.get("v");
+      if (fromQuery && /^[a-zA-Z0-9_-]{11}$/.test(fromQuery)) {
+        return fromQuery;
+      }
+      const parts = url.pathname.split("/").filter(Boolean);
+      if (
+        parts[0] === "embed" &&
+        parts[1] &&
+        /^[a-zA-Z0-9_-]{11}$/.test(parts[1])
+      ) {
+        return parts[1];
+      }
+    }
+  } catch {
+    return null;
+  }
+  return null;
 }
 
 function toRows(data: Record<string, object>): OverrideRow[] {
@@ -161,8 +241,10 @@ function placeholderRows(entries: unknown): OverrideRow[] {
 function partitionRows(rows: OverrideRow[]): Groups {
   const sorted = [...rows].sort((a, b) => a.order - b.order);
   const hidden = sorted.filter((row) => row.hidden);
-  const demo = sorted.filter((row) => !row.hidden && row.featured);
-  const rest = sorted.filter((row) => !row.hidden && !row.featured);
+  const visible = sorted.filter((row) => !row.hidden);
+  const youtube = visible.filter(isYouTube);
+  const demo = visible.filter((row) => !isYouTube(row) && row.featured);
+  const rest = visible.filter((row) => !isYouTube(row) && !row.featured);
   const social = rest.filter(isPortrait);
   const landscape = rest.filter((row) => !isPortrait(row));
 
@@ -170,6 +252,7 @@ function partitionRows(rows: OverrideRow[]): Groups {
     demo,
     highlight: landscape.slice(0, FEATURED_WORK_COUNT),
     selected: landscape.slice(FEATURED_WORK_COUNT),
+    youtube,
     social,
     hidden,
   };
@@ -199,6 +282,11 @@ function toSavePayload(groups: Groups) {
       hidden: false,
     })),
     ...groups.selected.map((row) => ({
+      ...row,
+      featured: false,
+      hidden: false,
+    })),
+    ...groups.youtube.map((row) => ({
       ...row,
       featured: false,
       hidden: false,
@@ -241,6 +329,41 @@ function toSavePayload(groups: Groups) {
       continue;
     }
 
+    if (isYouTube(row)) {
+      const youtubeId =
+        typeof row.youtubeId === "string" && row.youtubeId
+          ? row.youtubeId
+          : row.uid.startsWith("youtube:")
+            ? row.uid.slice("youtube:".length)
+            : row.uid;
+      const entry: Record<string, unknown> = {
+        source: "youtube",
+        youtubeId,
+        title: row.title,
+        order: row.order,
+      };
+      if (row.featured) {
+        entry.featured = true;
+      }
+      if (row.hidden) {
+        entry.hidden = true;
+      }
+      if (row.loop) {
+        entry.loop = true;
+      }
+      if (row.autoplay) {
+        entry.autoplay = true;
+      }
+      if (row.emmyBadge) {
+        entry.emmyBadge = true;
+      }
+      if (row.spotlight) {
+        entry.spotlight = row.spotlight;
+      }
+      overrides[`youtube:${youtubeId}`] = entry;
+      continue;
+    }
+
     const {
       uid,
       title,
@@ -253,6 +376,8 @@ function toSavePayload(groups: Groups) {
       caption,
       placeholder: _placeholder,
       orientation: _orientation,
+      source: _source,
+      youtubeId: _youtubeId,
       ...extra
     } = row;
     const entry: Record<string, unknown> = { ...extra, title, order };
@@ -294,6 +419,7 @@ export default function PortfolioAdminPage() {
     demo: [],
     highlight: [],
     selected: [],
+    youtube: [],
     social: [],
     hidden: [],
   });
@@ -303,6 +429,9 @@ export default function PortfolioAdminPage() {
   const [message, setMessage] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [drag, setDrag] = useState<DragState | null>(null);
+  const [youtubeInput, setYoutubeInput] = useState("");
+  const [youtubeMessage, setYoutubeMessage] = useState<string | null>(null);
+  const [addingYoutube, setAddingYoutube] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -453,6 +582,84 @@ export default function PortfolioAdminPage() {
     setGroups((current) => capHighlight(current));
   }
 
+  async function fetchYoutubeTitle(youtubeId: string): Promise<string> {
+    try {
+      const response = await fetch(
+        `/api/admin/youtube-oembed?id=${encodeURIComponent(youtubeId)}`,
+        { signal: AbortSignal.timeout(4000) },
+      );
+      if (!response.ok) {
+        return "";
+      }
+      const data: unknown = await response.json();
+      if (
+        data !== null &&
+        typeof data === "object" &&
+        "title" in data &&
+        typeof data.title === "string"
+      ) {
+        return data.title.trim();
+      }
+    } catch {
+      return "";
+    }
+    return "";
+  }
+
+  async function addYoutubeVideo() {
+    const youtubeId = extractYouTubeId(youtubeInput);
+    if (!youtubeId) {
+      setYoutubeMessage(
+        "Paste a YouTube URL (watch, youtu.be, or embed) or an 11-character video ID.",
+      );
+      return;
+    }
+
+    const uid = `youtube:${youtubeId}`;
+    const alreadyAdded = Object.values(groups).some((rows) =>
+      rows.some((row) => row.uid === uid || row.youtubeId === youtubeId),
+    );
+    if (alreadyAdded) {
+      setYoutubeMessage("That YouTube video is already in the list.");
+      return;
+    }
+
+    setAddingYoutube(true);
+    try {
+      const title = await fetchYoutubeTitle(youtubeId);
+      const nextOrder =
+        Math.max(
+          0,
+          ...Object.values(groups).flatMap((rows) =>
+            rows.map((row) => row.order),
+          ),
+        ) + 10;
+
+      setGroups((current) => ({
+        ...current,
+        youtube: [
+          ...current.youtube,
+          {
+            uid,
+            source: "youtube",
+            youtubeId,
+            title,
+            order: nextOrder,
+            orientation: "landscape",
+          },
+        ],
+      }));
+      setYoutubeInput("");
+      setYoutubeMessage(
+        title
+          ? "Added with the YouTube title — edit it if you want, then Save Changes."
+          : "Added — give it a title, then Save Changes.",
+      );
+    } finally {
+      setAddingYoutube(false);
+    }
+  }
+
   async function saveChanges() {
     setSaving(true);
     setMessage(null);
@@ -536,17 +743,66 @@ export default function PortfolioAdminPage() {
 
         {status === "ready" && (
           <div className="space-y-10">
+            <section className="rounded-xl border border-red-500/30 bg-red-500/5 p-5">
+              <h2 className="text-sm uppercase tracking-[0.3em] text-red-400">
+                Add YouTube Video
+              </h2>
+              <p className="mt-2 max-w-3xl text-xs leading-5 text-neutral-500">
+                Paste a full YouTube URL or just the video ID. The title is
+                filled from YouTube when possible and stays editable. Stats are
+                pulled live after you save — they are not editable here.
+              </p>
+              <form
+                className="mt-4 flex flex-col gap-3 sm:flex-row"
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  void addYoutubeVideo();
+                }}
+              >
+                <input
+                  type="text"
+                  value={youtubeInput}
+                  onChange={(event) => {
+                    setYoutubeInput(event.target.value);
+                    if (youtubeMessage) {
+                      setYoutubeMessage(null);
+                    }
+                  }}
+                  placeholder="https://www.youtube.com/watch?v=… or video ID"
+                  aria-label="YouTube URL or video ID"
+                  disabled={addingYoutube}
+                  className="min-w-0 flex-1 rounded-md border border-white/15 bg-neutral-900 px-3 py-2 text-sm text-neutral-100 outline-none focus:border-red-400/60 disabled:opacity-60"
+                />
+                <button
+                  type="submit"
+                  disabled={addingYoutube}
+                  className="rounded-full border border-red-400/40 px-5 py-2 text-sm font-medium text-red-100 transition hover:bg-red-500/10 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {addingYoutube ? "Adding…" : "Add"}
+                </button>
+              </form>
+              {youtubeMessage && (
+                <p className="mt-3 text-sm text-neutral-300">{youtubeMessage}</p>
+              )}
+            </section>
+
             {SECTIONS.map((section) => (
               <section
                 key={section.id}
                 className={
-                  section.id === "social"
+                  section.id === "social" || section.id === "youtube"
                     ? "border-t border-white/20 pt-10"
                     : undefined
                 }
               >
                 <div className="mb-3">
-                  <h2 className="text-sm uppercase tracking-[0.3em] text-violet-300/80">
+                  <h2
+                    className={
+                      section.id === "youtube"
+                        ? "text-sm uppercase tracking-[0.3em] text-red-400"
+                        : "text-sm uppercase tracking-[0.3em] text-violet-300/80"
+                    }
+                  >
                     {section.title}
                   </h2>
                   <p className="mt-2 max-w-3xl text-xs leading-5 text-neutral-500">
@@ -583,7 +839,9 @@ export default function PortfolioAdminPage() {
                           </td>
                         </tr>
                       )}
-                      {groups[section.id].map((row, i) => (
+                      {groups[section.id].map((row, i) => {
+                        const watchUrl = youtubeWatchUrl(row);
+                        return (
                         <tr
                           key={row.uid}
                           draggable={true}
@@ -632,6 +890,31 @@ export default function PortfolioAdminPage() {
                             {isPlaceholder(row) && (
                               <p className="mt-1 text-xs text-neutral-500">
                                 Placeholder — video coming soon
+                              </p>
+                            )}
+                            {isYouTube(row) && (
+                              <p className="mt-1 text-xs text-red-400/80">
+                                YouTube
+                                {row.title.trim()
+                                  ? ""
+                                  : " — title is blank until you name it"}
+                                {watchUrl && (
+                                  <>
+                                    {" · "}
+                                    <a
+                                      href={watchUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      draggable={false}
+                                      onPointerDown={(event) =>
+                                        event.stopPropagation()
+                                      }
+                                      className="text-red-300 underline decoration-red-300/40 underline-offset-2 hover:text-red-200"
+                                    >
+                                      Open
+                                    </a>
+                                  </>
+                                )}
                               </p>
                             )}
                             {(section.id === "highlight" ||
@@ -709,7 +992,8 @@ export default function PortfolioAdminPage() {
                             />
                           </td>
                         </tr>
-                      ))}
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>

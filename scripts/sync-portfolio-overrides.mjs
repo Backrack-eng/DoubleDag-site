@@ -95,6 +95,12 @@ async function main() {
     if (liveUids.has(uid)) {
       continue;
     }
+    if (
+      uid.startsWith("youtube:") ||
+      overrides[uid]?.source === "youtube"
+    ) {
+      continue;
+    }
 
     const title = overrides[uid]?.title ?? uid;
     delete overrides[uid];

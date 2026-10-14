@@ -168,28 +168,59 @@
     "order": 320,
     "caption": "Producer, Director and Editor, Colorist, audio design"
   },
+  "youtube:ZaNvoO7TTqU": {
+    "source": "youtube",
+    "youtubeId": "ZaNvoO7TTqU",
+    "title": "They're Watching You! | The History of the Illuminati",
+    "order": 330
+  },
+  "youtube:ZhLqvmELWtA": {
+    "source": "youtube",
+    "youtubeId": "ZhLqvmELWtA",
+    "title": "Weaving Nature | David Bacharach | American Masters Shorts | PBS",
+    "order": 340
+  },
+  "youtube:eguqNGausk8": {
+    "source": "youtube",
+    "youtubeId": "eguqNGausk8",
+    "title": "5 Assets You Should NEVER Put in Your Trust",
+    "order": 350
+  },
+  "youtube:k_mmH4oeHrk": {
+    "source": "youtube",
+    "youtubeId": "k_mmH4oeHrk",
+    "title": "How To Prepare a Juicy Prime Rib I Holiday Meals",
+    "order": 360
+  },
   "c2927fd0844702028c09df1523118d3c": {
     "title": "RB Wealth Introduction Video",
-    "order": 330
+    "order": 370
   },
   "ddeb6d07f295cac1b2555f918c033444": {
     "title": "Prop Firm Match",
-    "order": 340,
+    "order": 380,
     "caption": "Producer, Director and Editor, Colorist, audio design"
   },
   "4215f4af3f5a34958687ed0acfc04897": {
     "title": "Heart and Soil - \"doom scroll break\"",
-    "order": 350,
+    "order": 390,
     "loop": true
   },
   "62bbe1860e3977f21ce67bbd09a1dcf6": {
     "title": "Alex Ortiz Gangsta Poet",
-    "order": 360,
+    "order": 400,
     "caption": "Producer, Director and Editor, Colorist, audio design"
   },
   "390e589cee07f747aa6056dcd8713948": {
     "title": "Double Dag Logo",
-    "order": 370,
+    "order": 410,
+    "hidden": true
+  },
+  "youtube:jNQXAC9IVRw": {
+    "source": "youtube",
+    "youtubeId": "jNQXAC9IVRw",
+    "title": "Me at the zoo",
+    "order": 420,
     "hidden": true
   }
 }
