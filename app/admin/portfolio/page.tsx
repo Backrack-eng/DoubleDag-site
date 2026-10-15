@@ -68,7 +68,7 @@ const SECTIONS: {
   {
     id: "hidden",
     title: "Hidden",
-    hint: "Not shown on the portfolio page.",
+    hint: "Not shown on the portfolio page. Stream clips live here when you Remove them. YouTube links and placeholders are deleted from the site instead.",
   },
 ];
 
@@ -582,6 +582,33 @@ export default function PortfolioAdminPage() {
     setGroups((current) => capHighlight(current));
   }
 
+  function removeRow(section: SectionId, uid: string) {
+    setGroups((current) => {
+      const index = current[section].findIndex((row) => row.uid === uid);
+      if (index === -1) {
+        return current;
+      }
+      const row = current[section][index];
+      const next = cloneGroups(current);
+
+      if (isYouTube(row) || isPlaceholder(row)) {
+        next[section].splice(index, 1);
+        return capHighlight(next);
+      }
+
+      if (section === "hidden") {
+        return current;
+      }
+      const [moved] = next[section].splice(index, 1);
+      if (!moved) {
+        return current;
+      }
+      next.hidden.push(moved);
+      return capHighlight(next);
+    });
+    setMessage("Removed from the list. Save Changes to take it off the site.");
+  }
+
   async function fetchYoutubeTitle(youtubeId: string): Promise<string> {
     try {
       const response = await fetch(
@@ -713,7 +740,7 @@ export default function PortfolioAdminPage() {
               {message && (
                 <p
                   className={
-                    message === "Saved"
+                    message === "Saved" || message.startsWith("Removed")
                       ? "text-sm text-violet-300"
                       : "text-sm text-red-400"
                   }
@@ -810,7 +837,7 @@ export default function PortfolioAdminPage() {
                   </p>
                 </div>
                 <div className="overflow-x-auto rounded-xl border border-white/10">
-                  <table className="w-full min-w-[1020px] border-collapse text-left text-sm">
+                  <table className="w-full min-w-[1100px] border-collapse text-left text-sm">
                     <thead className="border-b border-white/10 bg-white/5 text-xs uppercase tracking-wider text-neutral-400">
                       <tr>
                         <th className="w-8 px-2 py-3 font-medium">
@@ -822,6 +849,9 @@ export default function PortfolioAdminPage() {
                         <th className="px-4 py-3 font-medium">Emmy</th>
                         <th className="px-4 py-3 font-medium">Loop</th>
                         <th className="px-4 py-3 font-medium">Autoplay</th>
+                        <th className="px-4 py-3 font-medium">
+                          <span className="sr-only">Remove</span>
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -832,7 +862,7 @@ export default function PortfolioAdminPage() {
                           }
                         >
                           <td
-                            colSpan={7}
+                            colSpan={8}
                             className="px-4 py-6 text-sm text-neutral-500"
                           >
                             No videos in this section.
@@ -990,6 +1020,22 @@ export default function PortfolioAdminPage() {
                               }
                               aria-label={`Autoplay ${row.title}`}
                             />
+                          </td>
+                          <td className="w-24 px-4 py-3 text-right align-middle">
+                            {!(section.id === "hidden" && !isYouTube(row) && !isPlaceholder(row)) && (
+                              <button
+                                type="button"
+                                draggable={false}
+                                onPointerDown={(event) =>
+                                  event.stopPropagation()
+                                }
+                                onClick={() => removeRow(section.id, row.uid)}
+                                aria-label={`Remove ${row.title || row.uid} from the site`}
+                                className="text-xs font-medium text-red-400/90 underline decoration-red-400/30 underline-offset-2 hover:text-red-300"
+                              >
+                                Remove
+                              </button>
+                            )}
                           </td>
                         </tr>
                         );
