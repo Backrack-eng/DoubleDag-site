@@ -53,7 +53,7 @@ const SECTIONS: {
   {
     id: "selected",
     title: "Selected Work",
-    hint: "Remaining landscape clips on the portfolio page.",
+    hint: "Remaining landscape clips on the portfolio page. Captions show beside these cards, so longer write-ups have room to display in full.",
   },
   {
     id: "youtube",
@@ -993,10 +993,14 @@ export default function PortfolioAdminPage() {
                                     caption: event.target.value,
                                   })
                                 }
-                                rows={4}
-                                placeholder="Caption shown under this video on the public page"
+                                rows={section.id === "selected" ? 10 : 4}
+                                placeholder="Caption shown with this video on the public page"
                                 aria-label={`Caption for ${row.title}`}
-                                className="mt-2 w-full rounded-md border border-white/15 bg-neutral-900 px-3 py-2 text-sm leading-6 text-neutral-100 outline-none focus:border-violet-400/60"
+                                className={
+                                  section.id === "selected"
+                                    ? "mt-2 min-h-[12rem] w-full resize-y rounded-md border border-white/15 bg-neutral-900 px-3 py-2 text-sm leading-6 text-neutral-100 outline-none focus:border-violet-400/60"
+                                    : "mt-2 w-full resize-y rounded-md border border-white/15 bg-neutral-900 px-3 py-2 text-sm leading-6 text-neutral-100 outline-none focus:border-violet-400/60"
+                                }
                               />
                             )}
                           </td>

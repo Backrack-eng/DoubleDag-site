@@ -173,7 +173,7 @@ export default async function PortfolioPage() {
               Editorial and graphics work by Ben Bacharach-White across branded, educational, and feature-length projects for Double Dag Productions and past studio engagements.
             </p>
             <div className="mt-10">
-              <PortfolioGrid videos={selectedWork} />
+              <PortfolioGrid videos={selectedWork} layout="row" />
             </div>
           </section>
         )}

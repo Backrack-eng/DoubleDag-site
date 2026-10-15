@@ -96,19 +96,32 @@ export function ClickToPlayVideo({ video }: { video: PortfolioVideo }) {
 function VideoCard({
   video,
   variant,
+  layout,
 }: {
   video: PortfolioVideo;
   variant: "landscape" | "portrait";
+  layout: "grid" | "row";
 }) {
+  const isRow = layout === "row";
+  const mediaClass = [
+    "relative w-full bg-black",
+    variant === "portrait" ? "aspect-[9/16]" : "pt-[56.25%]",
+    isRow
+      ? "overflow-hidden rounded-3xl border border-white/10 transition duration-300 group-hover:border-white/20"
+      : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <article className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10">
-      <div
-        className={
-          variant === "portrait"
-            ? "relative aspect-[9/16] w-full bg-black"
-            : "relative w-full bg-black pt-[56.25%]"
-        }
-      >
+    <article
+      className={
+        isRow
+          ? "group md:grid md:grid-cols-[minmax(16rem,20rem)_minmax(0,1fr)] md:items-start md:gap-8"
+          : "group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10"
+      }
+    >
+      <div className={mediaClass}>
         <ClickToPlayVideo video={video} />
         {video.emmyBadge && (
           <img
@@ -118,7 +131,7 @@ function VideoCard({
           />
         )}
       </div>
-      <div className="p-5">
+      <div className={isRow ? "min-w-0 px-1 py-5 md:py-1" : "p-5"}>
         <h2 className="text-base font-medium text-white">{video.title}</h2>
         {video.duration !== null && (
           <p className="mt-1 text-sm text-neutral-400">
@@ -132,7 +145,13 @@ function VideoCard({
           </p>
         )}
         {video.caption && (
-          <p className="mt-3 whitespace-pre-line text-sm leading-7 text-neutral-300">
+          <p
+            className={
+              isRow
+                ? "mt-3 whitespace-pre-line text-sm leading-7 text-neutral-300 sm:text-[15px] sm:leading-8"
+                : "mt-3 whitespace-pre-line text-sm leading-7 text-neutral-300"
+            }
+          >
             {video.caption}
           </p>
         )}
@@ -144,9 +163,11 @@ function VideoCard({
 export default function PortfolioGrid({
   videos,
   variant = "landscape",
+  layout = "grid",
 }: {
   videos: PortfolioVideo[];
   variant?: "landscape" | "portrait";
+  layout?: "grid" | "row";
 }) {
   if (videos.length === 0) {
     return (
@@ -161,11 +182,18 @@ export default function PortfolioGrid({
       className={
         variant === "portrait"
           ? "grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4"
-          : "grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+          : layout === "row"
+            ? "grid gap-6"
+            : "grid gap-6 md:grid-cols-2 lg:grid-cols-3"
       }
     >
       {videos.map((video) => (
-        <VideoCard key={video.uid} video={video} variant={variant} />
+        <VideoCard
+          key={video.uid}
+          video={video}
+          variant={variant}
+          layout={layout}
+        />
       ))}
     </div>
   );
