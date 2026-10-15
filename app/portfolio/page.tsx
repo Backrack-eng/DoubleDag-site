@@ -49,9 +49,10 @@ export default async function PortfolioPage() {
           </div>
 
           <p className="hero-eyebrow-shadow relative z-10 -mt-8 sm:-mt-10 mb-4 text-sm font-medium uppercase tracking-[0.3em]">
-            Post Production Specialist &amp; Creative Technologist
-            · Headquartered in Petersburg, VA
-          </p>
+  Post Production Specialist &amp; Creative Technologist
+  <br />
+  <span className="text-[10px]">Headquartered in Petersburg, VA</span>
+</p>
 
           <h1 className="max-w-4xl text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
             24+ years of editing and post-production for documentary, educational, and branded storytelling.
