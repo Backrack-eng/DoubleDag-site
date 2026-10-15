@@ -49,7 +49,8 @@ export default async function PortfolioPage() {
           </div>
 
           <p className="hero-eyebrow-shadow relative z-10 -mt-8 sm:-mt-10 mb-4 text-sm font-medium uppercase tracking-[0.3em]">
-            Post Production Specialist &amp; Creative Technologist · Headquartered in Petersburg, VA
+            Post Production Specialist &amp; Creative Technologist
+            · Headquartered in Petersburg, VA
           </p>
 
           <h1 className="max-w-4xl text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
@@ -57,7 +58,7 @@ export default async function PortfolioPage() {
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-300">
-            Emmy Award-winning editorial work on Weaving Nature (PBS American Masters), a Webby Award for John Lewis: Witness to History, and three Telly Awards, including a Gold Telly for Urban Legends Explained, just to name a few. Clients include PBS, Smithsonian, and National Geographic.
+            Emmy & Webby Award-winning editorial work on Weaving Nature (PBS American Masters), a Webby Award for John Lewis: Witness to History, and multiple Telly Awards, including a Gold Telly for Urban Legends Explained, just to name a few. Clients include PBS, Smithsonian, and National Geographic.
           </p>
 
           <a
