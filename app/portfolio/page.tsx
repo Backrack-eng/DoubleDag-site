@@ -1,6 +1,7 @@
 import { statSync } from "node:fs";
 import { join } from "node:path";
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import { FEATURED_WORK_COUNT } from "../../lib/portfolio-constants";
 import {
   extractFeatured,
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
 };
 
 export default async function PortfolioPage() {
+  await connection();
   const videos = await getPortfolioVideos();
   const youtubeVideos = videos.filter((video) => video.source === "youtube");
   const streamVideos = videos.filter((video) => video.source !== "youtube");

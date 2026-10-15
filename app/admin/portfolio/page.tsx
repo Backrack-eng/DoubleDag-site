@@ -48,7 +48,7 @@ const SECTIONS: {
   {
     id: "highlight",
     title: "Featured Work",
-    hint: `Up to ${FEATURED_WORK_COUNT} landscape clips after the demo reels, including any “video coming soon” placeholders. Captions show under these cards on the public page.`,
+    hint: `Up to ${FEATURED_WORK_COUNT} landscape clips after the demo reels, including any “video coming soon” placeholders. Captions show under these cards on the public page. Moving another clip in keeps it here and sends the last Featured Work clip to Selected Work.`,
   },
   {
     id: "selected",
@@ -258,18 +258,33 @@ function partitionRows(rows: OverrideRow[]): Groups {
   };
 }
 
-function capHighlight(groups: Groups): Groups {
+function capHighlight(groups: Groups, preferUid?: string): Groups {
   if (groups.highlight.length <= FEATURED_WORK_COUNT) {
     return groups;
   }
 
+  const highlight = [...groups.highlight];
+  const overflow: OverrideRow[] = [];
+
+  while (highlight.length > FEATURED_WORK_COUNT) {
+    let removeAt = highlight.length - 1;
+    if (
+      preferUid &&
+      highlight[removeAt]?.uid === preferUid &&
+      highlight.length > 1
+    ) {
+      removeAt -= 1;
+    }
+    const [demoted] = highlight.splice(removeAt, 1);
+    if (demoted) {
+      overflow.unshift(demoted);
+    }
+  }
+
   return {
     ...groups,
-    highlight: groups.highlight.slice(0, FEATURED_WORK_COUNT),
-    selected: [
-      ...groups.highlight.slice(FEATURED_WORK_COUNT),
-      ...groups.selected,
-    ],
+    highlight,
+    selected: [...overflow, ...groups.selected],
   };
 }
 
@@ -527,15 +542,28 @@ export default function PortfolioAdminPage() {
       return;
     }
 
+    const highlightWasFull =
+      to === "highlight" && groups.highlight.length >= FEATURED_WORK_COUNT;
+
     setGroups((current) => {
       const next = cloneGroups(current);
       const [moved] = next[from].splice(index, 1);
       if (!moved) {
         return current;
       }
-      next[resolveTarget(moved, to)].push(moved);
-      return capHighlight(next);
+      const target = resolveTarget(moved, to);
+      next[target].push(moved);
+      return capHighlight(
+        next,
+        target === "highlight" ? moved.uid : undefined,
+      );
     });
+
+    if (highlightWasFull) {
+      setMessage(
+        `Featured Work holds ${FEATURED_WORK_COUNT} clips. The last one moved to Selected Work.`,
+      );
+    }
   }
 
   function handleDragStart(
@@ -578,8 +606,15 @@ export default function PortfolioAdminPage() {
   }
 
   function handleDragEnd() {
+    const dragState = drag;
     setDrag(null);
-    setGroups((current) => capHighlight(current));
+    setGroups((current) => {
+      const preferUid =
+        dragState?.section === "highlight"
+          ? current[dragState.section][dragState.index]?.uid
+          : undefined;
+      return capHighlight(current, preferUid);
+    });
   }
 
   function removeRow(section: SectionId, uid: string) {
@@ -740,7 +775,9 @@ export default function PortfolioAdminPage() {
               {message && (
                 <p
                   className={
-                    message === "Saved" || message.startsWith("Removed")
+                    message === "Saved" ||
+                    message.startsWith("Removed") ||
+                    message.startsWith("Featured Work holds")
                       ? "text-sm text-violet-300"
                       : "text-sm text-red-400"
                   }
