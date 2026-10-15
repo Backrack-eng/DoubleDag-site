@@ -253,6 +253,20 @@ body {
   animation: emmyBlink 1s steps(2, jump-none) infinite;
 }
 
+.caption-toggle {
+  display: flex;
+  margin-top: 0.15rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: rgb(163 163 163);
+  cursor: pointer;
+}
+
+.caption-toggle:hover {
+  color: rgb(212 212 212);
+}
+
 @utility scrollbar-hide {
   scrollbar-width: none;
   -ms-overflow-style: none;
