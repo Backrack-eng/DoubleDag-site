@@ -48,7 +48,7 @@ export default async function PortfolioPage() {
             />
           </div>
 
-          <p className="hero-eyebrow-shadow relative z-10 -mt-8 sm:-mt-10 mb-4 text-sm font-medium uppercase tracking-[0.3em]">
+          <p className="hero-eyebrow-shadow relative z-10 -mt-8 sm:-mt-10 mb-4 text-base font-medium uppercase tracking-[0.3em]">
   Post Production Specialist &amp; Creative Technologist
   <br />
   <span className="text-[10px]">Headquartered in Petersburg, VA</span>
