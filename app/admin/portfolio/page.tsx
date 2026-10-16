@@ -124,6 +124,9 @@ function youtubePreviewThumbnail(row: OverrideRow): string {
   if (/^https?:\/\//i.test(override)) {
     return override;
   }
+  if (override.startsWith("/") && !override.startsWith("//")) {
+    return override;
+  }
   return youtubeDefaultThumbnail(row);
 }
 
