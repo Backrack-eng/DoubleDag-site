@@ -20,6 +20,7 @@ type OverrideRow = {
   thumbnailTime?: string | null;
   source?: "youtube" | "stream";
   youtubeId?: string;
+  thumbnailOverrideUrl?: string;
   [key: string]: unknown;
 };
 
@@ -100,6 +101,30 @@ function youtubeWatchUrl(row: OverrideRow): string | null {
     return null;
   }
   return `https://www.youtube.com/watch?v=${youtubeId}`;
+}
+
+function youtubeDefaultThumbnail(row: OverrideRow): string {
+  const youtubeId =
+    typeof row.youtubeId === "string" && row.youtubeId
+      ? row.youtubeId
+      : row.uid.startsWith("youtube:")
+        ? row.uid.slice("youtube:".length)
+        : "";
+  if (!/^[a-zA-Z0-9_-]{11}$/.test(youtubeId)) {
+    return "";
+  }
+  return `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`;
+}
+
+function youtubePreviewThumbnail(row: OverrideRow): string {
+  const override =
+    typeof row.thumbnailOverrideUrl === "string"
+      ? row.thumbnailOverrideUrl.trim()
+      : "";
+  if (/^https?:\/\//i.test(override)) {
+    return override;
+  }
+  return youtubeDefaultThumbnail(row);
 }
 
 function isPortrait(row: OverrideRow) {
@@ -374,6 +399,12 @@ function toSavePayload(groups: Groups) {
       }
       if (row.spotlight) {
         entry.spotlight = row.spotlight;
+      }
+      if (
+        typeof row.thumbnailOverrideUrl === "string" &&
+        row.thumbnailOverrideUrl.trim()
+      ) {
+        entry.thumbnailOverrideUrl = row.thumbnailOverrideUrl.trim();
       }
       overrides[`youtube:${youtubeId}`] = entry;
       continue;
@@ -908,6 +939,9 @@ export default function PortfolioAdminPage() {
                       )}
                       {groups[section.id].map((row, i) => {
                         const watchUrl = youtubeWatchUrl(row);
+                        const previewThumb = isYouTube(row)
+                          ? youtubePreviewThumbnail(row)
+                          : "";
                         return (
                         <tr
                           key={row.uid}
@@ -960,29 +994,73 @@ export default function PortfolioAdminPage() {
                               </p>
                             )}
                             {isYouTube(row) && (
-                              <p className="mt-1 text-xs text-red-400/80">
-                                YouTube
-                                {row.title.trim()
-                                  ? ""
-                                  : " — title is blank until you name it"}
-                                {watchUrl && (
-                                  <>
-                                    {" · "}
-                                    <a
-                                      href={watchUrl}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
+                              <>
+                                <p className="mt-1 text-xs text-red-400/80">
+                                  YouTube
+                                  {row.title.trim()
+                                    ? ""
+                                    : " — title is blank until you name it"}
+                                  {watchUrl && (
+                                    <>
+                                      {" · "}
+                                      <a
+                                        href={watchUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        draggable={false}
+                                        onPointerDown={(event) =>
+                                          event.stopPropagation()
+                                        }
+                                        className="text-red-300 underline decoration-red-300/40 underline-offset-2 hover:text-red-200"
+                                      >
+                                        Open
+                                      </a>
+                                    </>
+                                  )}
+                                </p>
+                                <div className="mt-2 flex items-start gap-2">
+                                  {previewThumb && (
+                                    <img
+                                      src={previewThumb}
+                                      alt=""
                                       draggable={false}
-                                      onPointerDown={(event) =>
-                                        event.stopPropagation()
-                                      }
-                                      className="text-red-300 underline decoration-red-300/40 underline-offset-2 hover:text-red-200"
-                                    >
-                                      Open
-                                    </a>
-                                  </>
-                                )}
-                              </p>
+                                      className="h-12 w-20 shrink-0 rounded object-cover bg-black"
+                                    />
+                                  )}
+                                  <input
+                                    type="text"
+                                    value={
+                                      typeof row.thumbnailOverrideUrl ===
+                                      "string"
+                                        ? row.thumbnailOverrideUrl
+                                        : ""
+                                    }
+                                    placeholder="Thumbnail image URL (optional)"
+                                    aria-label={`Thumbnail URL for ${row.title || row.uid}`}
+                                    draggable={false}
+                                    onPointerDown={(event) =>
+                                      event.stopPropagation()
+                                    }
+                                    onChange={(event) => {
+                                      const value = event.target.value;
+                                      updateRow(section.id, row.uid, {
+                                        thumbnailOverrideUrl: value
+                                          ? value
+                                          : undefined,
+                                      });
+                                    }}
+                                    onBlur={(event) => {
+                                      const value = event.target.value.trim();
+                                      updateRow(section.id, row.uid, {
+                                        thumbnailOverrideUrl: value
+                                          ? value
+                                          : undefined,
+                                      });
+                                    }}
+                                    className="w-full rounded-md border border-white/15 bg-neutral-900 px-3 py-2 text-sm text-neutral-100 outline-none focus:border-violet-400/60"
+                                  />
+                                </div>
+                              </>
                             )}
                             {(section.id === "highlight" ||
                               section.id === "selected") && (

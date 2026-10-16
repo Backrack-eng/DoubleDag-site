@@ -48,6 +48,7 @@ export interface YouTubeOverrideEntry {
   spotlight?: { meta: string; award?: string; paragraphs: string[] };
   loop?: boolean;
   autoplay?: boolean;
+  thumbnailOverrideUrl?: string;
 }
 
 type AnyOverrideEntry = OverrideEntry | YouTubeOverrideEntry;
@@ -262,7 +263,9 @@ export async function getPortfolioVideos(): Promise<PortfolioVideo[]> {
         uid: key.startsWith("youtube:") ? key : `youtube:${youtubeId}`,
         title: entry.title,
         duration: null,
-        thumbnailUrl: `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`,
+        thumbnailUrl: entry.thumbnailOverrideUrl
+          ? entry.thumbnailOverrideUrl
+          : `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`,
         playbackUrl: `https://www.youtube.com/embed/${youtubeId}`,
         width: null,
         height: null,
