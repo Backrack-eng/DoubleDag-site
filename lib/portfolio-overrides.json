@@ -200,39 +200,45 @@
     "title": "An Interview with Boxing Champion Pinklon Thomas",
     "order": 370
   },
+  "youtube:4KletBo8lds": {
+    "source": "youtube",
+    "youtubeId": "4KletBo8lds",
+    "title": "Jimmie Van Zant - Feels Like Freedom",
+    "order": 380
+  },
   "c2927fd0844702028c09df1523118d3c": {
     "title": "RB Wealth Introduction Video",
-    "order": 380
+    "order": 390
   },
   "ddeb6d07f295cac1b2555f918c033444": {
     "title": "Prop Firm Match",
-    "order": 390,
+    "order": 400,
     "caption": "Producer, Director and Editor, Colorist, audio design"
   },
   "4215f4af3f5a34958687ed0acfc04897": {
     "title": "Heart and Soil - \"doom scroll break\"",
-    "order": 400,
+    "order": 410,
     "loop": true
   },
   "62bbe1860e3977f21ce67bbd09a1dcf6": {
     "title": "Alex Ortiz Gangsta Poet",
-    "order": 410,
+    "order": 420,
     "caption": "Producer, Director and Editor, Colorist, audio design"
   },
   "390e589cee07f747aa6056dcd8713948": {
     "title": "Double Dag Logo",
-    "order": 420,
+    "order": 430,
     "hidden": true
   },
   "3d24a08bd88fa4ca2c6ed7454aa9a91e": {
     "title": "Weaving Nature End Credits",
-    "order": 430,
+    "order": 440,
     "hidden": true,
     "caption": "Editor, Colorist, Assistant producer"
   },
   "24cdd7ec061d47672d9106e352b9d2a1": {
     "title": "Pinklon Thomas Interview 2011",
-    "order": 440,
+    "order": 450,
     "hidden": true,
     "caption": "Producer, Director and Editor, Colorist, audio design"
   }
