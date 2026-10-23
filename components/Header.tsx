@@ -24,7 +24,7 @@ export default function Header() {
             alt="Double Dag Productions"
             priority
             sizes="100vw"
-            className="h-[48px] w-full object-cover object-left sm:h-[56px] lg:h-[72px]"
+            className="h-[clamp(48px,7.55vw,72px)] w-full object-contain object-left"
           />
         </Link>
 
