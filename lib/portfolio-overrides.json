@@ -91,12 +91,12 @@
   "fdf8313f820b4d34082b68a72f693aec": {
     "title": "Do-It-Yourself Engineering",
     "order": 170,
-    "caption": "Editor, Colorist, Field Camera operator"
+    "caption": "Editor, Graphics, Colorist, Field Camera operator"
   },
   "c987ba61091a629d09a4aef2b6d801b5": {
     "title": "Everyday Engineering: Understanding the Marvels of Daily Life",
     "order": 180,
-    "caption": "Editor, Colorist, Studio Camera operator"
+    "caption": "Editor, Graphics, Colorist, Studio Camera operator"
   },
   "b2028b3579fb6b00029fc1cc067a3edc": {
     "title": "Linear Algebra",
