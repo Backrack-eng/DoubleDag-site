@@ -3,10 +3,42 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import bannerWeb from "../public/Banner-web.png";
 
 export default function Header() {
   const pathname = usePathname();
+  const isPortfolio =
+    pathname === "/portfolio" || pathname.startsWith("/portfolio/");
+  const [collapsed, setCollapsed] = useState(false);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    if (!isPortfolio) {
+      setCollapsed(false);
+      return;
+    }
+
+    lastScrollY.current = window.scrollY;
+
+    const onScroll = () => {
+      const y = window.scrollY;
+      const delta = y - lastScrollY.current;
+
+      if (y < 16) {
+        setCollapsed(false);
+      } else if (delta > 6) {
+        setCollapsed(true);
+      } else if (delta < -6) {
+        setCollapsed(false);
+      }
+
+      lastScrollY.current = y;
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [isPortfolio]);
 
   const linkClass = (href: string) =>
     `transition ${
@@ -16,7 +48,11 @@ export default function Header() {
     }`;
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-neutral-950">
+    <header
+      className={`sticky top-0 z-50 w-full border-b border-white/10 bg-neutral-950 transition-transform duration-300 ease-out motion-reduce:transition-none ${
+        isPortfolio && collapsed ? "-translate-y-full" : "translate-y-0"
+      }`}
+    >
       <div className="relative w-full">
         <Link href="/" className="inline-block max-w-full">
           <Image
