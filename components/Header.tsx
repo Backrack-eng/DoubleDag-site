@@ -18,13 +18,14 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-neutral-950">
       <div className="relative w-full">
-        <Link href="/" className="block">
+        <Link href="/" className="inline-block max-w-full">
           <Image
             src={bannerWeb}
             alt="Double Dag Productions"
             priority
             sizes="100vw"
-            className="banner-web-mask h-[clamp(48px,7.55vw,72px)] w-full object-contain object-left"
+            className="banner-web-mask h-auto w-auto max-h-[72px] max-w-full"
+            style={{ width: "auto", height: "auto" }}
           />
         </Link>
 
