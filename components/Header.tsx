@@ -16,38 +16,42 @@ export default function Header() {
     }`;
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-neutral-950/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4 sm:px-10 lg:px-16">
-        <Link href="/" className="group min-w-0 flex-1">
+    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-neutral-950">
+      <div className="relative w-full">
+        <Link href="/" className="block">
           <Image
             src={bannerWeb}
             alt="Double Dag Productions"
             priority
-            sizes="520px"
-            className="h-auto w-full max-w-[520px] object-contain object-left transition duration-300 group-hover:opacity-80"
+            sizes="100vw"
+            className="h-[48px] w-full object-cover object-left sm:h-[56px] lg:h-[72px]"
           />
         </Link>
 
-        <nav className="flex shrink-0 flex-wrap items-center justify-end gap-x-5 gap-y-2 text-sm">
-          <Link href="/" className={linkClass("/")}>
-            Home
-          </Link>
-          <Link href="/creators" className={linkClass("/creators")}>
-            Creators
-          </Link>
-          <Link href="/filmography" className={linkClass("/filmography")}>
-            Filmography
-          </Link>
-          <Link href="/research" className={linkClass("/research")}>
-            Research
-          </Link>
-          <Link
-            href="/creative-technologist"
-            className={linkClass("/creative-technologist")}
-          >
-            Creative Technologist
-          </Link>
-        </nav>
+        <div className="border-t border-white/10 bg-neutral-950 px-6 py-3 md:pointer-events-none md:absolute md:inset-0 md:border-t-0 md:bg-transparent md:px-0 md:py-0">
+          <div className="mx-auto flex max-w-6xl items-center justify-end md:h-full md:px-10 lg:px-16">
+            <nav className="flex flex-wrap items-center justify-end gap-x-4 gap-y-2 text-sm md:pointer-events-auto md:gap-x-5">
+              <Link href="/" className={linkClass("/")}>
+                Home
+              </Link>
+              <Link href="/creators" className={linkClass("/creators")}>
+                Creators
+              </Link>
+              <Link href="/filmography" className={linkClass("/filmography")}>
+                Filmography
+              </Link>
+              <Link href="/research" className={linkClass("/research")}>
+                Research
+              </Link>
+              <Link
+                href="/creative-technologist"
+                className={linkClass("/creative-technologist")}
+              >
+                Creative Technologist
+              </Link>
+            </nav>
+          </div>
+        </div>
       </div>
     </header>
   );
