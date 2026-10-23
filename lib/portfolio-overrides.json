@@ -88,163 +88,173 @@
     "order": 160,
     "caption": "Editor, Colorist"
   },
+  "fdf8313f820b4d34082b68a72f693aec": {
+    "title": "Do-It-Yourself Engineering",
+    "order": 170,
+    "caption": "Editor, Colorist, Field Camera operator"
+  },
   "b2028b3579fb6b00029fc1cc067a3edc": {
     "title": "Linear Algebra",
-    "order": 170,
+    "order": 180,
     "caption": "Editor, Colorist"
   },
   "ecdaa3539a4fc2ec8d262505700a05ba": {
     "title": "Archaeological Mysteries",
-    "order": 180,
+    "order": 190,
     "caption": "Editor, Colorist"
   },
   "7e7f780089fa702e5427fee2b5e011e1": {
     "title": "Understanding Artificial Intelligence",
-    "order": 190,
+    "order": 200,
     "caption": "Editor, Colorist, AI Generation and research"
   },
   "3c4c0b6cde8a59f49d986aaac31d8484": {
     "title": "The Agency",
-    "order": 200,
+    "order": 210,
     "caption": "Editor, Colorist"
   },
   "a0d5ed24ac55e4d2a9eb3b441628719c": {
     "title": "Geological Events",
-    "order": 210,
+    "order": 220,
     "caption": "Editor, Colorist"
   },
   "7030cc8c533a627da65a84bb2808db4c": {
     "title": "10 Great What Ifs",
-    "order": 220,
+    "order": 230,
     "caption": "Editor, Colorist"
   },
   "34007a1e569b6d188ea3c1974165ee03": {
     "title": "Botanist Eye",
-    "order": 230,
+    "order": 240,
     "caption": "Editor, Colorist, Post-Producer"
   },
   "fa61dbc3569d6f947cd8955d82b69d80": {
     "title": "Outdoor Fundamentals",
-    "order": 240,
+    "order": 250,
     "caption": "Editor, Colorist, Location camera operator, graphics"
   },
   "6e17f20b7d7564f7c248665e07bebbad": {
     "title": "The Secret World Of Espionage",
-    "order": 250,
+    "order": 260,
     "caption": "Editor, Colorist"
   },
   "be6c7d79482614ebf509ff25f442789a": {
     "title": "Going to the Devil",
-    "order": 260,
+    "order": 270,
     "caption": "Editor, Colorist"
   },
   "bb59f02a4d3d5dd200a33f4775d71a5e": {
     "title": "Loss & Love music video",
-    "order": 270,
+    "order": 280,
     "caption": "Producer, Director and Editor, Colorist"
   },
   "1e1ed7cfa45cf4e6c02a9b001f7805bb": {
     "title": "Life Of Jesus History Revealed",
-    "order": 280,
+    "order": 290,
     "caption": "Editor"
   },
   "38f5c2143d48720d082b35a1c5a55b2a": {
     "title": "HB Production Group: Demo 2010",
-    "order": 290,
-    "caption": "This demo is a representation of the work I did at HB Production Group."
+    "order": 300,
+    "caption": "This demo is a representation of the client base and work I did at HB Production Group."
   },
   "decbbab0603fb1d59eb91e0f3abc1d84": {
     "title": "Sheriff Training Workout",
-    "order": 300,
+    "order": 310,
     "caption": "Producer, Director and Editor, Colorist, audio design"
   },
   "6cd866031ec8242a88b8618fded702b3": {
     "title": "Sexy Mutha F*#%ers Stand Up Special Trailer",
-    "order": 310,
+    "order": 320,
     "caption": "Producer, Director and Editor, Colorist, audio design"
   },
   "3deecf8b973280f1945aca129c47d082": {
     "title": "A Dead Husband in a Western Town",
-    "order": 320,
+    "order": 330,
     "caption": "Trailer Editor"
+  },
+  "c987ba61091a629d09a4aef2b6d801b5": {
+    "title": "Everyday Engineering: Understanding the Marvels of Daily Life",
+    "order": 340,
+    "caption": "Editor, Colorist, Studio Camera operator"
   },
   "youtube:ZaNvoO7TTqU": {
     "source": "youtube",
     "youtubeId": "ZaNvoO7TTqU",
     "title": "They're Watching You! | The History of the Illuminati",
-    "order": 330
+    "order": 350
   },
   "youtube:eguqNGausk8": {
     "source": "youtube",
     "youtubeId": "eguqNGausk8",
     "title": "5 Assets You Should NEVER Put in Your Trust",
-    "order": 340
+    "order": 360
   },
   "youtube:Zihkzw6HC8c": {
     "source": "youtube",
     "youtubeId": "Zihkzw6HC8c",
     "title": "How to Decorate your Living Space | Developing Your Style with Jonathan Adler",
-    "order": 350
+    "order": 370
   },
   "youtube:k_mmH4oeHrk": {
     "source": "youtube",
     "youtubeId": "k_mmH4oeHrk",
     "title": "How To Prepare a Juicy Prime Rib I Holiday Meals",
-    "order": 360
+    "order": 380
   },
   "youtube:ZhLqvmELWtA": {
     "source": "youtube",
     "youtubeId": "ZhLqvmELWtA",
     "title": "Weaving Nature | David Bacharach | American Masters Shorts | PBS",
-    "order": 370,
+    "order": 390,
     "emmyBadge": true
   },
   "youtube:WjPbgyyNW8Y": {
     "source": "youtube",
     "youtubeId": "WjPbgyyNW8Y",
     "title": "An Interview with Boxing Champion Pinklon Thomas",
-    "order": 380
+    "order": 400
   },
   "youtube:4KletBo8lds": {
     "source": "youtube",
     "youtubeId": "4KletBo8lds",
     "title": "Jimmie Van Zant - Feels Like Freedom",
-    "order": 390,
+    "order": 410,
     "thumbnailOverrideUrl": "/Thumbnails/FeelsLikeFreedom-Thumbnail2.jpg"
   },
   "c2927fd0844702028c09df1523118d3c": {
     "title": "RB Wealth Introduction Video",
-    "order": 400
+    "order": 420
   },
   "ddeb6d07f295cac1b2555f918c033444": {
     "title": "Prop Firm Match",
-    "order": 410,
+    "order": 430,
     "caption": "Producer, Director and Editor, Colorist, audio design"
   },
   "4215f4af3f5a34958687ed0acfc04897": {
     "title": "Heart and Soil - \"doom scroll break\"",
-    "order": 420,
+    "order": 440,
     "loop": true
   },
   "62bbe1860e3977f21ce67bbd09a1dcf6": {
     "title": "Alex Ortiz Gangsta Poet",
-    "order": 430,
+    "order": 450,
     "caption": "Producer, Director and Editor, Colorist, audio design"
   },
   "390e589cee07f747aa6056dcd8713948": {
     "title": "Double Dag Logo",
-    "order": 440,
+    "order": 460,
     "hidden": true
   },
   "3d24a08bd88fa4ca2c6ed7454aa9a91e": {
     "title": "Weaving Nature End Credits",
-    "order": 450,
+    "order": 470,
     "hidden": true,
     "caption": "Editor, Colorist, Assistant producer"
   },
   "24cdd7ec061d47672d9106e352b9d2a1": {
     "title": "Pinklon Thomas Interview 2011",
-    "order": 460,
+    "order": 480,
     "hidden": true,
     "caption": "Producer, Director and Editor, Colorist, audio design"
   }
