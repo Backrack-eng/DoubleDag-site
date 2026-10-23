@@ -24,7 +24,7 @@ export default function Header() {
             alt="Double Dag Productions"
             priority
             sizes="100vw"
-            className="h-[clamp(48px,7.55vw,72px)] w-full object-contain object-left"
+            className="banner-web-mask h-[clamp(48px,7.55vw,72px)] w-full object-contain object-left"
           />
         </Link>
 

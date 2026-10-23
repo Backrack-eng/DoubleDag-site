@@ -52,6 +52,11 @@ body {
   animation: photo-scroll 360s linear infinite;
 }
 
+.banner-web-mask {
+  -webkit-mask-image: linear-gradient(to right, #000 62%, transparent 100%);
+  mask-image: linear-gradient(to right, #000 62%, transparent 100%);
+}
+
 .hero-eyebrow-shadow {
   color: #f5f3ff;
   -webkit-text-stroke: 1px #000;
