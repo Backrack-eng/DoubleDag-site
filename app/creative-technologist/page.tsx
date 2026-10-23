@@ -5,7 +5,14 @@ export const metadata: Metadata = {
   description:
     "Editing tools built by an editor. DagToolkit, Script Reader, and AutoThirds for Premiere Pro workflows.",
   openGraph: {
-    images: ["/Banner-web.png"],
+    images: [
+      {
+        url: "/og-share.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Creative Technologist | Double Dag Productions",
+      },
+    ],
   },
 };
 

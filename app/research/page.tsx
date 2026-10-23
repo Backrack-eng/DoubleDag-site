@@ -10,7 +10,14 @@ export const metadata: Metadata = {
       "Research & Fact Checking | L. Viola Kozak, PhD | Double Dag Productions",
     description:
       "Premium research and fact checking for documentary, educational, branded, and scripted content.",
-    images: ["/Banner-web.png"],
+    images: [
+      {
+        url: "/og-share.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Research & Fact Checking | Double Dag Productions",
+      },
+    ],
   },
 };
 
