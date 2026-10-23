@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import bannerWeb from "../public/Banner-web.png";
 
 export default function Header() {
   const pathname = usePathname();
@@ -16,18 +17,18 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-neutral-950/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 sm:px-10 lg:px-16">
-        <Link href="/" className="flex items-center gap-3 group">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4 sm:px-10 lg:px-16">
+        <Link href="/" className="group min-w-0 flex-1">
           <Image
-            src="/banner2.png"
+            src={bannerWeb}
             alt="Double Dag Productions"
-            width={640}
-            height={160}
-            className="object-contain transition duration-300 group-hover:opacity-80"
+            priority
+            sizes="520px"
+            className="h-auto w-full max-w-[520px] object-contain object-left transition duration-300 group-hover:opacity-80"
           />
         </Link>
 
-        <nav className="flex flex-wrap items-center justify-end gap-x-5 gap-y-2 text-sm">
+        <nav className="flex shrink-0 flex-wrap items-center justify-end gap-x-5 gap-y-2 text-sm">
           <Link href="/" className={linkClass("/")}>
             Home
           </Link>
