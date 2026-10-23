@@ -18,12 +18,12 @@ export const metadata: Metadata = {
   title: "Double Dag Productions | Video Editing & Post-Production",
   description:
     "Emmy-recognized video editor Ben Bacharach-White. Documentary, branded, and cinematic post-production.",
-  // TODO: swap banner2.png for a proper 1200x630 social-share still.
+  // TODO: swap Banner-web.png for a proper 1200x630 social-share still.
   openGraph: {
     title: "Double Dag Productions | Video Editing & Post-Production",
     description:
       "Emmy-recognized video editor Ben Bacharach-White. Documentary, branded, and cinematic post-production.",
-    images: ["/banner2.png"],
+    images: ["/Banner-web.png"],
     type: "website",
   },
 };

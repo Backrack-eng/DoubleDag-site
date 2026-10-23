@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description:
     "Editing tools built by an editor. DagToolkit, Script Reader, and AutoThirds for Premiere Pro workflows.",
   openGraph: {
-    images: ["/banner2.png"],
+    images: ["/Banner-web.png"],
   },
 };
 
