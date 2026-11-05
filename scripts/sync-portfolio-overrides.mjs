@@ -95,9 +95,12 @@ async function main() {
     if (liveUids.has(uid)) {
       continue;
     }
+    // Keep non-Stream entries managed by the admin UI.
     if (
       uid.startsWith("youtube:") ||
-      overrides[uid]?.source === "youtube"
+      uid.startsWith("section:") ||
+      overrides[uid]?.source === "youtube" ||
+      overrides[uid]?.type === "section"
     ) {
       continue;
     }
