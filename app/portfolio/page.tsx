@@ -5,10 +5,38 @@ import { connection } from "next/server";
 import { FEATURED_WORK_COUNT } from "../../lib/portfolio-constants";
 import {
   extractFeatured,
+  getPortfolioGridItems,
   getPortfolioVideos,
   groupByOrientation,
+  type PortfolioGridItem,
 } from "../../lib/portfolio-videos";
 import PortfolioGrid, { ClickToPlayVideo } from "./PortfolioGrid";
+
+function splitHighlightSelected(items: PortfolioGridItem[], count: number) {
+  const highlight: PortfolioGridItem[] = [];
+  const selected: PortfolioGridItem[] = [];
+  let videoCount = 0;
+
+  for (const item of items) {
+    if (item.type === "section") {
+      if (videoCount < count) {
+        highlight.push(item);
+      } else {
+        selected.push(item);
+      }
+      continue;
+    }
+
+    if (videoCount < count) {
+      highlight.push(item);
+      videoCount += 1;
+    } else {
+      selected.push(item);
+    }
+  }
+
+  return { highlight, selected };
+}
 
 export const metadata: Metadata = {
   title: "Video Portfolio | Double Dag Productions",
@@ -23,18 +51,30 @@ export const metadata: Metadata = {
 export default async function PortfolioPage() {
   await connection();
   const videos = await getPortfolioVideos();
+  const gridItems = await getPortfolioGridItems();
   const youtubeVideos = videos.filter((video) => video.source === "youtube");
   const streamVideos = videos.filter((video) => video.source !== "youtube");
   const { featured, rest } = extractFeatured(streamVideos);
-  const { landscape, portrait } = groupByOrientation(rest);
+  const { portrait } = groupByOrientation(rest);
 
   const mainReel =
     featured.find((v) => v.title.toLowerCase().includes("2023")) ??
     featured[0];
   const archiveReel = featured.find((v) => v.uid !== mainReel?.uid);
 
-  const highlightWork = landscape.slice(0, FEATURED_WORK_COUNT);
-  const selectedWork = landscape.slice(FEATURED_WORK_COUNT);
+  const demoUids = new Set(featured.map((video) => video.uid));
+  const portraitUids = new Set(portrait.map((video) => video.uid));
+  const mainGridItems = gridItems.filter((item) => {
+    if (item.type === "section") {
+      return true;
+    }
+    if (demoUids.has(item.video.uid) || portraitUids.has(item.video.uid)) {
+      return false;
+    }
+    return item.video.orientation === "landscape";
+  });
+  const { highlight: highlightWork, selected: selectedWork } =
+    splitHighlightSelected(mainGridItems, FEATURED_WORK_COUNT);
   const avatarSrc = `/Portfolio_avatar.png?v=${Math.round(statSync(join(process.cwd(), "public/Portfolio_avatar.png")).mtimeMs)}`;
 
   return (
@@ -141,7 +181,7 @@ export default async function PortfolioPage() {
               Emmy-recognized editing across documentary and series work
             </h2>
             <div className="mt-10">
-              <PortfolioGrid videos={highlightWork} />
+              <PortfolioGrid items={highlightWork} />
             </div>
           </section>
         )}
@@ -173,7 +213,7 @@ export default async function PortfolioPage() {
               Editorial and graphics work by Ben Bacharach-White across branded, educational, and feature-length projects for Double Dag Productions and past studio engagements.
             </p>
             <div className="mt-10">
-              <PortfolioGrid videos={selectedWork} layout="row" />
+              <PortfolioGrid items={selectedWork} layout="row" />
             </div>
           </section>
         )}

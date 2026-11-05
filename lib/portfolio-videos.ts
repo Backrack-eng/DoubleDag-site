@@ -51,7 +51,28 @@ export interface YouTubeOverrideEntry {
   thumbnailOverrideUrl?: string;
 }
 
-type AnyOverrideEntry = OverrideEntry | YouTubeOverrideEntry;
+export interface SectionBreakEntry {
+  type: "section";
+  label: string;
+  order: number;
+  hidden?: boolean;
+}
+
+export type GridVideoItem = {
+  type: "video";
+  video: PortfolioVideo;
+};
+
+export type GridSectionItem = {
+  type: "section";
+  uid: string;
+  label: string;
+  order: number;
+};
+
+export type PortfolioGridItem = GridVideoItem | GridSectionItem;
+
+type AnyOverrideEntry = OverrideEntry | YouTubeOverrideEntry | SectionBreakEntry;
 
 type PlaceholderEntry = {
   id: string;
@@ -99,6 +120,16 @@ function isYouTubeOverride(
   return (
     key.startsWith("youtube:") ||
     ("source" in entry && entry.source === "youtube")
+  );
+}
+
+function isSectionOverride(
+  key: string,
+  entry: AnyOverrideEntry,
+): entry is SectionBreakEntry {
+  return (
+    key.startsWith("section:") ||
+    ("type" in entry && entry.type === "section")
   );
 }
 
@@ -191,8 +222,10 @@ export async function getPortfolioVideos(): Promise<PortfolioVideo[]> {
           ? "portrait"
           : "landscape";
       const override = overrides[video.uid];
-      const streamOverride =
-        override && !isYouTubeOverride(video.uid, override)
+      const streamOverride: OverrideEntry | undefined =
+        override &&
+        !isYouTubeOverride(video.uid, override) &&
+        !isSectionOverride(video.uid, override)
           ? override
           : undefined;
       const baseThumbnailUrl = `https://videodelivery.net/${video.uid}/thumbnails/thumbnail.jpg`;
@@ -303,6 +336,49 @@ export async function getPortfolioVideos(): Promise<PortfolioVideo[]> {
       );
     },
   );
+}
+
+export async function getPortfolioGridItems(): Promise<PortfolioGridItem[]> {
+  const videos = await getPortfolioVideos();
+  const streamVideos = videos.filter((video) => video.source !== "youtube");
+
+  const sectionItems: GridSectionItem[] = Object.entries(overrides)
+    .filter(([key, entry]) => isSectionOverride(key, entry))
+    .filter(([, entry]) => !entry.hidden)
+    .map(([key, entry]) => {
+      const section = entry as SectionBreakEntry;
+      return {
+        type: "section" as const,
+        uid: key.startsWith("section:") ? key : `section:${key}`,
+        label: section.label,
+        order: section.order,
+      };
+    });
+
+  const videoItems: GridVideoItem[] = streamVideos.map((video) => ({
+    type: "video" as const,
+    video,
+  }));
+
+  return [...videoItems, ...sectionItems].sort((a, b) => {
+    const aOrder =
+      a.type === "section" ? a.order : entryOrder(a.video.uid);
+    const bOrder =
+      b.type === "section" ? b.order : entryOrder(b.video.uid);
+    const aHasOrder = aOrder !== undefined;
+    const bHasOrder = bOrder !== undefined;
+
+    if (aHasOrder && bHasOrder) {
+      return aOrder - bOrder;
+    }
+    if (aHasOrder) {
+      return -1;
+    }
+    if (bHasOrder) {
+      return 1;
+    }
+    return 0;
+  });
 }
 
 export function buildPlaybackSrc(video: PortfolioVideo) {

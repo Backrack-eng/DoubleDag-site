@@ -21,6 +21,8 @@ type OverrideRow = {
   source?: "youtube" | "stream";
   youtubeId?: string;
   thumbnailOverrideUrl?: string;
+  type?: "section";
+  label?: string;
   [key: string]: unknown;
 };
 
@@ -49,12 +51,12 @@ const SECTIONS: {
   {
     id: "highlight",
     title: "Featured Work",
-    hint: `Up to ${FEATURED_WORK_COUNT} landscape clips after the demo reels, including any “video coming soon” placeholders. Captions show under these cards on the public page. Moving another clip in keeps it here and sends the last Featured Work clip to Selected Work.`,
+    hint: `Up to ${FEATURED_WORK_COUNT} landscape clips after the demo reels, including any “video coming soon” placeholders and section breaks. Captions show under these cards on the public page. Moving another clip in keeps it here and sends the last Featured Work clip to Selected Work.`,
   },
   {
     id: "selected",
     title: "Selected Work",
-    hint: "Remaining landscape clips on the portfolio page. Captions show beside these cards, so longer write-ups have room to display in full.",
+    hint: "Remaining landscape clips and section breaks on the portfolio page. Captions show beside video cards, so longer write-ups have room to display in full.",
   },
   {
     id: "youtube",
@@ -88,6 +90,17 @@ function isPlaceholder(row: OverrideRow) {
 
 function isYouTube(row: OverrideRow) {
   return row.source === "youtube" || row.uid.startsWith("youtube:");
+}
+
+function isSectionBreak(row: OverrideRow) {
+  return row.type === "section" || row.uid.startsWith("section:");
+}
+
+function sectionLabel(row: OverrideRow) {
+  if (typeof row.label === "string" && row.label.trim()) {
+    return row.label;
+  }
+  return row.title;
 }
 
 function youtubeWatchUrl(row: OverrideRow): string | null {
@@ -149,6 +162,9 @@ function canPlace(row: OverrideRow, section: SectionId) {
   if (section === "hidden") {
     return true;
   }
+  if (isSectionBreak(row)) {
+    return section === "highlight" || section === "selected";
+  }
   if (isYouTube(row)) {
     return section === "youtube";
   }
@@ -167,6 +183,9 @@ function canPlace(row: OverrideRow, section: SectionId) {
 function resolveTarget(row: OverrideRow, to: SectionId): SectionId {
   if (canPlace(row, to)) {
     return to;
+  }
+  if (isSectionBreak(row)) {
+    return "selected";
   }
   if (isYouTube(row)) {
     return "youtube";
@@ -220,10 +239,61 @@ function extractYouTubeId(raw: string): string | null {
 }
 
 function toRows(data: Record<string, object>): OverrideRow[] {
-  return Object.entries(data).map(([uid, entry]) => ({
-    uid,
-    ...entry,
-  })) as OverrideRow[];
+  return Object.entries(data).map(([uid, entry]) => {
+    const row = {
+      uid,
+      ...entry,
+    } as OverrideRow;
+
+    if (isSectionBreak(row)) {
+      const label =
+        typeof row.label === "string" && row.label.trim()
+          ? row.label
+          : row.title;
+      return {
+        ...row,
+        type: "section",
+        label,
+        title: label,
+        orientation: "landscape",
+      };
+    }
+
+    return row;
+  });
+}
+
+function countVideos(rows: OverrideRow[]) {
+  return rows.filter((row) => !isSectionBreak(row)).length;
+}
+
+function splitLandscapeRows(rows: OverrideRow[]): {
+  highlight: OverrideRow[];
+  selected: OverrideRow[];
+} {
+  const highlight: OverrideRow[] = [];
+  const selected: OverrideRow[] = [];
+  let videoCount = 0;
+
+  for (const row of rows) {
+    if (isSectionBreak(row)) {
+      if (videoCount < FEATURED_WORK_COUNT) {
+        highlight.push(row);
+      } else {
+        selected.push(row);
+      }
+      continue;
+    }
+
+    if (videoCount < FEATURED_WORK_COUNT) {
+      highlight.push(row);
+      videoCount += 1;
+    } else {
+      selected.push(row);
+    }
+  }
+
+  return { highlight, selected };
 }
 
 function placeholderRows(entries: unknown): OverrideRow[] {
@@ -271,15 +341,22 @@ function partitionRows(rows: OverrideRow[]): Groups {
   const hidden = sorted.filter((row) => row.hidden);
   const visible = sorted.filter((row) => !row.hidden);
   const youtube = visible.filter(isYouTube);
-  const demo = visible.filter((row) => !isYouTube(row) && row.featured);
-  const rest = visible.filter((row) => !isYouTube(row) && !row.featured);
-  const social = rest.filter(isPortrait);
-  const landscape = rest.filter((row) => !isPortrait(row));
+  const demo = visible.filter(
+    (row) => !isYouTube(row) && !isSectionBreak(row) && row.featured,
+  );
+  const rest = visible.filter(
+    (row) => !isYouTube(row) && (isSectionBreak(row) || !row.featured),
+  );
+  const social = rest.filter((row) => !isSectionBreak(row) && isPortrait(row));
+  const landscape = rest.filter(
+    (row) => isSectionBreak(row) || !isPortrait(row),
+  );
+  const { highlight, selected } = splitLandscapeRows(landscape);
 
   return {
     demo,
-    highlight: landscape.slice(0, FEATURED_WORK_COUNT),
-    selected: landscape.slice(FEATURED_WORK_COUNT),
+    highlight,
+    selected,
     youtube,
     social,
     hidden,
@@ -287,21 +364,36 @@ function partitionRows(rows: OverrideRow[]): Groups {
 }
 
 function capHighlight(groups: Groups, preferUid?: string): Groups {
-  if (groups.highlight.length <= FEATURED_WORK_COUNT) {
+  if (countVideos(groups.highlight) <= FEATURED_WORK_COUNT) {
     return groups;
   }
 
   const highlight = [...groups.highlight];
   const overflow: OverrideRow[] = [];
 
-  while (highlight.length > FEATURED_WORK_COUNT) {
-    let removeAt = highlight.length - 1;
-    if (
-      preferUid &&
-      highlight[removeAt]?.uid === preferUid &&
-      highlight.length > 1
-    ) {
-      removeAt -= 1;
+  while (countVideos(highlight) > FEATURED_WORK_COUNT) {
+    let removeAt = -1;
+    for (let index = highlight.length - 1; index >= 0; index -= 1) {
+      const row = highlight[index];
+      if (!row || isSectionBreak(row)) {
+        continue;
+      }
+      if (preferUid && row.uid === preferUid) {
+        continue;
+      }
+      removeAt = index;
+      break;
+    }
+    if (removeAt === -1) {
+      for (let index = highlight.length - 1; index >= 0; index -= 1) {
+        if (!isSectionBreak(highlight[index])) {
+          removeAt = index;
+          break;
+        }
+      }
+    }
+    if (removeAt === -1) {
+      break;
     }
     const [demoted] = highlight.splice(removeAt, 1);
     if (demoted) {
@@ -413,6 +505,21 @@ function toSavePayload(groups: Groups) {
       continue;
     }
 
+    if (isSectionBreak(row)) {
+      const label = sectionLabel(row).trim() || "Section";
+      const entry: Record<string, unknown> = {
+        type: "section",
+        label,
+        order: row.order,
+      };
+      if (row.hidden) {
+        entry.hidden = true;
+      }
+      overrides[row.uid.startsWith("section:") ? row.uid : `section:${row.uid}`] =
+        entry;
+      continue;
+    }
+
     const {
       uid,
       title,
@@ -427,6 +534,8 @@ function toSavePayload(groups: Groups) {
       orientation: _orientation,
       source: _source,
       youtubeId: _youtubeId,
+      type: _type,
+      label: _label,
       ...extra
     } = row;
     const entry: Record<string, unknown> = { ...extra, title, order };
@@ -481,6 +590,8 @@ export default function PortfolioAdminPage() {
   const [youtubeInput, setYoutubeInput] = useState("");
   const [youtubeMessage, setYoutubeMessage] = useState<string | null>(null);
   const [addingYoutube, setAddingYoutube] = useState(false);
+  const [sectionInput, setSectionInput] = useState("");
+  const [sectionMessage, setSectionMessage] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -576,8 +687,12 @@ export default function PortfolioAdminPage() {
       return;
     }
 
+    const movingRow = groups[from][index];
     const highlightWasFull =
-      to === "highlight" && groups.highlight.length >= FEATURED_WORK_COUNT;
+      to === "highlight" &&
+      countVideos(groups.highlight) >= FEATURED_WORK_COUNT &&
+      movingRow != null &&
+      !isSectionBreak(movingRow);
 
     setGroups((current) => {
       const next = cloneGroups(current);
@@ -589,7 +704,9 @@ export default function PortfolioAdminPage() {
       next[target].push(moved);
       return capHighlight(
         next,
-        target === "highlight" ? moved.uid : undefined,
+        target === "highlight" && !isSectionBreak(moved)
+          ? moved.uid
+          : undefined,
       );
     });
 
@@ -660,7 +777,7 @@ export default function PortfolioAdminPage() {
       const row = current[section][index];
       const next = cloneGroups(current);
 
-      if (isYouTube(row) || isPlaceholder(row)) {
+      if (isYouTube(row) || isPlaceholder(row) || isSectionBreak(row)) {
         next[section].splice(index, 1);
         return capHighlight(next);
       }
@@ -756,6 +873,106 @@ export default function PortfolioAdminPage() {
     }
   }
 
+  function addSectionBreak() {
+    const label = sectionInput.trim();
+    if (!label) {
+      setSectionMessage("Enter a section label, like History or Travel.");
+      return;
+    }
+
+    const nextOrder =
+      Math.max(
+        0,
+        ...Object.values(groups).flatMap((rows) =>
+          rows.map((row) => row.order),
+        ),
+      ) + 10;
+    const uid = `section:${Date.now().toString(36)}`;
+
+    setGroups((current) => ({
+      ...current,
+      selected: [
+        {
+          uid,
+          type: "section",
+          label,
+          title: label,
+          order: nextOrder,
+          orientation: "landscape",
+        },
+        ...current.selected,
+      ],
+    }));
+    setSectionInput("");
+    setSectionMessage(
+      "Section break added to the top of Selected Work — drag it where you want, then Save Changes.",
+    );
+  }
+
+  function listSectionBreakOptions() {
+    return (["highlight", "selected"] as const).flatMap((section) =>
+      groups[section]
+        .filter(isSectionBreak)
+        .map((row) => ({
+          uid: row.uid,
+          label: sectionLabel(row) || row.uid,
+          section,
+        })),
+    );
+  }
+
+  function precedingSectionBreakUid(rows: OverrideRow[], index: number) {
+    for (let cursor = index - 1; cursor >= 0; cursor -= 1) {
+      const row = rows[cursor];
+      if (row && isSectionBreak(row)) {
+        return row.uid;
+      }
+    }
+    return "";
+  }
+
+  function moveBelowSectionBreak(
+    from: SectionId,
+    index: number,
+    breakUid: string,
+  ) {
+    setGroups((current) => {
+      const moving = current[from][index];
+      if (!moving || isSectionBreak(moving)) {
+        return current;
+      }
+      if (!canPlace(moving, "highlight") && !canPlace(moving, "selected")) {
+        return current;
+      }
+
+      const next = cloneGroups(current);
+      const [moved] = next[from].splice(index, 1);
+      if (!moved) {
+        return current;
+      }
+
+      let targetSection: "highlight" | "selected" | null = null;
+      let breakIndex = -1;
+      for (const section of ["highlight", "selected"] as const) {
+        const found = next[section].findIndex((row) => row.uid === breakUid);
+        if (found !== -1) {
+          targetSection = section;
+          breakIndex = found;
+          break;
+        }
+      }
+      if (!targetSection || breakIndex === -1) {
+        return current;
+      }
+
+      next[targetSection].splice(breakIndex + 1, 0, moved);
+      return capHighlight(
+        next,
+        targetSection === "highlight" ? moved.uid : undefined,
+      );
+    });
+  }
+
   async function saveChanges() {
     setSaving(true);
     setMessage(null);
@@ -811,7 +1028,8 @@ export default function PortfolioAdminPage() {
                   className={
                     message === "Saved" ||
                     message.startsWith("Removed") ||
-                    message.startsWith("Featured Work holds")
+                    message.startsWith("Featured Work holds") ||
+                    message.startsWith("Section break")
                       ? "text-sm text-violet-300"
                       : "text-sm text-red-400"
                   }
@@ -884,6 +1102,47 @@ export default function PortfolioAdminPage() {
               )}
             </section>
 
+            <section className="rounded-xl border border-violet-400/30 bg-violet-500/5 p-5">
+              <h2 className="text-sm uppercase tracking-[0.3em] text-violet-300/80">
+                Add Section Break
+              </h2>
+              <p className="mt-2 max-w-3xl text-xs leading-5 text-neutral-500">
+                Adds a labeled divider at the top of Selected Work. Drag it, or
+                use a video&apos;s &quot;Under section break&quot; menu to place
+                clips directly under it.
+              </p>
+              <form
+                className="mt-4 flex flex-col gap-3 sm:flex-row"
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  addSectionBreak();
+                }}
+              >
+                <input
+                  type="text"
+                  value={sectionInput}
+                  onChange={(event) => {
+                    setSectionInput(event.target.value);
+                    if (sectionMessage) {
+                      setSectionMessage(null);
+                    }
+                  }}
+                  placeholder="History, Travel, Science…"
+                  aria-label="Section break label"
+                  className="min-w-0 flex-1 rounded-md border border-white/15 bg-neutral-900 px-3 py-2 text-sm text-neutral-100 outline-none focus:border-violet-400/60"
+                />
+                <button
+                  type="submit"
+                  className="rounded-full border border-violet-400/40 px-5 py-2 text-sm font-medium text-violet-100 transition hover:bg-violet-500/10"
+                >
+                  Add
+                </button>
+              </form>
+              {sectionMessage && (
+                <p className="mt-3 text-sm text-neutral-300">{sectionMessage}</p>
+              )}
+            </section>
+
             {SECTIONS.map((section) => (
               <section
                 key={section.id}
@@ -945,6 +1204,7 @@ export default function PortfolioAdminPage() {
                         const previewThumb = isYouTube(row)
                           ? youtubePreviewThumbnail(row)
                           : "";
+                        const sectionBreak = isSectionBreak(row);
                         return (
                         <tr
                           key={row.uid}
@@ -957,6 +1217,8 @@ export default function PortfolioAdminPage() {
                           }
                           onDragEnd={handleDragEnd}
                           className={`border-b border-white/10 last:border-b-0 ${
+                            sectionBreak ? "bg-violet-500/10" : ""
+                          } ${
                             drag?.section === section.id && drag.index === i
                               ? "opacity-40"
                               : ""
@@ -965,7 +1227,7 @@ export default function PortfolioAdminPage() {
                           <td className="w-8 px-0 py-3 align-middle">
                             <div
                               className="cursor-grab select-none px-2 text-neutral-500"
-                              aria-label={`Reorder ${row.title}`}
+                              aria-label={`Reorder ${sectionLabel(row) || row.uid}`}
                             >
                               ⠿
                             </div>
@@ -978,15 +1240,33 @@ export default function PortfolioAdminPage() {
                           <td className="px-4 py-3 align-middle">
                             <input
                               type="text"
-                              value={row.title}
+                              value={sectionBreak ? sectionLabel(row) : row.title}
                               onChange={(event) =>
-                                updateRow(section.id, row.uid, {
-                                  title: event.target.value,
-                                })
+                                updateRow(
+                                  section.id,
+                                  row.uid,
+                                  sectionBreak
+                                    ? {
+                                        title: event.target.value,
+                                        label: event.target.value,
+                                      }
+                                    : {
+                                        title: event.target.value,
+                                      },
+                                )
                               }
-                              className="w-full rounded-md border border-white/15 bg-neutral-900 px-3 py-2 text-neutral-100 outline-none focus:border-violet-400/60"
+                              className={
+                                sectionBreak
+                                  ? "w-full rounded-md border border-violet-400/30 bg-neutral-900 px-3 py-2 text-sm font-medium uppercase tracking-[0.2em] text-violet-100 outline-none focus:border-violet-400/60"
+                                  : "w-full rounded-md border border-white/15 bg-neutral-900 px-3 py-2 text-neutral-100 outline-none focus:border-violet-400/60"
+                              }
                             />
-                            {section.id === "demo" && (
+                            {sectionBreak && (
+                              <p className="mt-1 text-xs text-violet-300/80">
+                                Section break — no thumbnail, divider only
+                              </p>
+                            )}
+                            {section.id === "demo" && !sectionBreak && (
                               <p className="mt-1 text-xs text-violet-300/80">
                                 {reelRole(row, groups.demo)}
                               </p>
@@ -1065,8 +1345,9 @@ export default function PortfolioAdminPage() {
                                 </div>
                               </>
                             )}
-                            {(section.id === "highlight" ||
-                              section.id === "selected") && (
+                            {!sectionBreak &&
+                              (section.id === "highlight" ||
+                                section.id === "selected") && (
                               <textarea
                                 value={row.caption ?? ""}
                                 onChange={(event) =>
@@ -1095,7 +1376,7 @@ export default function PortfolioAdminPage() {
                                   event.target.value as SectionId,
                                 )
                               }
-                              aria-label={`Section for ${row.title}`}
+                              aria-label={`Section for ${sectionLabel(row) || row.uid}`}
                               className="w-full rounded-md border border-white/15 bg-neutral-900 px-3 py-2 text-neutral-100 outline-none focus:border-violet-400/60"
                             >
                               {SECTION_OPTIONS.filter((option) =>
@@ -1106,45 +1387,88 @@ export default function PortfolioAdminPage() {
                                 </option>
                               ))}
                             </select>
+                            {!sectionBreak &&
+                              (canPlace(row, "highlight") ||
+                                canPlace(row, "selected")) &&
+                              listSectionBreakOptions().length > 0 && (
+                                <select
+                                  value={precedingSectionBreakUid(
+                                    groups[section.id],
+                                    i,
+                                  )}
+                                  onChange={(event) => {
+                                    const breakUid = event.target.value;
+                                    if (breakUid) {
+                                      moveBelowSectionBreak(
+                                        section.id,
+                                        i,
+                                        breakUid,
+                                      );
+                                    }
+                                  }}
+                                  aria-label={`Place ${row.title || row.uid} under section break`}
+                                  className="mt-2 w-full rounded-md border border-violet-400/30 bg-neutral-900 px-3 py-2 text-neutral-100 outline-none focus:border-violet-400/60"
+                                >
+                                  <option value="">
+                                    Under section break…
+                                  </option>
+                                  {listSectionBreakOptions().map((option) => (
+                                    <option key={option.uid} value={option.uid}>
+                                      {option.label}
+                                    </option>
+                                  ))}
+                                </select>
+                              )}
                           </td>
                           <td className="w-20 px-4 py-3 text-center align-middle">
-                            <input
-                              type="checkbox"
-                              checked={Boolean(row.emmyBadge)}
-                              onChange={(event) =>
-                                updateRow(section.id, row.uid, {
-                                  emmyBadge: event.target.checked,
-                                })
-                              }
-                              aria-label={`Emmy badge ${row.title}`}
-                            />
+                            {!sectionBreak && (
+                              <input
+                                type="checkbox"
+                                checked={Boolean(row.emmyBadge)}
+                                onChange={(event) =>
+                                  updateRow(section.id, row.uid, {
+                                    emmyBadge: event.target.checked,
+                                  })
+                                }
+                                aria-label={`Emmy badge ${row.title}`}
+                              />
+                            )}
                           </td>
                           <td className="w-20 px-4 py-3 text-center align-middle">
-                            <input
-                              type="checkbox"
-                              checked={Boolean(row.loop)}
-                              onChange={(event) =>
-                                updateRow(section.id, row.uid, {
-                                  loop: event.target.checked,
-                                })
-                              }
-                              aria-label={`Loop ${row.title}`}
-                            />
+                            {!sectionBreak && (
+                              <input
+                                type="checkbox"
+                                checked={Boolean(row.loop)}
+                                onChange={(event) =>
+                                  updateRow(section.id, row.uid, {
+                                    loop: event.target.checked,
+                                  })
+                                }
+                                aria-label={`Loop ${row.title}`}
+                              />
+                            )}
                           </td>
                           <td className="w-24 px-4 py-3 text-center align-middle">
-                            <input
-                              type="checkbox"
-                              checked={Boolean(row.autoplay)}
-                              onChange={(event) =>
-                                updateRow(section.id, row.uid, {
-                                  autoplay: event.target.checked,
-                                })
-                              }
-                              aria-label={`Autoplay ${row.title}`}
-                            />
+                            {!sectionBreak && (
+                              <input
+                                type="checkbox"
+                                checked={Boolean(row.autoplay)}
+                                onChange={(event) =>
+                                  updateRow(section.id, row.uid, {
+                                    autoplay: event.target.checked,
+                                  })
+                                }
+                                aria-label={`Autoplay ${row.title}`}
+                              />
+                            )}
                           </td>
                           <td className="w-24 px-4 py-3 text-right align-middle">
-                            {!(section.id === "hidden" && !isYouTube(row) && !isPlaceholder(row)) && (
+                            {!(
+                              section.id === "hidden" &&
+                              !isYouTube(row) &&
+                              !isPlaceholder(row) &&
+                              !sectionBreak
+                            ) && (
                               <button
                                 type="button"
                                 draggable={false}
@@ -1152,7 +1476,7 @@ export default function PortfolioAdminPage() {
                                   event.stopPropagation()
                                 }
                                 onClick={() => removeRow(section.id, row.uid)}
-                                aria-label={`Remove ${row.title || row.uid} from the site`}
+                                aria-label={`Remove ${sectionLabel(row) || row.uid} from the site`}
                                 className="text-xs font-medium text-red-400/90 underline decoration-red-400/30 underline-offset-2 hover:text-red-300"
                               >
                                 Remove

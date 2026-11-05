@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   buildPlaybackSrc,
   formatCount,
+  type PortfolioGridItem,
   type PortfolioVideo,
 } from "../../lib/portfolio-videos";
 
@@ -228,16 +229,38 @@ function VideoCard({
   );
 }
 
+function SectionBreak({ label }: { label: string }) {
+  return (
+    <div className="col-span-full py-4 md:py-6">
+      <div className="flex items-center gap-4">
+        <h2 className="shrink-0 text-sm font-medium uppercase tracking-[0.3em] text-violet-300/80">
+          {label}
+        </h2>
+        <div className="h-px flex-1 bg-white/10" aria-hidden="true" />
+      </div>
+    </div>
+  );
+}
+
 export default function PortfolioGrid({
   videos,
+  items,
   variant = "landscape",
   layout = "grid",
 }: {
-  videos: PortfolioVideo[];
+  videos?: PortfolioVideo[];
+  items?: PortfolioGridItem[];
   variant?: "landscape" | "portrait";
   layout?: "grid" | "row";
 }) {
-  if (videos.length === 0) {
+  const resolvedItems: PortfolioGridItem[] =
+    items ??
+    (videos ?? []).map((video) => ({
+      type: "video" as const,
+      video,
+    }));
+
+  if (resolvedItems.length === 0) {
     return (
       <p className="py-20 text-center text-neutral-400">
         No videos yet — check back soon.
@@ -255,14 +278,18 @@ export default function PortfolioGrid({
             : "grid gap-6 md:grid-cols-2 lg:grid-cols-3"
       }
     >
-      {videos.map((video) => (
-        <VideoCard
-          key={video.uid}
-          video={video}
-          variant={variant}
-          layout={layout}
-        />
-      ))}
+      {resolvedItems.map((item) =>
+        item.type === "section" ? (
+          <SectionBreak key={item.uid} label={item.label} />
+        ) : (
+          <VideoCard
+            key={item.video.uid}
+            video={item.video}
+            variant={variant}
+            layout={layout}
+          />
+        ),
+      )}
     </div>
   );
 }

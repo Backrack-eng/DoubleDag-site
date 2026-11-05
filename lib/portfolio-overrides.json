@@ -43,219 +43,262 @@
     "order": 70,
     "caption": "Six cameras, 72 hours of footage, and one very serious barbecue championship.\n\n“Revealing, deftly cut and amusingly hosted documentary.” Roger Moore, Orlando Sentinel\n\nOnce a year, Starke, Florida turns into a barbecue town. In February 2011 I brought six cameras to Boots ‘n BBQ, the Santa Fe College Foundation scholarship fundraiser that doubled as the Florida BBQ Association State Championship.\n\nThe film follows comedian Alex Ortiz as he works the grounds, talks shop with pitmasters, and gets backstage with the concert acts, including southern rock’s Jimmie Van Zant. Boxing champ Pinklon Thomas and wrestling champ Dory Funk Jr. turn up too. Novice teams and veteran teams are cooking toward the same judging deadline, and that clock does a lot of the storytelling.\n\nI directed the four day shoot with six cameras, one of them a Steadicam operator. Then I edited the whole thing myself. That meant cutting 72 hours of footage down to a 60 minute film, with graphics built in Motion and After Effects. A barbecue festival is hard to cover because everything happens everywhere at once. The edit had to keep the cooks, the crowd, and the stage moving together without losing the people at the center.\n\nThe film premiered August 4, 2011 at the Twin Theater in downtown Starke. Two days later, Cinematique Theater in Daytona Beach ran three screenings with red carpet showings and a Q&A with Ortiz and the crew. The Daytona Beach News-Journal gave it a full page in its GO386 entertainment section. In October it screened at the 2011 Orlando Film Festival, where Orlando Sentinel's Roger Moore reviewed it."
   },
+  "section:mw3uhdu3": {
+    "type": "section",
+    "label": "Entertainment",
+    "order": 80
+  },
   "ebe4d552daad3a4e44dd55883bd3aa3f": {
     "title": "Mock And Roll",
-    "order": 80,
+    "order": 90,
     "caption": "A clueless parody band sets out to make it at SXSW.\nMock and Roll is a musical mockumentary about Liberty Mean, an Ohio parody band chasing a spot at SXSW until bad decisions put their music careers, and their lives, in jeopardy. I directed the film, co-wrote the screenplay, and handled the edit, color, and audio design. We shot entirely on location in Ohio with a cast that includes comedian Alex Ortiz, Foghat founding drummer Roger Earl, and Ohio musician Michael Stanley. In the mix, I made the studio performances sound live and match each set location.\nThe film had its world premiere September 22, 2017 at the Austin Revolution Film Festival, one of 150 films chosen from 1,500 submissions. Nominated for Feature Comedy, Feature Director, Best Editing Feature, Actress Feature, and Actor Feature. \nAwards and festivals\nBest Original Score, EyeCatcher International Film Festival\nBest Feature, Inside The Loop Film Festival\nOfficial selection: Orlando Film Festival, Hollywood Florida Film Festival, Adrian International Film Festival, Austin Revolution Film Festival\nVideo Librarian: recommended, “a solid entry in the mini-genre”"
+  },
+  "3deecf8b973280f1945aca129c47d082": {
+    "title": "A Dead Husband in a Western Town",
+    "order": 100,
+    "caption": "Trailer Editor"
+  },
+  "bb59f02a4d3d5dd200a33f4775d71a5e": {
+    "title": "Loss & Love music video",
+    "order": 110,
+    "caption": "Producer, Director and Editor, Colorist"
+  },
+  "6cd866031ec8242a88b8618fded702b3": {
+    "title": "Sexy Mutha F*#%ers Stand Up Special Trailer",
+    "order": 120,
+    "caption": "Producer, Director and Editor, Colorist, audio design"
+  },
+  "section:mw3u787r": {
+    "type": "section",
+    "label": "Culture & Lifestyle",
+    "order": 130
+  },
+  "fa61dbc3569d6f947cd8955d82b69d80": {
+    "title": "Outdoor Fundamentals",
+    "order": 140,
+    "caption": "Editor, Colorist, Location camera operator, graphics"
   },
   "e6a74d702a586c50fae03887dd2bf4c0": {
     "title": "Decorate Like A Designer with Jonathan Adler",
-    "order": 90,
+    "order": 150,
     "caption": "Editor, Colorist"
   },
-  "d3cad11639aa7927a4687d44a0dc12a3": {
-    "title": "The Banjo: Music, History and Heritage",
-    "order": 100,
-    "caption": "Editor, Colorist, Post-Producer"
+  "section:mw3tos16": {
+    "type": "section",
+    "label": "Travel",
+    "order": 160
   },
   "e421e6122b84e8f7b372676b9ba2bc5e": {
     "title": "Exploring the Mayan World",
-    "order": 110,
-    "caption": "Editor, Colorist, Post-Producer"
+    "order": 170,
+    "caption": "Editor, Colorist, Post-Producer\n\nDays of footage from all over the Yucatán: cenotes, ancient ruins, an archaeologist decoding Maya hieroglyphs, a stop for handmade tequila along the way. I cut and color graded all 8 episodes of this Great Courses travel series, following Dr. Edwin Barnhart, director of the Maya Exploration Center, through the past, present, and future of the Maya world.\n\nNot many editing jobs put you alongside someone who discovered a lost city. Multiple camera formats, a lot of rough source footage, a real deadline, and still delivered all 8 episodes on schedule for release."
   },
-  "415cb57aea41d58299ed11870fd21e26": {
-    "title": "Reporting 911 and Why it Still Matters",
-    "order": 120,
-    "caption": "Editor, Colorist, Post-Producer"
+  "3ed8d6b3d8bca13a17b8f900f25b70a4": {
+    "title": "Great Tours: The World's Most Sacred Sites",
+    "order": 180,
+    "caption": "Editor, Colorist"
+  },
+  "af0db3b36f5d56bdf491985db5008cba": {
+    "title": "Great Tours: England Scotland & Wales Promo",
+    "order": 190,
+    "caption": "Editor, Colorist"
+  },
+  "8d6b0388d1bb7144550cff30bf900038": {
+    "title": "Great Tours: Washington DC",
+    "order": 200,
+    "caption": "Editor, Colorist"
+  },
+  "section:mw3u15ei": {
+    "type": "section",
+    "label": "Culinary",
+    "order": 210
   },
   "8be235f273aae7fa86cb13d95fd46b93": {
     "title": "The Chesfsters",
-    "order": 130,
+    "order": 220,
     "caption": "Editor, Colorist"
   },
   "1b941abaead007abae3495e47893d205": {
     "title": "The Everyday Gourmet Rediscovering The Lost Art Of Cooking",
-    "order": 140,
+    "order": 230,
     "caption": "Producer/Editor"
   },
   "63d37f5767b94cc9d1c8b34fa5834d5d": {
     "title": "Cooking Across The Ages",
-    "order": 150,
+    "order": 240,
     "caption": "Producer/Editor"
   },
-  "8d6b0388d1bb7144550cff30bf900038": {
-    "title": "Great Tours DC",
-    "order": 160,
-    "caption": "Editor, Colorist"
-  },
-  "fdf8313f820b4d34082b68a72f693aec": {
-    "title": "Do-It-Yourself Engineering",
-    "order": 170,
-    "caption": "Editor, Graphics, Colorist, Field Camera operator"
+  "section:mw3u26gk": {
+    "type": "section",
+    "label": "Science & Technology",
+    "order": 250
   },
   "c987ba61091a629d09a4aef2b6d801b5": {
     "title": "Everyday Engineering: Understanding the Marvels of Daily Life",
-    "order": 180,
+    "order": 260,
     "caption": "Editor, Graphics, Colorist, Studio Camera operator"
   },
-  "b2028b3579fb6b00029fc1cc067a3edc": {
-    "title": "Linear Algebra",
-    "order": 190,
-    "caption": "Editor, Colorist"
-  },
-  "ecdaa3539a4fc2ec8d262505700a05ba": {
-    "title": "Archaeological Mysteries",
-    "order": 200,
-    "caption": "Editor, Colorist"
+  "fdf8313f820b4d34082b68a72f693aec": {
+    "title": "Do-It-Yourself Engineering",
+    "order": 270,
+    "caption": "Editor, Graphics, Colorist, Field Camera operator"
   },
   "7e7f780089fa702e5427fee2b5e011e1": {
     "title": "Understanding Artificial Intelligence",
-    "order": 210,
+    "order": 280,
     "caption": "Editor, Colorist, AI Generation and research"
   },
-  "3c4c0b6cde8a59f49d986aaac31d8484": {
-    "title": "The Agency",
-    "order": 220,
-    "caption": "Editor, Colorist"
-  },
-  "a0d5ed24ac55e4d2a9eb3b441628719c": {
-    "title": "Geological Events",
-    "order": 230,
-    "caption": "Editor, Colorist"
-  },
-  "7030cc8c533a627da65a84bb2808db4c": {
-    "title": "10 Great What Ifs",
-    "order": 240,
+  "ecdaa3539a4fc2ec8d262505700a05ba": {
+    "title": "Archaeological Mysteries",
+    "order": 290,
     "caption": "Editor, Colorist"
   },
   "34007a1e569b6d188ea3c1974165ee03": {
     "title": "Botanist Eye",
-    "order": 250,
+    "order": 300,
     "caption": "Editor, Colorist, Post-Producer"
   },
-  "fa61dbc3569d6f947cd8955d82b69d80": {
-    "title": "Outdoor Fundamentals",
-    "order": 260,
-    "caption": "Editor, Colorist, Location camera operator, graphics"
+  "b2028b3579fb6b00029fc1cc067a3edc": {
+    "title": "Linear Algebra",
+    "order": 310,
+    "caption": "Editor, Colorist"
+  },
+  "a0d5ed24ac55e4d2a9eb3b441628719c": {
+    "title": "Geological Events",
+    "order": 320,
+    "caption": "Editor, Colorist"
+  },
+  "section:mw3u5mk7": {
+    "type": "section",
+    "label": "History",
+    "order": 330
+  },
+  "415cb57aea41d58299ed11870fd21e26": {
+    "title": "Reporting 911 and Why it Still Matters",
+    "order": 340,
+    "caption": "Editor, Colorist, Post-Producer"
+  },
+  "7030cc8c533a627da65a84bb2808db4c": {
+    "title": "10 Great What Ifs",
+    "order": 350,
+    "caption": "Editor, Colorist"
   },
   "6e17f20b7d7564f7c248665e07bebbad": {
     "title": "The Secret World Of Espionage",
-    "order": 270,
+    "order": 360,
+    "caption": "Editor, Colorist"
+  },
+  "3c4c0b6cde8a59f49d986aaac31d8484": {
+    "title": "The Agency",
+    "order": 370,
     "caption": "Editor, Colorist"
   },
   "be6c7d79482614ebf509ff25f442789a": {
     "title": "Going to the Devil",
-    "order": 280,
+    "order": 380,
     "caption": "Editor, Colorist"
-  },
-  "bb59f02a4d3d5dd200a33f4775d71a5e": {
-    "title": "Loss & Love music video",
-    "order": 290,
-    "caption": "Producer, Director and Editor, Colorist"
   },
   "1e1ed7cfa45cf4e6c02a9b001f7805bb": {
     "title": "Life Of Jesus History Revealed",
-    "order": 300,
+    "order": 390,
     "caption": "Editor"
   },
   "38f5c2143d48720d082b35a1c5a55b2a": {
     "title": "HB Production Group: Demo 2010",
-    "order": 310,
+    "order": 400,
     "caption": "This demo is a representation of the client base and work I did at HB Production Group."
-  },
-  "decbbab0603fb1d59eb91e0f3abc1d84": {
-    "title": "Sheriff Training Workout",
-    "order": 320,
-    "caption": "Producer, Director and Editor, Colorist, audio design"
-  },
-  "6cd866031ec8242a88b8618fded702b3": {
-    "title": "Sexy Mutha F*#%ers Stand Up Special Trailer",
-    "order": 330,
-    "caption": "Producer, Director and Editor, Colorist, audio design"
-  },
-  "3deecf8b973280f1945aca129c47d082": {
-    "title": "A Dead Husband in a Western Town",
-    "order": 340,
-    "caption": "Trailer Editor"
   },
   "youtube:ZaNvoO7TTqU": {
     "source": "youtube",
     "youtubeId": "ZaNvoO7TTqU",
     "title": "They're Watching You! | The History of the Illuminati",
-    "order": 350
+    "order": 410
   },
   "youtube:eguqNGausk8": {
     "source": "youtube",
     "youtubeId": "eguqNGausk8",
     "title": "5 Assets You Should NEVER Put in Your Trust",
-    "order": 360
+    "order": 420
   },
   "youtube:Zihkzw6HC8c": {
     "source": "youtube",
     "youtubeId": "Zihkzw6HC8c",
     "title": "How to Decorate your Living Space | Developing Your Style with Jonathan Adler",
-    "order": 370
+    "order": 430
   },
   "youtube:k_mmH4oeHrk": {
     "source": "youtube",
     "youtubeId": "k_mmH4oeHrk",
     "title": "How To Prepare a Juicy Prime Rib I Holiday Meals",
-    "order": 380
+    "order": 440
   },
   "youtube:ZhLqvmELWtA": {
     "source": "youtube",
     "youtubeId": "ZhLqvmELWtA",
     "title": "Weaving Nature | David Bacharach | American Masters Shorts | PBS",
-    "order": 390,
+    "order": 450,
     "emmyBadge": true
   },
   "youtube:WjPbgyyNW8Y": {
     "source": "youtube",
     "youtubeId": "WjPbgyyNW8Y",
     "title": "An Interview with Boxing Champion Pinklon Thomas",
-    "order": 400
+    "order": 460
   },
   "youtube:4KletBo8lds": {
     "source": "youtube",
     "youtubeId": "4KletBo8lds",
     "title": "Jimmie Van Zant - Feels Like Freedom",
-    "order": 410,
+    "order": 470,
     "thumbnailOverrideUrl": "/Thumbnails/FeelsLikeFreedom-Thumbnail2.jpg"
   },
   "c2927fd0844702028c09df1523118d3c": {
     "title": "RB Wealth Introduction Video",
-    "order": 420
+    "order": 480
   },
   "ddeb6d07f295cac1b2555f918c033444": {
     "title": "Prop Firm Match",
-    "order": 430,
+    "order": 490,
     "caption": "Producer, Director and Editor, Colorist, audio design"
   },
   "4215f4af3f5a34958687ed0acfc04897": {
     "title": "Heart and Soil - \"doom scroll break\"",
-    "order": 440,
+    "order": 500,
     "loop": true
   },
   "62bbe1860e3977f21ce67bbd09a1dcf6": {
     "title": "Alex Ortiz Gangsta Poet",
-    "order": 450,
+    "order": 510,
+    "hidden": true,
     "caption": "Producer, Director and Editor, Colorist, audio design"
   },
   "390e589cee07f747aa6056dcd8713948": {
     "title": "Double Dag Logo",
-    "order": 460,
+    "order": 520,
     "hidden": true
   },
   "3d24a08bd88fa4ca2c6ed7454aa9a91e": {
     "title": "Weaving Nature End Credits",
-    "order": 470,
+    "order": 530,
     "hidden": true,
     "caption": "Editor, Colorist, Assistant producer"
   },
   "24cdd7ec061d47672d9106e352b9d2a1": {
     "title": "Pinklon Thomas Interview 2011",
-    "order": 480,
+    "order": 540,
     "hidden": true,
     "caption": "Producer, Director and Editor, Colorist, audio design"
+  },
+  "decbbab0603fb1d59eb91e0f3abc1d84": {
+    "title": "Sheriff Training Workout",
+    "order": 550,
+    "hidden": true,
+    "caption": "Producer, Director and Editor, Colorist, audio design"
+  },
+  "d3cad11639aa7927a4687d44a0dc12a3": {
+    "title": "The Banjo: Music, History and Heritage",
+    "order": 560,
+    "hidden": true,
+    "caption": "Editor, Colorist, Post-Producer"
   }
 }
