@@ -18,6 +18,8 @@ export interface PortfolioVideo {
   caption?: string;
   emmyBadge?: boolean;
   featured?: boolean;
+  /** Large violet Demo Reel player; at most one featured video. */
+  mainReel?: boolean;
   spotlight?: { meta: string; award?: string; paragraphs: string[] };
   loop?: boolean;
   autoplay?: boolean;
@@ -33,6 +35,7 @@ type OverrideEntry = {
   caption?: string;
   emmyBadge?: boolean;
   featured?: boolean;
+  mainReel?: boolean;
   spotlight?: { meta: string; award?: string; paragraphs: string[] };
   loop?: boolean;
   autoplay?: boolean;
@@ -45,6 +48,7 @@ export interface YouTubeOverrideEntry {
   order: number;
   hidden?: boolean;
   featured?: boolean;
+  mainReel?: boolean;
   spotlight?: { meta: string; award?: string; paragraphs: string[] };
   loop?: boolean;
   autoplay?: boolean;
@@ -252,6 +256,7 @@ export async function getPortfolioVideos(): Promise<PortfolioVideo[]> {
         caption: streamOverride?.caption,
         emmyBadge: streamOverride?.emmyBadge ?? false,
         featured: streamOverride?.featured ?? false,
+        mainReel: streamOverride?.mainReel ?? false,
         spotlight: streamOverride?.spotlight,
         loop: streamOverride?.loop ?? false,
         autoplay: streamOverride?.autoplay ?? false,
@@ -274,6 +279,7 @@ export async function getPortfolioVideos(): Promise<PortfolioVideo[]> {
       caption: entry.caption,
       emmyBadge: entry.emmyBadge ?? false,
       featured: false,
+      mainReel: false,
       loop: false,
       autoplay: false,
       placeholder: true,
@@ -307,6 +313,7 @@ export async function getPortfolioVideos(): Promise<PortfolioVideo[]> {
         youtubeId,
         stats: youtubeStats.get(youtubeId) ?? null,
         featured: entry.featured ?? false,
+        mainReel: entry.mainReel ?? false,
         spotlight: entry.spotlight,
         loop: entry.loop ?? false,
         autoplay: entry.autoplay ?? false,

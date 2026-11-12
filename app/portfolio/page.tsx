@@ -52,15 +52,16 @@ export default async function PortfolioPage() {
   await connection();
   const videos = await getPortfolioVideos();
   const gridItems = await getPortfolioGridItems();
-  const youtubeVideos = videos.filter((video) => video.source === "youtube");
-  const streamVideos = videos.filter((video) => video.source !== "youtube");
-  const { featured, rest } = extractFeatured(streamVideos);
-  const { portrait } = groupByOrientation(rest);
+  const { featured, rest } = extractFeatured(videos);
+  const youtubeVideos = rest.filter((video) => video.source === "youtube");
+  const streamRest = rest.filter((video) => video.source !== "youtube");
+  const { portrait } = groupByOrientation(streamRest);
 
   const mainReel =
+    featured.find((v) => v.mainReel) ??
     featured.find((v) => v.title.toLowerCase().includes("2023")) ??
     featured[0];
-  const archiveReel = featured.find((v) => v.uid !== mainReel?.uid);
+  const archiveReels = featured.filter((v) => v.uid !== mainReel?.uid);
 
   const demoUids = new Set(featured.map((video) => video.uid));
   const portraitUids = new Set(portrait.map((video) => video.uid));
@@ -132,20 +133,24 @@ export default async function PortfolioPage() {
               {mainReel.title}
             </p>
 
-            {archiveReel && (
-              <div className="mt-10 max-w-xs">
-                <div className="featured-reel-turquoise mx-1 my-2 sm:mx-3 sm:my-4">
-                  <div className="featured-reel-turquoise__ring">
-                    <div className="featured-reel-turquoise__frame">
-                      <div className="featured-reel-turquoise__media">
-                        <ClickToPlayVideo video={archiveReel} />
+            {archiveReels.length > 0 && (
+              <div className="mt-10 flex flex-wrap gap-6">
+                {archiveReels.map((reel) => (
+                  <div key={reel.uid} className="max-w-xs">
+                    <div className="featured-reel-turquoise mx-1 my-2 sm:mx-3 sm:my-4">
+                      <div className="featured-reel-turquoise__ring">
+                        <div className="featured-reel-turquoise__frame">
+                          <div className="featured-reel-turquoise__media">
+                            <ClickToPlayVideo video={reel} />
+                          </div>
+                        </div>
                       </div>
                     </div>
+                    <p className="mt-3 px-1 text-xs font-medium text-neutral-400 sm:px-3">
+                      {reel.title}
+                    </p>
                   </div>
-                </div>
-                <p className="mt-3 px-1 text-xs font-medium text-neutral-400 sm:px-3">
-                  {archiveReel.title}
-                </p>
+                ))}
               </div>
             )}
           </section>

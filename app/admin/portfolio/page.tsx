@@ -11,6 +11,7 @@ type OverrideRow = {
   order: number;
   hidden?: boolean;
   featured?: boolean;
+  mainReel?: boolean;
   emmyBadge?: boolean;
   loop?: boolean;
   autoplay?: boolean;
@@ -46,7 +47,7 @@ const SECTIONS: {
   {
     id: "demo",
     title: "Demo Reels",
-    hint: "The clip whose title includes “2023” is the large purple reel. Any other featured clip is the smaller archive reel.",
+    hint: "Check Main reel on one clip for the large purple player. Other Demo Reel clips appear as smaller turquoise cards. If none is checked, the title containing “2023” is used, then the first Demo Reel clip.",
   },
   {
     id: "highlight",
@@ -166,7 +167,7 @@ function canPlace(row: OverrideRow, section: SectionId) {
     return section === "highlight" || section === "selected";
   }
   if (isYouTube(row)) {
-    return section === "youtube";
+    return section === "youtube" || section === "demo";
   }
   if (section === "youtube") {
     return false;
@@ -340,10 +341,13 @@ function partitionRows(rows: OverrideRow[]): Groups {
   const sorted = [...rows].sort((a, b) => a.order - b.order);
   const hidden = sorted.filter((row) => row.hidden);
   const visible = sorted.filter((row) => !row.hidden);
-  const youtube = visible.filter(isYouTube);
   const demo = visible.filter(
-    (row) => !isYouTube(row) && !isSectionBreak(row) && row.featured,
+    (row) =>
+      !isSectionBreak(row) &&
+      row.featured &&
+      (isYouTube(row) || !isPortrait(row)),
   );
+  const youtube = visible.filter((row) => isYouTube(row) && !row.featured);
   const rest = visible.filter(
     (row) => !isYouTube(row) && (isSectionBreak(row) || !row.featured),
   );
@@ -414,24 +418,33 @@ function toSavePayload(groups: Groups) {
     ...groups.highlight.map((row) => ({
       ...row,
       featured: false,
+      mainReel: false,
       hidden: false,
     })),
     ...groups.selected.map((row) => ({
       ...row,
       featured: false,
+      mainReel: false,
       hidden: false,
     })),
     ...groups.youtube.map((row) => ({
       ...row,
       featured: false,
+      mainReel: false,
       hidden: false,
     })),
     ...groups.social.map((row) => ({
       ...row,
       featured: false,
+      mainReel: false,
       hidden: false,
     })),
-    ...groups.hidden.map((row) => ({ ...row, featured: false, hidden: true })),
+    ...groups.hidden.map((row) => ({
+      ...row,
+      featured: false,
+      mainReel: false,
+      hidden: true,
+    })),
   ].map((row, index) => ({ ...row, order: index * 10 }));
 
   const overrides: Record<string, Record<string, unknown>> = {};
@@ -480,6 +493,9 @@ function toSavePayload(groups: Groups) {
       if (row.featured) {
         entry.featured = true;
       }
+      if (row.mainReel && row.featured && !row.hidden) {
+        entry.mainReel = true;
+      }
       if (row.hidden) {
         entry.hidden = true;
       }
@@ -525,6 +541,7 @@ function toSavePayload(groups: Groups) {
       title,
       order,
       featured,
+      mainReel,
       hidden,
       emmyBadge,
       loop,
@@ -541,6 +558,9 @@ function toSavePayload(groups: Groups) {
     const entry: Record<string, unknown> = { ...extra, title, order };
     if (featured) {
       entry.featured = true;
+    }
+    if (mainReel && featured && !hidden) {
+      entry.mainReel = true;
     }
     if (hidden) {
       entry.hidden = true;
@@ -565,7 +585,9 @@ function toSavePayload(groups: Groups) {
 
 function reelRole(row: OverrideRow, demo: OverrideRow[]) {
   const main =
-    demo.find((item) => item.title.toLowerCase().includes("2023")) ?? demo[0];
+    demo.find((item) => item.mainReel) ??
+    demo.find((item) => item.title.toLowerCase().includes("2023")) ??
+    demo[0];
   if (!main) {
     return "";
   }
@@ -682,6 +704,33 @@ export default function PortfolioAdminPage() {
     }));
   }
 
+  function setMainReel(uid: string | null) {
+    setGroups((current) => {
+      const next = cloneGroups(current);
+      for (const sectionId of Object.keys(next) as SectionId[]) {
+        next[sectionId] = next[sectionId].map((row) => {
+          if (isSectionBreak(row)) {
+            return row;
+          }
+          const shouldBeMain =
+            uid !== null &&
+            row.uid === uid &&
+            Boolean(row.featured || sectionId === "demo") &&
+            !row.hidden &&
+            sectionId !== "hidden";
+          if (shouldBeMain) {
+            return { ...row, mainReel: true, featured: true };
+          }
+          if (!row.mainReel) {
+            return row;
+          }
+          return { ...row, mainReel: false };
+        });
+      }
+      return next;
+    });
+  }
+
   function moveToSection(from: SectionId, index: number, to: SectionId) {
     if (from === to) {
       return;
@@ -701,11 +750,20 @@ export default function PortfolioAdminPage() {
         return current;
       }
       const target = resolveTarget(moved, to);
-      next[target].push(moved);
+      const placed =
+        target === "demo"
+          ? { ...moved, featured: true, hidden: false }
+          : {
+              ...moved,
+              featured: false,
+              mainReel: false,
+              hidden: target === "hidden",
+            };
+      next[target].push(placed);
       return capHighlight(
         next,
-        target === "highlight" && !isSectionBreak(moved)
-          ? moved.uid
+        target === "highlight" && !isSectionBreak(placed)
+          ? placed.uid
           : undefined,
       );
     });
@@ -764,7 +822,28 @@ export default function PortfolioAdminPage() {
         dragState?.section === "highlight"
           ? current[dragState.section][dragState.index]?.uid
           : undefined;
-      return capHighlight(current, preferUid);
+      const capped = capHighlight(current, preferUid);
+      const next = cloneGroups(capped);
+      next.demo = next.demo.map((row) => ({
+        ...row,
+        featured: true,
+        hidden: false,
+      }));
+      for (const sectionId of [
+        "highlight",
+        "selected",
+        "youtube",
+        "social",
+        "hidden",
+      ] as SectionId[]) {
+        next[sectionId] = next[sectionId].map((row) => ({
+          ...row,
+          featured: false,
+          mainReel: false,
+          hidden: sectionId === "hidden",
+        }));
+      }
+      return next;
     });
   }
 
@@ -789,7 +868,12 @@ export default function PortfolioAdminPage() {
       if (!moved) {
         return current;
       }
-      next.hidden.push(moved);
+      next.hidden.push({
+        ...moved,
+        featured: false,
+        mainReel: false,
+        hidden: true,
+      });
       return capHighlight(next);
     });
     setMessage("Removed from the list. Save Changes to take it off the site.");
@@ -1176,6 +1260,7 @@ export default function PortfolioAdminPage() {
                         <th className="px-4 py-3 font-medium">UID</th>
                         <th className="px-4 py-3 font-medium">Title</th>
                         <th className="px-4 py-3 font-medium">Section</th>
+                        <th className="px-4 py-3 font-medium">Main</th>
                         <th className="px-4 py-3 font-medium">Emmy</th>
                         <th className="px-4 py-3 font-medium">Loop</th>
                         <th className="px-4 py-3 font-medium">Autoplay</th>
@@ -1192,7 +1277,7 @@ export default function PortfolioAdminPage() {
                           }
                         >
                           <td
-                            colSpan={8}
+                            colSpan={9}
                             className="px-4 py-6 text-sm text-neutral-500"
                           >
                             No videos in this section.
@@ -1419,6 +1504,25 @@ export default function PortfolioAdminPage() {
                                   ))}
                                 </select>
                               )}
+                          </td>
+                          <td className="w-20 px-4 py-3 text-center align-middle">
+                            {!sectionBreak && (
+                              <input
+                                type="checkbox"
+                                checked={Boolean(row.mainReel)}
+                                disabled={
+                                  section.id !== "demo" || Boolean(row.hidden)
+                                }
+                                onChange={(event) => {
+                                  if (event.target.checked) {
+                                    setMainReel(row.uid);
+                                  } else {
+                                    setMainReel(null);
+                                  }
+                                }}
+                                aria-label={`Main reel ${row.title}`}
+                              />
+                            )}
                           </td>
                           <td className="w-20 px-4 py-3 text-center align-middle">
                             {!sectionBreak && (
