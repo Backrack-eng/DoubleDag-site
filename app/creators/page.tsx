@@ -1,5 +1,14 @@
 import type { Metadata } from "next";
 import { loadContent } from "../../lib/content/load-content";
+import { getPortfolioVideos } from "../../lib/portfolio-data";
+import {
+  extractFeatured,
+  groupByOrientation,
+} from "../../lib/portfolio-videos";
+import PortfolioGrid from "../portfolio/PortfolioGrid";
+
+/** Revalidate Stream-backed portrait list hourly (ISR). No per-request render. */
+export const revalidate = 3600;
 
 type Hideable = { hidden?: boolean };
 
@@ -56,6 +65,11 @@ type CreatorsData = {
       after: string;
     };
   };
+  socialCuts: Hideable & {
+    eyebrow: string;
+    heading: string;
+    intro: string;
+  };
   faq: {
     eyebrow: string;
     heading: string;
@@ -103,7 +117,7 @@ export function generateMetadata(): Metadata {
   };
 }
 
-export default function CreatorsPage() {
+export default async function CreatorsPage() {
   const content = loadContent<CreatorsData>("creators");
   const heroButtons = visible(content.hero.buttons);
   const steps = visible(content.howItWorks.steps);
@@ -112,6 +126,19 @@ export default function CreatorsPage() {
   const faqs = visible(content.faq.items);
   const ctaButtons = visible(content.cta.buttons);
   const note = content.packages.retainerNote;
+  const socialCuts = content.socialCuts;
+
+  let portrait: Awaited<ReturnType<typeof getPortfolioVideos>> = [];
+  try {
+    const videos = await getPortfolioVideos();
+    const { rest } = extractFeatured(videos);
+    const streamRest = rest.filter((video) => video.source !== "youtube");
+    portrait = groupByOrientation(streamRest).portrait;
+  } catch {
+    // Build/runtime without Stream access: omit the section rather than failing the page.
+    portrait = [];
+  }
+  const showSocialCuts = !socialCuts.hidden && portrait.length > 0;
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-100">
@@ -238,6 +265,30 @@ export default function CreatorsPage() {
             {note.after}
           </p>
         </section>
+
+        {showSocialCuts && (
+          <section className="mb-14 border-t border-white/10 pt-14">
+            <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
+              {socialCuts.eyebrow}
+            </p>
+            <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+              {socialCuts.heading}
+            </h2>
+            {socialCuts.intro.trim() && (
+              <p className="mt-4 max-w-3xl text-base leading-8 text-neutral-300">
+                {socialCuts.intro}
+              </p>
+            )}
+            <div className="mt-10">
+              <PortfolioGrid
+                videos={portrait}
+                variant="portrait"
+                gridClassName="flex flex-wrap justify-center gap-6"
+                itemClassName="w-[calc((100%-1.5rem)/2)] md:w-[calc((100%-3rem)/3)] lg:w-[calc((100%-6rem)/5)]"
+              />
+            </div>
+          </section>
+        )}
 
         <section className="mb-14 border-t border-white/10 pt-14">
           <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">

@@ -5,9 +5,9 @@ import {
   loadHomeFeatured,
   resolveHomeFeaturedVideos,
 } from "../lib/home-featured";
+import { getPortfolioVideos } from "../lib/portfolio-data";
 import {
   extractFeatured,
-  getPortfolioVideos,
   selectDemoReels,
 } from "../lib/portfolio-videos";
 import { DemoReelsSection } from "./components/DemoReelsSection";

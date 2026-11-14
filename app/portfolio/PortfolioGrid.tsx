@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CollapsibleCaption } from "../components/CollapsibleCaption";
 import {
   buildPlaybackSrc,
+  clickPlaybackSrc,
   formatCount,
+  PAUSE_INLINE_VIDEOS_EVENT,
   type PortfolioGridItem,
   type PortfolioVideo,
 } from "../../lib/portfolio-videos";
@@ -31,27 +33,6 @@ function PlaceholderMedia({ title }: { title: string }) {
   );
 }
 
-function clickPlaybackSrc(video: PortfolioVideo) {
-  if (video.source === "youtube") {
-    const params = new URLSearchParams();
-    params.set("autoplay", "1");
-    if (video.loop) {
-      const youtubeId =
-        video.youtubeId ??
-        (video.uid.startsWith("youtube:")
-          ? video.uid.slice("youtube:".length)
-          : video.uid);
-      params.set("loop", "1");
-      params.set("playlist", youtubeId);
-    }
-    return `${video.playbackUrl}?${params.toString()}`;
-  }
-
-  const base = buildPlaybackSrc({ ...video, autoplay: false });
-  const join = base.includes("?") ? "&" : "?";
-  return `${base}${join}autoplay=true`;
-}
-
 export function ClickToPlayVideo({
   video,
   objectFit = "cover",
@@ -60,13 +41,25 @@ export function ClickToPlayVideo({
   objectFit?: "cover" | "contain";
 }) {
   const [playing, setPlaying] = useState(false);
+  const [suppressed, setSuppressed] = useState(false);
   const fitClass = objectFit === "contain" ? "object-contain" : "object-cover";
+
+  useEffect(() => {
+    const onPause = () => {
+      setPlaying(false);
+      setSuppressed(true);
+    };
+    window.addEventListener(PAUSE_INLINE_VIDEOS_EVENT, onPause);
+    return () => {
+      window.removeEventListener(PAUSE_INLINE_VIDEOS_EVENT, onPause);
+    };
+  }, []);
 
   if (video.placeholder || !video.playbackUrl) {
     return <PlaceholderMedia title={video.title} />;
   }
 
-  if (video.autoplay || playing) {
+  if ((video.autoplay || playing) && !suppressed) {
     return (
       <iframe
         src={video.autoplay ? buildPlaybackSrc(video) : clickPlaybackSrc(video)}
@@ -81,7 +74,10 @@ export function ClickToPlayVideo({
   return (
     <button
       type="button"
-      onClick={() => setPlaying(true)}
+      onClick={() => {
+        setSuppressed(false);
+        setPlaying(true);
+      }}
       aria-label={`Play ${video.title}`}
       className="absolute inset-0"
     >
@@ -153,10 +149,10 @@ function VideoCard({
             {formatCount(video.stats.likeCount)} likes
           </p>
         )}
-        {video.caption && isRow && (
+        {variant !== "portrait" && video.caption && isRow && (
           <CollapsibleCaption caption={video.caption} />
         )}
-        {video.caption && !isRow && (
+        {variant !== "portrait" && video.caption && !isRow && (
           <p className="mt-3 whitespace-pre-line text-sm leading-7 text-neutral-300">
             {video.caption}
           </p>
@@ -184,11 +180,17 @@ export default function PortfolioGrid({
   items,
   variant = "landscape",
   layout = "grid",
+  gridClassName,
+  itemClassName,
 }: {
   videos?: PortfolioVideo[];
   items?: PortfolioGridItem[];
   variant?: "landscape" | "portrait";
   layout?: "grid" | "row";
+  /** Optional override for the outer grid/flex container (e.g. Creators portrait layout). */
+  gridClassName?: string;
+  /** Optional wrapper class around each video card (e.g. fixed column widths). */
+  itemClassName?: string;
 }) {
   const resolvedItems: PortfolioGridItem[] =
     items ??
@@ -205,19 +207,26 @@ export default function PortfolioGrid({
     );
   }
 
+  const defaultGridClass =
+    variant === "portrait"
+      ? "grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4"
+      : layout === "row"
+        ? "grid gap-6"
+        : "grid gap-6 md:grid-cols-2 lg:grid-cols-3";
+
   return (
-    <div
-      className={
-        variant === "portrait"
-          ? "grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4"
-          : layout === "row"
-            ? "grid gap-6"
-            : "grid gap-6 md:grid-cols-2 lg:grid-cols-3"
-      }
-    >
+    <div className={gridClassName ?? defaultGridClass}>
       {resolvedItems.map((item) =>
         item.type === "section" ? (
           <SectionBreak key={item.uid} label={item.label} />
+        ) : itemClassName ? (
+          <div key={item.video.uid} className={itemClassName}>
+            <VideoCard
+              video={item.video}
+              variant={variant}
+              layout={layout}
+            />
+          </div>
         ) : (
           <VideoCard
             key={item.video.uid}

@@ -8,10 +8,10 @@
     "caption": "This is my full length demo reel including examples from my documentary work."
   },
   "066a9989e5e134d2816590ebf77751b8": {
-    "thumbnailTime": null,
     "title": "Sizzle Reel 2023",
     "order": 10,
-    "featured": true
+    "featured": true,
+    "thumbnailTime": null
   },
   "95c38530eb7336c2fbe7c46129bfe1a2": {
     "title": "Sizzle Reel - 2006-2012",
@@ -45,10 +45,10 @@
     "caption": "10 episodes, 22 to 30 minutes each\nBuzzie Nominee, Most Innovative Factual Program/Project of the Year (World Congress of Science and Factual Producers)\n\nProfessor Eric R. Williams walks through where entertainment is headed with extended reality: esports, mixed reality sports, interactive storytelling, cinematic VR, the metaverse. He meets the people building it along the way.\n\nI was the sole editor and did some of the graphics. The footage came from all over: 3D objects, 360 cameras, unrendered VR animations and environments, plus cameras of every kind from internal teams and freelance directors and operators shooting around the country. Getting all of that to sit together in one cut took a lot of problem solving and a lot of late nights.\n\nIt was also a blast to work on. Maybe because of the hard parts, honestly. I learned a ton on this one, and I still use it today."
   },
   "cf532871a841fb0c63618f5deceaf514": {
-    "thumbnailTime": "11s",
     "title": "Grills Gone Wild: From the Backyard to Backstage",
     "order": 80,
-    "caption": "Six cameras, 72 hours of footage, and one very serious barbecue championship.\n\n“Revealing, deftly cut and amusingly hosted documentary.” Roger Moore, Orlando Sentinel\n\nOnce a year, Starke, Florida turns into a barbecue town. In February 2011 I brought six cameras to Boots ‘n BBQ, the Santa Fe College Foundation scholarship fundraiser that doubled as the Florida BBQ Association State Championship.\n\nThe film follows comedian Alex Ortiz as he works the grounds, talks shop with pitmasters, and gets backstage with the concert acts, including southern rock’s Jimmie Van Zant. Boxing champ Pinklon Thomas and wrestling champ Dory Funk Jr. turn up too. Novice teams and veteran teams are cooking toward the same judging deadline, and that clock does a lot of the storytelling.\n\nI directed the four day shoot with six cameras, one of them a Steadicam operator. Then I edited the whole thing myself. That meant cutting 72 hours of footage down to a 60 minute film, with graphics built in Motion and After Effects. A barbecue festival is hard to cover because everything happens everywhere at once. The edit had to keep the cooks, the crowd, and the stage moving together without losing the people at the center.\n\nThe film premiered August 4, 2011 at the Twin Theater in downtown Starke. Two days later, Cinematique Theater in Daytona Beach ran three screenings with red carpet showings and a Q&A with Ortiz and the crew. The Daytona Beach News-Journal gave it a full page in its GO386 entertainment section. In October it screened at the 2011 Orlando Film Festival, where Orlando Sentinel's Roger Moore reviewed it."
+    "caption": "Six cameras, 72 hours of footage, and one very serious barbecue championship.\n\n“Revealing, deftly cut and amusingly hosted documentary.” Roger Moore, Orlando Sentinel\n\nOnce a year, Starke, Florida turns into a barbecue town. In February 2011 I brought six cameras to Boots ‘n BBQ, the Santa Fe College Foundation scholarship fundraiser that doubled as the Florida BBQ Association State Championship.\n\nThe film follows comedian Alex Ortiz as he works the grounds, talks shop with pitmasters, and gets backstage with the concert acts, including southern rock’s Jimmie Van Zant. Boxing champ Pinklon Thomas and wrestling champ Dory Funk Jr. turn up too. Novice teams and veteran teams are cooking toward the same judging deadline, and that clock does a lot of the storytelling.\n\nI directed the four day shoot with six cameras, one of them a Steadicam operator. Then I edited the whole thing myself. That meant cutting 72 hours of footage down to a 60 minute film, with graphics built in Motion and After Effects. A barbecue festival is hard to cover because everything happens everywhere at once. The edit had to keep the cooks, the crowd, and the stage moving together without losing the people at the center.\n\nThe film premiered August 4, 2011 at the Twin Theater in downtown Starke. Two days later, Cinematique Theater in Daytona Beach ran three screenings with red carpet showings and a Q&A with Ortiz and the crew. The Daytona Beach News-Journal gave it a full page in its GO386 entertainment section. In October it screened at the 2011 Orlando Film Festival, where Orlando Sentinel's Roger Moore reviewed it.",
+    "thumbnailTime": "11s"
   },
   "section:mw3uhdu3": {
     "type": "section",
@@ -276,17 +276,19 @@
   },
   "c2927fd0844702028c09df1523118d3c": {
     "title": "RB Wealth Introduction Video",
-    "order": 520
-  },
-  "ddeb6d07f295cac1b2555f918c033444": {
-    "title": "Prop Firm Match",
-    "order": 530,
-    "caption": "Producer, Director and Editor, Colorist, audio design"
+    "order": 520,
+    "thumbnailTime": "26s"
   },
   "4215f4af3f5a34958687ed0acfc04897": {
     "title": "Heart and Soil - \"doom scroll break\"",
+    "order": 530,
+    "loop": true,
+    "thumbnailTime": "123s"
+  },
+  "ddeb6d07f295cac1b2555f918c033444": {
+    "title": "Prop Firm Match",
     "order": 540,
-    "loop": true
+    "caption": "Producer, Director and Editor, Colorist, audio design"
   },
   "62bbe1860e3977f21ce67bbd09a1dcf6": {
     "title": "Alex Ortiz Gangsta Poet",
@@ -325,6 +327,7 @@
   },
   "831d0b684aad78cf5450e06f5af4c32a": {
     "title": "Weavingnature Preview",
-    "order": 610
+    "order": 610,
+    "hidden": true
   }
 }

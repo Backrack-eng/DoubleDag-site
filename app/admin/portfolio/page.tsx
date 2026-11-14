@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type DragEvent } from "react";
 import { FEATURED_WORK_COUNT } from "../../../lib/portfolio-constants";
+import { StreamThumbnailControl } from "../components/StreamThumbnailControl";
 import { moveItemInList } from "../lib/drag-reorder";
 
 export const dynamic = "force-dynamic";
@@ -548,10 +549,12 @@ function toSavePayload(groups: Groups) {
       loop,
       autoplay,
       caption,
+      thumbnailTime,
       placeholder: _placeholder,
       orientation: _orientation,
       source: _source,
       youtubeId: _youtubeId,
+      thumbnailOverrideUrl: _thumbnailOverrideUrl,
       type: _type,
       label: _label,
       ...extra
@@ -577,6 +580,11 @@ function toSavePayload(groups: Groups) {
     }
     if (typeof caption === "string" && caption.trim()) {
       entry.caption = caption;
+    }
+    if (typeof thumbnailTime === "string" && thumbnailTime.trim()) {
+      entry.thumbnailTime = thumbnailTime.trim();
+    } else if (thumbnailTime === null) {
+      entry.thumbnailTime = null;
     }
     overrides[uid] = entry;
   }
@@ -615,6 +623,7 @@ export default function PortfolioAdminPage() {
   const [addingYoutube, setAddingYoutube] = useState(false);
   const [sectionInput, setSectionInput] = useState("");
   const [sectionMessage, setSectionMessage] = useState<string | null>(null);
+  const [durations, setDurations] = useState<Record<string, number>>({});
 
   useEffect(() => {
     let cancelled = false;
@@ -653,6 +662,7 @@ export default function PortfolioAdminPage() {
           overrides?: Record<string, object>;
           placeholders?: unknown;
           orientations?: Record<string, "landscape" | "portrait">;
+          durations?: Record<string, number>;
         };
         const overrides =
           payload.overrides &&
@@ -666,8 +676,15 @@ export default function PortfolioAdminPage() {
           !Array.isArray(payload.orientations)
             ? payload.orientations
             : {};
+        const nextDurations =
+          payload.durations &&
+          typeof payload.durations === "object" &&
+          !Array.isArray(payload.durations)
+            ? payload.durations
+            : {};
 
         if (!cancelled) {
+          setDurations(nextDurations);
           setGroups(
             partitionRows(
               [...toRows(overrides), ...placeholderRows(payload.placeholders)].map(
@@ -699,9 +716,18 @@ export default function PortfolioAdminPage() {
   function updateRow(section: SectionId, uid: string, patch: Partial<OverrideRow>) {
     setGroups((current) => ({
       ...current,
-      [section]: current[section].map((row) =>
-        row.uid === uid ? { ...row, ...patch } : row,
-      ),
+      [section]: current[section].map((row) => {
+        if (row.uid !== uid) {
+          return row;
+        }
+        const next: OverrideRow = { ...row, ...patch };
+        for (const [key, value] of Object.entries(patch)) {
+          if (value === undefined) {
+            delete next[key];
+          }
+        }
+        return next;
+      }),
     }));
   }
 
@@ -1456,6 +1482,26 @@ export default function PortfolioAdminPage() {
                                 }
                               />
                             )}
+                            {!sectionBreak &&
+                              !isYouTube(row) &&
+                              !isPlaceholder(row) && (
+                                <StreamThumbnailControl
+                                  uid={row.uid}
+                                  title={row.title || row.uid}
+                                  orientation={
+                                    row.orientation === "portrait"
+                                      ? "portrait"
+                                      : "landscape"
+                                  }
+                                  durationSeconds={durations[row.uid]}
+                                  thumbnailTime={row.thumbnailTime}
+                                  onChange={(next) =>
+                                    updateRow(section.id, row.uid, {
+                                      thumbnailTime: next,
+                                    })
+                                  }
+                                />
+                              )}
                           </td>
                           <td className="w-48 px-4 py-3 align-middle">
                             <select

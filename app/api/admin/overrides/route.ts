@@ -17,13 +17,14 @@ const LOCAL_ONLY_ERROR = {
   error: "Only available when running locally (npm run dev).",
 };
 
-async function loadOrientations() {
+async function loadStreamMeta() {
   const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
   const token = process.env.CLOUDFLARE_STREAM_API_TOKEN;
   const orientations: Record<string, "landscape" | "portrait"> = {};
+  const durations: Record<string, number> = {};
 
   if (!accountId || !token) {
-    return orientations;
+    return { orientations, durations };
   }
 
   const response = await fetch(
@@ -36,12 +37,13 @@ async function loadOrientations() {
   );
 
   if (!response.ok) {
-    return orientations;
+    return { orientations, durations };
   }
 
   const payload = (await response.json()) as {
     result?: Array<{
       uid?: string;
+      duration?: number;
       input?: { width?: number; height?: number };
     }>;
   };
@@ -56,9 +58,16 @@ async function loadOrientations() {
       width != null && height != null && height > width
         ? "portrait"
         : "landscape";
+    if (
+      typeof video.duration === "number" &&
+      Number.isFinite(video.duration) &&
+      video.duration > 0
+    ) {
+      durations[video.uid] = video.duration;
+    }
   }
 
-  return orientations;
+  return { orientations, durations };
 }
 
 export async function GET() {
@@ -68,8 +77,8 @@ export async function GET() {
 
   const overrides = JSON.parse(fs.readFileSync(OVERRIDES_PATH, "utf8"));
   const placeholders = JSON.parse(fs.readFileSync(PLACEHOLDERS_PATH, "utf8"));
-  const orientations = await loadOrientations();
-  return Response.json({ overrides, placeholders, orientations });
+  const { orientations, durations } = await loadStreamMeta();
+  return Response.json({ overrides, placeholders, orientations, durations });
 }
 
 export async function POST(request: Request) {

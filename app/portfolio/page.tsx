@@ -5,10 +5,12 @@ import { connection } from "next/server";
 import { FEATURED_WORK_COUNT } from "../../lib/portfolio-constants";
 import { DemoReelsSection } from "../components/DemoReelsSection";
 import {
-  extractFeatured,
-  getMainLandscapeGridItems,
   getPortfolioGridItems,
   getPortfolioVideos,
+} from "../../lib/portfolio-data";
+import {
+  extractFeatured,
+  getMainLandscapeGridItems,
   groupByOrientation,
   selectDemoReels,
   splitHighlightSelected,

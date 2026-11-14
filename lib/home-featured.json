@@ -3,7 +3,8 @@
     "uid": "831d0b684aad78cf5450e06f5af4c32a",
     "order": 0,
     "title": "Weaving Nature Preview",
-    "caption": "A 20-minute documentary made with Maryland Public Television for PBS American Masters. It follows Maryland artist David Bacharach building The Mounds, an outdoor installation that turns weaving and metalsmithing into a statement on climate change and land, air, and water damage. I was sole editor from concept to final cut. The subject and his story were strong going in, but shaping that into a real narrative in the edit was the hard part, and I was also running post-production start to finish, working around camera operator issues along the way. Color correcting a film shot entirely outdoors is its own fight, and this one tested me. PBS American Masters picked it up as the first entry in their Shorts series, and it won an Emmy. Still the project I'm proudest of."
+    "caption": "A 20-minute documentary made with Maryland Public Television for PBS American Masters. It follows Maryland artist David Bacharach building The Mounds, an outdoor installation that turns weaving and metalsmithing into a statement on climate change and land, air, and water damage. I was sole editor from concept to final cut. The subject and his story were strong going in, but shaping that into a real narrative in the edit was the hard part, and I was also running post-production start to finish, working around camera operator issues along the way. Color correcting a film shot entirely outdoors is its own fight, and this one tested me. PBS American Masters picked it up as the first entry in their Shorts series, and it won an Emmy. Still the project I'm proudest of.",
+    "emmyBadge": true
   },
   {
     "uid": "f5eb655a9de65e2d835081d5aa355241",
@@ -24,7 +25,15 @@
     "order": 40
   },
   {
-    "uid": "e6a74d702a586c50fae03887dd2bf4c0",
+    "uid": "cf532871a841fb0c63618f5deceaf514",
     "order": 50
+  },
+  {
+    "uid": "e6a74d702a586c50fae03887dd2bf4c0",
+    "order": 60
+  },
+  {
+    "uid": "a0d5ed24ac55e4d2a9eb3b441628719c",
+    "order": 70
   }
 ]
