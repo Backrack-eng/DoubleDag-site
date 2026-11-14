@@ -1,0 +1,242 @@
+{
+  "meta": {
+    "title": "Editing Rates & Services | Double Dag Productions",
+    "description": "Transparent video editing rates for documentary, series, branded, and digital content. Day rates, project packages, retainers, and add-ons from Emmy-recognized editor Ben Bacharach-White."
+  },
+  "hero": {
+    "eyebrow": "Services & Rates",
+    "heading": "Expert Video Editing — Built for Story, Not Just Assembly",
+    "intro": "I'm a senior editor with over two decades of experience shaping documentaries, series, and high-end digital content. This isn't just cutting footage — it's editorial judgment, pacing, structure, and polish that elevates the final piece.",
+    "note": "Clear pricing helps you plan, but don't let the numbers scare you. Final quotes are always tailored to your project, and I'm absolutely open to working with Non-Profits, students, small productions, and people with limited budgets when I can."
+  },
+  "coreRates": {
+    "eyebrow": "Core Rates",
+    "heading": "Flexible ways to work together",
+    "tiers": [
+      {
+        "name": "Day Rate",
+        "price": "$600 – $800",
+        "unit": "/ day",
+        "description": "Best for ongoing projects, collaborative edits, or agency work."
+      },
+      {
+        "name": "Hourly",
+        "price": "$75 – $100",
+        "unit": "/ hour",
+        "description": "Used for smaller updates, fixes, or overflow work."
+      },
+      {
+        "name": "Project Minimum",
+        "price": "$1,500",
+        "unit": "minimum",
+        "description": "Ensures proper time for quality editorial work."
+      }
+    ]
+  },
+  "packages": {
+    "eyebrow": "Project Packages",
+    "heading": "Structured options for common needs",
+    "intro": "Packages are starting points — scope, complexity, and timeline shape the final estimate.",
+    "items": [
+      {
+        "id": "short-form-social",
+        "name": "Short-Form / Social",
+        "price": "Starting at $1,500",
+        "bullets": [
+          {
+            "text": "1–3 short videos (30–90 seconds)"
+          },
+          {
+            "text": "Tight pacing, captions, platform-ready formatting"
+          },
+          {
+            "text": "1 round of revisions"
+          },
+          {
+            "text": "Fast turnaround available"
+          }
+        ],
+        "bestFor": "social campaigns, promos, quick-turn content"
+      },
+      {
+        "id": "long-form-youtube",
+        "name": "Long-Form / YouTube / Branded Content",
+        "price": "$3,000 – $6,000",
+        "bullets": [
+          {
+            "text": "5–20 minute edited piece"
+          },
+          {
+            "text": "Full narrative shaping + pacing"
+          },
+          {
+            "text": "Graphics, music, audio polish"
+          },
+          {
+            "text": "2 rounds of revisions"
+          }
+        ],
+        "bestFor": "YouTube channels, branded storytelling, interviews"
+      },
+      {
+        "name": "Documentary / Premium Content",
+        "price": "$7,500+",
+        "bullets": [
+          {
+            "text": "Deep story structure + editorial development"
+          },
+          {
+            "text": "Multi-layered edits (interviews, b-roll, archival)"
+          },
+          {
+            "text": "Advanced pacing, tone, and narrative flow"
+          },
+          {
+            "text": "Collaboration with producers / directors"
+          }
+        ],
+        "bestFor": "documentaries, series, high-end branded films"
+      },
+      {
+        "name": "Campaign / Multi-Deliverable Projects",
+        "price": "$10,000+",
+        "bullets": [
+          {
+            "text": "Hero video + multiple cutdowns"
+          },
+          {
+            "text": "Versioning for platforms"
+          },
+          {
+            "text": "Structured review workflow"
+          },
+          {
+            "text": "Consistent creative across deliverables"
+          }
+        ],
+        "bestFor": "agencies, marketing teams, launches"
+      }
+    ]
+  },
+  "retainer": {
+    "eyebrow": "Retainer Options",
+    "heading": "Monthly Editorial Partner",
+    "price": "$5,000 – $12,000 / month",
+    "bullets": [
+      {
+        "text": "Reserved editing time each month"
+      },
+      {
+        "text": "Priority scheduling"
+      },
+      {
+        "text": "Consistent output and turnaround"
+      },
+      {
+        "text": "Ideal for ongoing content pipelines"
+      }
+    ]
+  },
+  "addOns": {
+    "eyebrow": "Add-Ons",
+    "items": [
+      {
+        "label": "Motion graphics / animation",
+        "price": "custom quote"
+      },
+      {
+        "label": "Advanced color grading",
+        "price": "+$500–$1,500",
+        "accent": true
+      },
+      {
+        "label": "Audio cleanup / mix",
+        "price": "+$300–$1,000",
+        "accent": true
+      },
+      {
+        "label": "Additional revisions",
+        "price": "billed hourly"
+      },
+      {
+        "label": "Rush turnaround",
+        "price": "+25–50%",
+        "accent": true
+      },
+      {
+        "label": "Project file delivery",
+        "price": "+$500+",
+        "accent": true
+      },
+      {
+        "label": "Long-term archive",
+        "price": "custom"
+      }
+    ]
+  },
+  "howPricingWorks": {
+    "eyebrow": "How Pricing Works",
+    "heading": "Every project is different. Pricing is based on:",
+    "factors": [
+      {
+        "text": "Footage volume and organization"
+      },
+      {
+        "text": "Story complexity"
+      },
+      {
+        "text": "Number of revisions"
+      },
+      {
+        "text": "Graphics / finishing needs"
+      },
+      {
+        "text": "Turnaround speed"
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "heading": "Common questions",
+    "items": [
+      {
+        "question": "How many revisions are included?",
+        "answer": "Most projects include 1–2 rounds. Additional revisions are billed hourly."
+      },
+      {
+        "question": "Do you work hourly or per project?",
+        "answer": "Both. Projects are typically fixed-rate; ongoing work is often hourly or retainer-based."
+      },
+      {
+        "question": "Can you match a lower budget?",
+        "answer": "If scope can be adjusted, sometimes. The focus is always maintaining quality."
+      },
+      {
+        "question": "Do you handle raw footage organization?",
+        "answer": "Yes — but heavily disorganized footage may affect pricing."
+      }
+    ]
+  },
+  "cta": {
+    "eyebrow": "Next Step",
+    "heading": "Let's talk about your project.",
+    "body": "Tell me what you're working on, and I'll put together a tailored estimate.",
+    "buttons": [
+      {
+        "label": "Email for a Quote",
+        "href": "mailto:hello@doubledagproductions.com?subject=Editing%20%26%20Post-Production%20Inquiry",
+        "style": "primary"
+      },
+      {
+        "label": "Research & Fact Checking",
+        "href": "/research",
+        "style": "secondary"
+      },
+      {
+        "label": "View Filmography",
+        "href": "/filmography",
+        "style": "secondary"
+      }
+    ]
+  }
+}

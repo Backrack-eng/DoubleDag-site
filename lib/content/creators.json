@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "title": "Video Editing for Content Creators | Double Dag Productions",
+    "description": "You shoot it, I cut it. Professional video editing for YouTubers, podcasters, and creators who'd rather make content than sit in a timeline."
+  },
+  "hero": {
+    "eyebrow": "For Creators",
+    "heading": "You shoot it. I cut it.",
+    "lead": "You have fun. Leave the work to me.",
+    "intro": "Editing eats hours you don't have. Send me your footage and I'll turn it into something worth posting, so you spend your time filming instead of stuck in a timeline at midnight.",
+    "buttons": [
+      {
+        "label": "Send Me Your Footage",
+        "href": "mailto:hello@doubledagproductions.com?subject=Creator%20Edit%20Inquiry",
+        "style": "primary"
+      },
+      {
+        "label": "Request Pricing Sheet",
+        "href": "mailto:info@DoubleDagProductions.com?subject=Pricing%20Sheet%20Request",
+        "style": "secondary"
+      },
+      {
+        "label": "How It Works",
+        "href": "#how-it-works",
+        "style": "secondary"
+      }
+    ]
+  },
+  "howItWorks": {
+    "id": "how-it-works",
+    "eyebrow": "How It Works",
+    "heading": "Three steps. That's it.",
+    "steps": [
+      {
+        "title": "Upload Your Footage",
+        "body": "Drop your raw clips in your own file-sharing service — Dropbox is fine — or I can send you a link to upload everything. No special export, no formatting rules. Just get it to me."
+      },
+      {
+        "title": "I Cut the Story",
+        "body": "Not just an assembly of your clips in order. Pacing, structure, hooks, the stuff that actually keeps people watching."
+      },
+      {
+        "title": "You Get It Back Ready to Post",
+        "body": "Formatted for wherever it's going. Captions and graphics included if you want them."
+      }
+    ]
+  },
+  "audience": {
+    "eyebrow": "Who This Is For",
+    "heading": "Long-form, short-form, or both.",
+    "items": [
+      {
+        "title": "Long-Form Creators",
+        "body": "YouTubers, podcasters, vloggers who need consistent weekly or biweekly turnaround without burning out on the edit."
+      },
+      {
+        "title": "Short-Form Creators",
+        "body": "Reels, TikTok, Shorts. High volume, fast turnaround, cut for the scroll."
+      },
+      {
+        "title": "Anyone Done Teaching Themselves Premiere",
+        "body": "You already have a full-time job being the talent. You don't need a second one in the timeline."
+      }
+    ]
+  },
+  "why": {
+    "eyebrow": "Why Double Dag",
+    "heading": "Broadcast chops, creator turnaround.",
+    "body": "20+ years cutting documentaries and series for PBS, National Geographic, Smithsonian, and The Great Courses. Emmy-recognized editorial work. That's the same story sense going into your content, not just cuts on the beat from a preset pack."
+  },
+  "packages": {
+    "eyebrow": "Packages",
+    "heading": "Two ways to work together.",
+    "items": [
+      {
+        "title": "Short-Form / Social",
+        "body": "Fast-turnaround edits for Reels, TikTok, and Shorts."
+      },
+      {
+        "title": "Long-Form / YouTube",
+        "body": "Full edits for YouTube, vlogs, and episodic content."
+      }
+    ],
+    "pricingButton": {
+      "label": "Request Pricing Sheet",
+      "href": "mailto:info@DoubleDagProductions.com?subject=Pricing%20Sheet%20Request"
+    },
+    "retainerNote": {
+      "before": "Posting every week? ",
+      "linkLabel": "Ask about a standing editorial retainer",
+      "linkHref": "mailto:hello@doubledagproductions.com?subject=Creator%20Edit%20Inquiry",
+      "after": " so your queue never backs up."
+    }
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "heading": "Common questions",
+    "items": [
+      {
+        "question": "Do I need to shoot a certain way?",
+        "answer": "No. Send me what you've got. If you want shot list tips before you film, ask, happy to help."
+      },
+      {
+        "question": "How fast is turnaround?",
+        "answer": "Depends on length and complexity, but most short-form turns around in days, not weeks. Rush available."
+      },
+      {
+        "question": "Can you do captions, thumbnails, or graphics?",
+        "answer": "Yes, all add-ons. Ask for a quote with your project."
+      },
+      {
+        "question": "What if I post every week?",
+        "answer": "That's what the retainer option is for. Reserved editing time so you're never waiting in a queue."
+      }
+    ]
+  },
+  "cta": {
+    "eyebrow": "Next Step",
+    "heading": "Ready to hand off the edit?",
+    "body": "Send your footage and tell me what it's for. I'll take it from there.",
+    "buttons": [
+      {
+        "label": "Email Double Dag",
+        "href": "mailto:hello@doubledagproductions.com?subject=Creator%20Edit%20Inquiry",
+        "style": "primary"
+      }
+    ]
+  }
+}

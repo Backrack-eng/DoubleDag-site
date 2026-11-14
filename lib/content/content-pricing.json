@@ -1,0 +1,419 @@
+{
+  "meta": {
+    "title": "Double Dag Productions | Pricing by Genre",
+    "description": "Editing rates by genre for YouTube, podcasts, social shorts, documentary, corporate, and comedy. Emmy-recognized editor Ben Bacharach-White — starting points tailored to your project."
+  },
+  "hero": {
+    "eyebrow": "Double Dag Productions",
+    "heading": "Editing Rates, By Genre",
+    "intro": "Every kind of content cuts different, so the price should too. Pick your format below to see how it breaks down.",
+    "note": "Emmy winner for PBS American Masters. Two decades in the edit bay for The Great Courses, Smithsonian, and National Geographic, plus brand films and client work in between."
+  },
+  "genres": [
+    {
+      "id": "youtube",
+      "title": "YouTube / Vlogs",
+      "description": "Long-form talking head or vlog style. Pacing and retention matter more than polish.",
+      "tiers": [
+        {
+          "name": "Basic",
+          "price": "$250-450",
+          "turnaround": "3-4 business days",
+          "features": [
+            {
+              "text": "Clean assembly, jump cuts"
+            },
+            {
+              "text": "Basic color correction"
+            },
+            {
+              "text": "Licensed music bed, captions"
+            },
+            {
+              "text": "1 round of revisions"
+            }
+          ]
+        },
+        {
+          "name": "Standard",
+          "price": "$500-900",
+          "turnaround": "4-6 business days",
+          "features": [
+            {
+              "text": "Everything in Basic"
+            },
+            {
+              "text": "Retention-focused pacing"
+            },
+            {
+              "text": "Sound design, animated lower-thirds"
+            },
+            {
+              "text": "1 vertical Shorts cutdown"
+            },
+            {
+              "text": "2 rounds of revisions"
+            }
+          ]
+        },
+        {
+          "name": "Premium",
+          "price": "$1,000-1,800",
+          "turnaround": "7-10 business days",
+          "features": [
+            {
+              "text": "Everything in Standard"
+            },
+            {
+              "text": "Full color grade"
+            },
+            {
+              "text": "Custom motion graphics"
+            },
+            {
+              "text": "2-3 short-form cutdowns"
+            },
+            {
+              "text": "3 rounds of revisions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "podcasts",
+      "title": "Podcasts",
+      "description": "Multi-cam or single-cam interviews. Clean audio and clips that actually get watched.",
+      "tiers": [
+        {
+          "name": "Basic",
+          "price": "$250-400",
+          "turnaround": "3-4 days",
+          "features": [
+            {
+              "text": "Single or two-cam edit"
+            },
+            {
+              "text": "Audio leveling and noise cleanup"
+            },
+            {
+              "text": "Chapter markers"
+            },
+            {
+              "text": "1 round of revisions"
+            }
+          ]
+        },
+        {
+          "name": "Standard",
+          "price": "$500-900",
+          "turnaround": "4-6 days",
+          "features": [
+            {
+              "text": "Multi-cam sync"
+            },
+            {
+              "text": "Full audio mix"
+            },
+            {
+              "text": "3-5 social clips from the episode"
+            },
+            {
+              "text": "2 rounds of revisions"
+            }
+          ]
+        },
+        {
+          "name": "Premium",
+          "price": "$1,000-1,800",
+          "turnaround": "7-10 days",
+          "features": [
+            {
+              "text": "Everything in Standard"
+            },
+            {
+              "text": "Custom show graphics"
+            },
+            {
+              "text": "6-10 short-form clips with captions"
+            },
+            {
+              "text": "Thumbnail options"
+            },
+            {
+              "text": "3 rounds of revisions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "social-shorts",
+      "title": "Social Shorts (TikTok/Reels)",
+      "description": "Hook-first, built for the scroll. Priced per clip, bundles of 8-12 get a discount.",
+      "tiers": [
+        {
+          "name": "Basic",
+          "price": "$75-125 / clip",
+          "turnaround": "1-2 day turnaround",
+          "features": [
+            {
+              "text": "Hook-first cut"
+            },
+            {
+              "text": "Captions burned in"
+            },
+            {
+              "text": "Trending audio sync"
+            },
+            {
+              "text": "1 round of revisions"
+            }
+          ]
+        },
+        {
+          "name": "Standard",
+          "price": "$150-250 / clip",
+          "turnaround": "2-3 day turnaround",
+          "features": [
+            {
+              "text": "Everything in Basic"
+            },
+            {
+              "text": "Animated captions"
+            },
+            {
+              "text": "Sound design and B-roll overlays"
+            },
+            {
+              "text": "Multi-platform export"
+            },
+            {
+              "text": "2 rounds of revisions"
+            }
+          ]
+        },
+        {
+          "name": "Premium",
+          "price": "$300-500 / clip",
+          "turnaround": "2-3 day turnaround",
+          "features": [
+            {
+              "text": "Custom motion graphics"
+            },
+            {
+              "text": "Advanced retention structuring"
+            },
+            {
+              "text": "Multiple hook variants for testing"
+            },
+            {
+              "text": "2 rounds of revisions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "documentary",
+      "title": "Documentary / Long-form",
+      "description": "Story-first work. Interview selects, structure, and pacing across a real runtime, priced by finished minute or by week.",
+      "tiers": [
+        {
+          "name": "Basic",
+          "price": "$100-150 / min",
+          "turnaround": "phase-based, 2-3 weeks",
+          "features": [
+            {
+              "text": "Assembly / rough cut"
+            },
+            {
+              "text": "Interview selects and paper edit"
+            },
+            {
+              "text": "1-2 rounds of notes"
+            }
+          ]
+        },
+        {
+          "name": "Standard",
+          "price": "$150-250 / min",
+          "turnaround": "phase-based, 3-5 weeks",
+          "features": [
+            {
+              "text": "Full story structure fine cut"
+            },
+            {
+              "text": "Color correction, temp mix"
+            },
+            {
+              "text": "2 rounds of notes"
+            }
+          ]
+        },
+        {
+          "name": "Premium",
+          "price": "$300-500 / min",
+          "turnaround": "phase-based, 5-8 weeks",
+          "features": [
+            {
+              "text": "Picture lock"
+            },
+            {
+              "text": "Full color grade, final sound mix"
+            },
+            {
+              "text": "Graphics and titles package"
+            },
+            {
+              "text": "Delivery masters, all formats"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "corporate",
+      "title": "Corporate / Brand",
+      "description": "Polished and on-message. Built to represent the company, with fast turnarounds.",
+      "tiers": [
+        {
+          "name": "Basic",
+          "price": "$600-1,200",
+          "turnaround": "5-7 business days",
+          "features": [
+            {
+              "text": "Single cut, one aspect ratio"
+            },
+            {
+              "text": "Brand template applied"
+            },
+            {
+              "text": "2 rounds of revisions"
+            }
+          ]
+        },
+        {
+          "name": "Standard",
+          "price": "$1,500-3,500",
+          "turnaround": "1-2 weeks",
+          "features": [
+            {
+              "text": "Multi-source edit"
+            },
+            {
+              "text": "Motion graphics package"
+            },
+            {
+              "text": "2-3 aspect ratios delivered"
+            },
+            {
+              "text": "2-3 rounds of revisions"
+            }
+          ]
+        },
+        {
+          "name": "Premium",
+          "price": "$4,000-8,000+",
+          "turnaround": "2-3 weeks",
+          "features": [
+            {
+              "text": "Full campaign set: web, social, internal"
+            },
+            {
+              "text": "Custom animation, full sound mix"
+            },
+            {
+              "text": "Multiple deliverables"
+            },
+            {
+              "text": "Dedicated revision window"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "comedy",
+      "title": "Comedy",
+      "description": "Timing is the whole job. Cutting for the laugh, not just the line.",
+      "tiers": [
+        {
+          "name": "Basic",
+          "price": "$200-400",
+          "turnaround": "3-5 business days",
+          "features": [
+            {
+              "text": "Straight edit, dead air trimmed"
+            },
+            {
+              "text": "Basic audio cleanup"
+            },
+            {
+              "text": "1 round of revisions"
+            }
+          ]
+        },
+        {
+          "name": "Standard",
+          "price": "$500-1,200",
+          "turnaround": "5-7 business days",
+          "features": [
+            {
+              "text": "Multicam sketch or short-set edit"
+            },
+            {
+              "text": "Sound design for punchlines"
+            },
+            {
+              "text": "Reaction and cutaway inserts"
+            },
+            {
+              "text": "2 rounds of revisions"
+            }
+          ]
+        },
+        {
+          "name": "Premium",
+          "price": "$2,000-5,000",
+          "turnaround": "2-4 weeks",
+          "features": [
+            {
+              "text": "Full stand-up special edit"
+            },
+            {
+              "text": "Color grade, audience sound balancing"
+            },
+            {
+              "text": "Motion graphics titles"
+            },
+            {
+              "text": "Full revision cycle"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "cta": {
+    "heading": "Let's talk about the next project.",
+    "body": "Send me what you have got and I will turn it into a real quote. The numbers above are starting points, not the final word, final price depends on scope and footage.",
+    "buttons": [
+      {
+        "label": "Email Me",
+        "href": "mailto:hello@doubledagproductions.com?subject=Pricing%20Inquiry",
+        "style": "primary"
+      },
+      {
+        "label": "View Portfolio",
+        "href": "/portfolio",
+        "style": "secondary"
+      },
+      {
+        "label": "View Full Filmography",
+        "href": "/filmography",
+        "style": "secondary"
+      }
+    ]
+  }
+}

@@ -1,8 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BulletList } from "../../components/BulletList";
-import { genres, type PricingTier } from "./genre-data";
+
+export type FeatureBullet = {
+  text: string;
+  hidden?: boolean;
+};
+
+export type PricingTier = {
+  name: string;
+  price: string;
+  turnaround: string;
+  features: FeatureBullet[];
+  hidden?: boolean;
+};
+
+export type Genre = {
+  id: string;
+  title: string;
+  description: string;
+  tiers: PricingTier[];
+  hidden?: boolean;
+};
+
+function visibleFeatures(features: FeatureBullet[]): string[] {
+  return features.filter((item) => !item.hidden).map((item) => item.text);
+}
 
 function TierCard({ tier }: { tier: PricingTier }) {
   const isPopular = tier.name === "Standard";
@@ -31,13 +55,19 @@ function TierCard({ tier }: { tier: PricingTier }) {
         {tier.price}
       </p>
       <p className="mt-2 text-sm text-neutral-400">{tier.turnaround}</p>
-      <BulletList items={tier.features} />
+      <BulletList items={visibleFeatures(tier.features)} />
     </div>
   );
 }
 
-export default function GenreAccordion() {
+export default function GenreAccordion({ genres }: { genres: Genre[] }) {
   const [openId, setOpenId] = useState<string>("");
+
+  useEffect(() => {
+    if (openId && !genres.some((genre) => genre.id === openId)) {
+      setOpenId("");
+    }
+  }, [genres, openId]);
 
   return (
     <div className="space-y-4">
@@ -49,6 +79,7 @@ export default function GenreAccordion() {
         return (
           <div
             key={genre.id}
+            id={genre.id}
             className="overflow-hidden rounded-3xl border border-white/10 bg-white/5"
           >
             <h2 className="m-0">
@@ -88,9 +119,11 @@ export default function GenreAccordion() {
             >
               {isOpen && (
                 <div className="grid gap-6 p-6 pt-8 min-[760px]:grid-cols-3 sm:p-8 sm:pt-10">
-                  {genre.tiers.map((tier) => (
-                    <TierCard key={tier.name} tier={tier} />
-                  ))}
+                  {genre.tiers
+                    .filter((tier) => !tier.hidden)
+                    .map((tier) => (
+                      <TierCard key={tier.name} tier={tier} />
+                    ))}
                 </div>
               )}
             </div>

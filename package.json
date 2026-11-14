@@ -3,16 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-  "dev": "next dev",
-  "build": "next build",
-  "start": "next start",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "next lint",
     "sync-videos": "node scripts/sync-portfolio-overrides.mjs",
     "deploy": "npm run build && git add . && git commit -m \"Update site\" && git push"
-   
   },
   "dependencies": {
-    "@vimeo/player": "^2.30.3",
     "next": "16.2.1",
     "react": "19.2.4",
     "react-dom": "19.2.4"

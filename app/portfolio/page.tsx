@@ -3,40 +3,17 @@ import { join } from "node:path";
 import type { Metadata } from "next";
 import { connection } from "next/server";
 import { FEATURED_WORK_COUNT } from "../../lib/portfolio-constants";
+import { DemoReelsSection } from "../components/DemoReelsSection";
 import {
   extractFeatured,
+  getMainLandscapeGridItems,
   getPortfolioGridItems,
   getPortfolioVideos,
   groupByOrientation,
-  type PortfolioGridItem,
+  selectDemoReels,
+  splitHighlightSelected,
 } from "../../lib/portfolio-videos";
-import PortfolioGrid, { ClickToPlayVideo } from "./PortfolioGrid";
-
-function splitHighlightSelected(items: PortfolioGridItem[], count: number) {
-  const highlight: PortfolioGridItem[] = [];
-  const selected: PortfolioGridItem[] = [];
-  let videoCount = 0;
-
-  for (const item of items) {
-    if (item.type === "section") {
-      if (videoCount < count) {
-        highlight.push(item);
-      } else {
-        selected.push(item);
-      }
-      continue;
-    }
-
-    if (videoCount < count) {
-      highlight.push(item);
-      videoCount += 1;
-    } else {
-      selected.push(item);
-    }
-  }
-
-  return { highlight, selected };
-}
+import PortfolioGrid from "./PortfolioGrid";
 
 export const metadata: Metadata = {
   title: "Video Portfolio | Double Dag Productions",
@@ -57,23 +34,9 @@ export default async function PortfolioPage() {
   const streamRest = rest.filter((video) => video.source !== "youtube");
   const { portrait } = groupByOrientation(streamRest);
 
-  const mainReel =
-    featured.find((v) => v.mainReel) ??
-    featured.find((v) => v.title.toLowerCase().includes("2023")) ??
-    featured[0];
-  const archiveReels = featured.filter((v) => v.uid !== mainReel?.uid);
+  const { mainReel, archiveReels } = selectDemoReels(featured);
 
-  const demoUids = new Set(featured.map((video) => video.uid));
-  const portraitUids = new Set(portrait.map((video) => video.uid));
-  const mainGridItems = gridItems.filter((item) => {
-    if (item.type === "section") {
-      return true;
-    }
-    if (demoUids.has(item.video.uid) || portraitUids.has(item.video.uid)) {
-      return false;
-    }
-    return item.video.orientation === "landscape";
-  });
+  const mainGridItems = getMainLandscapeGridItems(gridItems, videos);
   const { highlight: highlightWork, selected: selectedWork } =
     splitHighlightSelected(mainGridItems, FEATURED_WORK_COUNT);
   const avatarSrc = `/Portfolio_avatar.png?v=${Math.round(statSync(join(process.cwd(), "public/Portfolio_avatar.png")).mtimeMs)}`;
@@ -113,47 +76,8 @@ export default async function PortfolioPage() {
           </a>
         </section>
 
-        {/* Demo reels */}
         {mainReel && (
-          <section className="py-16">
-            <p className="mb-6 text-sm uppercase tracking-[0.3em] text-violet-300/80">
-              Demo Reel
-            </p>
-
-            <div className="featured-reel mx-1 my-2 sm:mx-3 sm:my-4">
-              <div className="featured-reel__ring">
-                <div className="featured-reel__frame">
-                  <div className="featured-reel__media">
-                    <ClickToPlayVideo video={mainReel} />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <p className="mt-4 px-1 text-sm font-medium text-neutral-200 sm:px-3">
-              {mainReel.title}
-            </p>
-
-            {archiveReels.length > 0 && (
-              <div className="mt-10 flex flex-wrap gap-6">
-                {archiveReels.map((reel) => (
-                  <div key={reel.uid} className="max-w-xs">
-                    <div className="featured-reel-turquoise mx-1 my-2 sm:mx-3 sm:my-4">
-                      <div className="featured-reel-turquoise__ring">
-                        <div className="featured-reel-turquoise__frame">
-                          <div className="featured-reel-turquoise__media">
-                            <ClickToPlayVideo video={reel} />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <p className="mt-3 px-1 text-xs font-medium text-neutral-400 sm:px-3">
-                      {reel.title}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            )}
-          </section>
+          <DemoReelsSection mainReel={mainReel} archiveReels={archiveReels} />
         )}
 
         {/* Established */}

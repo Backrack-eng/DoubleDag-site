@@ -1,0 +1,149 @@
+{
+  "meta": {
+    "title": "Double Dag Productions | Video Editing & Post-Production",
+    "description": "Emmy-recognized video editor Ben Bacharach-White. Documentary, branded, and cinematic post-production."
+  },
+  "hero": {
+    "eyebrow": "Double Dag Productions",
+    "heading": "Editing, finishing, and story-driven post-production for films, series, branded content, and digital media.",
+    "intro": "I'm an Emmy-recognized editor and post-production professional with more than two decades of experience crafting documentaries, educational series, branded storytelling, and feature work for respected clients and platforms.",
+    "buttons": [
+      {
+        "label": "View Filmography",
+        "href": "/filmography",
+        "style": "primary"
+      },
+      {
+        "label": "Request Pricing Sheet",
+        "href": "mailto:hello@doubledagproductions.com?subject=Pricing%20Request",
+        "style": "secondary"
+      },
+      {
+        "label": "Research & Fact Checking",
+        "href": "/research",
+        "style": "secondary"
+      },
+      {
+        "label": "Get in Touch",
+        "href": "mailto:hello@doubledagproductions.com",
+        "style": "secondary"
+      }
+    ]
+  },
+  "featuredWork": {
+    "eyebrow": "Featured Work"
+  },
+  "experience": {
+    "items": [
+      {
+        "eyebrow": "Experience",
+        "heading": "20+ Years",
+        "body": "Deep experience across editorial, finishing, documentary structure, branded storytelling, and post workflows."
+      },
+      {
+        "eyebrow": "Recognition",
+        "heading": "Emmy-Recognized",
+        "body": "Award-winning and festival-recognized work, including documentary and feature projects with broad public reach."
+      },
+      {
+        "eyebrow": "Clients & Platforms",
+        "heading": "Trusted Partners",
+        "body": "Projects connected to PBS, National Geographic, Smithsonian, The Great Courses, and other educational and cultural institutions."
+      }
+    ]
+  },
+  "about": {
+    "eyebrow": "About",
+    "heading": "A seasoned editor with a wide creative range.",
+    "paragraphs": [
+      {
+        "text": "Double Dag Productions is my creative home. My work spans documentary, music, history, science, travel, culinary, educational programming, branded storytelling, social media, and feature film."
+      },
+      {
+        "text": "My approach combines strong editorial instincts, technical polish, and a deep respect for story, performance, pacing, and emotional clarity."
+      }
+    ],
+    "note": {
+      "before": "Need ",
+      "pricingLabel": "a pricing sheet",
+      "pricingHref": "mailto:hello@doubledagproductions.com?subject=Pricing%20Request",
+      "middle": ", or ",
+      "researchLabel": "PhD-level research & fact checking",
+      "researchHref": "/research",
+      "after": "? It's part of how Double Dag supports serious productions."
+    },
+    "focus": {
+      "eyebrow": "Focus Areas",
+      "items": [
+        { "text": "Documentary & Docuseries" },
+        { "text": "Educational & Cultural Programming" },
+        { "text": "Branded & Corporate Storytelling" },
+        { "text": "Feature Film & Narrative Work" },
+        { "text": "Finishing, Delivery, and Post Workflow" }
+      ]
+    }
+  },
+  "selectedWork": {
+    "eyebrow": "Selected Work",
+    "items": [
+      {
+        "title": "Reporting 9/11 and Why It Still Matters",
+        "body": "Feature documentary storytelling with nationally recognized journalists reflecting on the experience of reporting through September 11."
+      },
+      {
+        "title": "The Banjo: Music, History, and Heritage",
+        "body": "A rich exploration of music, culture, and history hosted by Rhiannon Giddens."
+      },
+      {
+        "title": "Exploring the Mayan World",
+        "body": "Historical and archaeological storytelling shaped through cinematic editorial structure."
+      },
+      {
+        "title": "Mock & Roll",
+        "body": "Multi-award-winning mockumentary feature film directed and edited by Ben Bacharach-White."
+      }
+    ]
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "heading": "Let's talk about the next project.",
+    "body": "For editing, post-production, finishing, or creative collaboration inquiries, get in touch directly.",
+    "buttons": [
+      {
+        "label": "Email Double Dag",
+        "href": "mailto:hello@doubledagproductions.com",
+        "style": "primary"
+      },
+      {
+        "label": "LinkedIn",
+        "href": "https://www.linkedin.com/in/doubledag/",
+        "style": "secondary",
+        "external": true
+      },
+      {
+        "label": "Explore Full Filmography",
+        "href": "/filmography",
+        "style": "secondary"
+      },
+      {
+        "label": "Request Pricing Sheet",
+        "href": "mailto:hello@doubledagproductions.com?subject=Pricing%20Request",
+        "style": "secondary"
+      },
+      {
+        "label": "Research Services",
+        "href": "/research",
+        "style": "secondary"
+      }
+    ],
+    "footnote": {
+      "before": "Please ",
+      "linkLabel": "contact me",
+      "linkHref": "mailto:hello@doubledagproductions.com",
+      "after": " for a current price sheet."
+    }
+  },
+  "photography": {
+    "caption": "Photography by Ben Bacharach-White"
+  }
+}

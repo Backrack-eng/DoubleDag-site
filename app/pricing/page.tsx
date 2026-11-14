@@ -1,265 +1,261 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BulletList } from "../../components/BulletList";
+import { loadContent } from "../../lib/content/load-content";
 
-export const metadata: Metadata = {
-  title: "Editing Rates & Services | Double Dag Productions",
-  description:
-    "Transparent video editing rates for documentary, series, branded, and digital content. Day rates, project packages, retainers, and add-ons from Emmy-recognized editor Ben Bacharach-White.",
-  robots: {
-    index: false,
-    follow: false,
-  },
+type Hideable = { hidden?: boolean };
+
+type Bullet = Hideable & { text: string };
+
+type CoreTier = Hideable & {
+  name: string;
+  price: string;
+  unit: string;
+  description: string;
 };
 
+type PackageItem = Hideable & {
+  id?: string;
+  name: string;
+  price: string;
+  bullets: Bullet[];
+  bestFor: string;
+};
+
+type AddOn = Hideable & {
+  label: string;
+  price: string;
+  accent?: boolean;
+};
+
+type FaqItem = Hideable & {
+  question: string;
+  answer: string;
+};
+
+type CtaButton = Hideable & {
+  label: string;
+  href: string;
+  style: "primary" | "secondary";
+};
+
+type PricingData = {
+  meta: { title: string; description: string };
+  hero: {
+    eyebrow: string;
+    heading: string;
+    intro: string;
+    note: string;
+  };
+  coreRates: {
+    eyebrow: string;
+    heading: string;
+    tiers: CoreTier[];
+  };
+  packages: {
+    eyebrow: string;
+    heading: string;
+    intro: string;
+    items: PackageItem[];
+  };
+  retainer: {
+    eyebrow: string;
+    heading: string;
+    price: string;
+    bullets: Bullet[];
+  };
+  addOns: {
+    eyebrow: string;
+    items: AddOn[];
+  };
+  howPricingWorks: {
+    eyebrow: string;
+    heading: string;
+    factors: Bullet[];
+  };
+  faq: {
+    eyebrow: string;
+    heading: string;
+    items: FaqItem[];
+  };
+  cta: {
+    eyebrow: string;
+    heading: string;
+    body: string;
+    buttons: CtaButton[];
+  };
+};
+
+function visible<T extends Hideable>(items: T[]): T[] {
+  return items.filter((item) => !item.hidden);
+}
+
+function bulletTexts(items: Bullet[]): string[] {
+  return visible(items).map((item) => item.text);
+}
+
+export function generateMetadata(): Metadata {
+  const pricing = loadContent<PricingData>("pricing");
+  return {
+    title: pricing.meta.title,
+    description: pricing.meta.description,
+    robots: {
+      index: false,
+      follow: false,
+    },
+  };
+}
+
 export default function PricingPage() {
+  const pricing = loadContent<PricingData>("pricing");
+  const coreTiers = visible(pricing.coreRates.tiers);
+  const packages = visible(pricing.packages.items);
+  const retainerBullets = bulletTexts(pricing.retainer.bullets);
+  const addOns = visible(pricing.addOns.items);
+  const factors = visible(pricing.howPricingWorks.factors);
+  const faqs = visible(pricing.faq.items);
+  const ctaButtons = visible(pricing.cta.buttons);
+
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-100">
       <main className="mx-auto w-full max-w-6xl px-6 py-16 sm:px-10 lg:px-16 animate-fade-in-up">
         <section className="mb-16">
           <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
-            Services &amp; Rates
+            {pricing.hero.eyebrow}
           </p>
           <h1 className="max-w-4xl text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-            Expert Video Editing — Built for Story, Not Just Assembly
+            {pricing.hero.heading}
           </h1>
           <p className="mt-8 max-w-3xl text-lg leading-8 text-neutral-300 sm:text-xl">
-            I&apos;m a senior editor with over two decades of experience shaping
-            documentaries, series, and high-end digital content. This isn&apos;t
-            just cutting footage — it&apos;s editorial judgment, pacing,
-            structure, and polish that elevates the final piece.
+            {pricing.hero.intro}
           </p>
           <p className="mt-6 max-w-3xl text-base leading-8 text-neutral-400">
-            Clear pricing helps you plan, but don&apos;t let the numbers scare
-            you. Final quotes are always tailored to your project, and I&apos;m
-            absolutely open to working with Non-Profits, students, small productions, and
-            people with limited budgets when I can.
+            {pricing.hero.note}
           </p>
         </section>
 
         <section className="mb-14 border-t border-white/10 pt-14">
           <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
-            Core Rates
+            {pricing.coreRates.eyebrow}
           </p>
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-            Flexible ways to work together
+            {pricing.coreRates.heading}
           </h2>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
-            <div className="group rounded-3xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10">
-              <p className="text-sm uppercase tracking-[0.2em] text-violet-300/80">
-                Day Rate
-              </p>
-              <p className="mt-4 text-2xl font-semibold text-white sm:text-3xl">
-                $600 – $800 <span className="text-lg font-normal text-neutral-400">/ day</span>
-              </p>
-              <p className="mt-4 text-sm leading-7 text-neutral-300 transition group-hover:text-neutral-200">
-                Best for ongoing projects, collaborative edits, or agency work.
-              </p>
-            </div>
-            <div className="group rounded-3xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10">
-              <p className="text-sm uppercase tracking-[0.2em] text-violet-300/80">
-                Hourly
-              </p>
-              <p className="mt-4 text-2xl font-semibold text-white sm:text-3xl">
-                $75 – $100 <span className="text-lg font-normal text-neutral-400">/ hour</span>
-              </p>
-              <p className="mt-4 text-sm leading-7 text-neutral-300 transition group-hover:text-neutral-200">
-                Used for smaller updates, fixes, or overflow work.
-              </p>
-            </div>
-            <div className="group rounded-3xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10">
-              <p className="text-sm uppercase tracking-[0.2em] text-violet-300/80">
-                Project Minimum
-              </p>
-              <p className="mt-4 text-2xl font-semibold text-white sm:text-3xl">
-                $1,500 <span className="text-lg font-normal text-neutral-400">minimum</span>
-              </p>
-              <p className="mt-4 text-sm leading-7 text-neutral-300 transition group-hover:text-neutral-200">
-                Ensures proper time for quality editorial work.
-              </p>
-            </div>
+            {coreTiers.map((tier) => (
+              <div
+                key={tier.name}
+                className="group rounded-3xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10"
+              >
+                <p className="text-sm uppercase tracking-[0.2em] text-violet-300/80">
+                  {tier.name}
+                </p>
+                <p className="mt-4 text-2xl font-semibold text-white sm:text-3xl">
+                  {tier.price}{" "}
+                  <span className="text-lg font-normal text-neutral-400">
+                    {tier.unit}
+                  </span>
+                </p>
+                <p className="mt-4 text-sm leading-7 text-neutral-300 transition group-hover:text-neutral-200">
+                  {tier.description}
+                </p>
+              </div>
+            ))}
           </div>
         </section>
 
         <section className="mb-14 border-t border-white/10 pt-14">
           <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
-            Project Packages
+            {pricing.packages.eyebrow}
           </p>
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-            Structured options for common needs
+            {pricing.packages.heading}
           </h2>
           <p className="mt-4 max-w-3xl text-base leading-8 text-neutral-300">
-            Packages are starting points — scope, complexity, and timeline shape
-            the final estimate.
+            {pricing.packages.intro}
           </p>
 
           <div className="mt-10 grid gap-6 lg:grid-cols-2">
-            <div
-              id="short-form-social"
-              className="rounded-3xl border border-violet-400/15 bg-white/5 p-8 backdrop-blur-sm transition duration-300 hover:border-violet-300/30"
-            >
-              <p className="text-xs uppercase tracking-widest text-violet-300/90">
-                Short-Form / Social
-              </p>
-              <p className="mt-3 text-2xl font-semibold text-white">
-                Starting at $1,500
-              </p>
-              <BulletList
-                items={[
-                  "1–3 short videos (30–90 seconds)",
-                  "Tight pacing, captions, platform-ready formatting",
-                  "1 round of revisions",
-                  "Fast turnaround available",
-                ]}
-              />
-              <p className="mt-6 text-sm leading-7 text-neutral-400">
-                <span className="font-medium text-neutral-200">Best for:</span>{" "}
-                social campaigns, promos, quick-turn content
-              </p>
-            </div>
-
-            <div
-              id="long-form-youtube"
-              className="rounded-3xl border border-violet-400/15 bg-white/5 p-8 backdrop-blur-sm transition duration-300 hover:border-violet-300/30"
-            >
-              <p className="text-xs uppercase tracking-widest text-violet-300/90">
-                Long-Form / YouTube / Branded Content
-              </p>
-              <p className="mt-3 text-2xl font-semibold text-white">
-                $3,000 – $6,000
-              </p>
-              <BulletList
-                items={[
-                  "5–20 minute edited piece",
-                  "Full narrative shaping + pacing",
-                  "Graphics, music, audio polish",
-                  "2 rounds of revisions",
-                ]}
-              />
-              <p className="mt-6 text-sm leading-7 text-neutral-400">
-                <span className="font-medium text-neutral-200">Best for:</span>{" "}
-                YouTube channels, branded storytelling, interviews
-              </p>
-            </div>
-
-            <div className="rounded-3xl border border-violet-400/15 bg-white/5 p-8 backdrop-blur-sm transition duration-300 hover:border-violet-300/30">
-              <p className="text-xs uppercase tracking-widest text-violet-300/90">
-                Documentary / Premium Content
-              </p>
-              <p className="mt-3 text-2xl font-semibold text-white">$7,500+</p>
-              <BulletList
-                items={[
-                  "Deep story structure + editorial development",
-                  "Multi-layered edits (interviews, b-roll, archival)",
-                  "Advanced pacing, tone, and narrative flow",
-                  "Collaboration with producers / directors",
-                ]}
-              />
-              <p className="mt-6 text-sm leading-7 text-neutral-400">
-                <span className="font-medium text-neutral-200">Best for:</span>{" "}
-                documentaries, series, high-end branded films
-              </p>
-            </div>
-
-            <div className="rounded-3xl border border-violet-400/15 bg-white/5 p-8 backdrop-blur-sm transition duration-300 hover:border-violet-300/30">
-              <p className="text-xs uppercase tracking-widest text-violet-300/90">
-                Campaign / Multi-Deliverable Projects
-              </p>
-              <p className="mt-3 text-2xl font-semibold text-white">$10,000+</p>
-              <BulletList
-                items={[
-                  "Hero video + multiple cutdowns",
-                  "Versioning for platforms",
-                  "Structured review workflow",
-                  "Consistent creative across deliverables",
-                ]}
-              />
-              <p className="mt-6 text-sm leading-7 text-neutral-400">
-                <span className="font-medium text-neutral-200">Best for:</span>{" "}
-                agencies, marketing teams, launches
-              </p>
-            </div>
+            {packages.map((item) => (
+              <div
+                key={item.id ?? item.name}
+                id={item.id}
+                className="rounded-3xl border border-violet-400/15 bg-white/5 p-8 backdrop-blur-sm transition duration-300 hover:border-violet-300/30"
+              >
+                <p className="text-xs uppercase tracking-widest text-violet-300/90">
+                  {item.name}
+                </p>
+                <p className="mt-3 text-2xl font-semibold text-white">
+                  {item.price}
+                </p>
+                <BulletList items={bulletTexts(item.bullets)} />
+                <p className="mt-6 text-sm leading-7 text-neutral-400">
+                  <span className="font-medium text-neutral-200">Best for:</span>{" "}
+                  {item.bestFor}
+                </p>
+              </div>
+            ))}
           </div>
         </section>
 
         <section className="mb-14 grid gap-6 border-t border-white/10 pt-14 lg:grid-cols-2">
           <div className="rounded-3xl border border-white/10 bg-white/5 p-8">
             <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
-              Retainer Options
+              {pricing.retainer.eyebrow}
             </p>
             <h2 className="text-2xl font-semibold text-white">
-              Monthly Editorial Partner
+              {pricing.retainer.heading}
             </h2>
             <p className="mt-4 text-2xl font-semibold text-violet-200">
-              $5,000 – $12,000 / month
+              {pricing.retainer.price}
             </p>
-            <BulletList
-              items={[
-                "Reserved editing time each month",
-                "Priority scheduling",
-                "Consistent output and turnaround",
-                "Ideal for ongoing content pipelines",
-              ]}
-            />
+            <BulletList items={retainerBullets} />
           </div>
 
           <div className="rounded-3xl border border-white/10 bg-white/5 p-8">
             <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
-              Add-Ons
+              {pricing.addOns.eyebrow}
             </p>
             <ul className="space-y-4 text-sm leading-7 text-neutral-300">
-              <li className="flex justify-between gap-4 border-b border-white/5 pb-4">
-                <span>Motion graphics / animation</span>
-                <span className="shrink-0 text-neutral-400">custom quote</span>
-              </li>
-              <li className="flex justify-between gap-4 border-b border-white/5 pb-4">
-                <span>Advanced color grading</span>
-                <span className="shrink-0 text-violet-200/90">+$500–$1,500</span>
-              </li>
-              <li className="flex justify-between gap-4 border-b border-white/5 pb-4">
-                <span>Audio cleanup / mix</span>
-                <span className="shrink-0 text-violet-200/90">+$300–$1,000</span>
-              </li>
-              <li className="flex justify-between gap-4 border-b border-white/5 pb-4">
-                <span>Additional revisions</span>
-                <span className="shrink-0 text-neutral-400">billed hourly</span>
-              </li>
-              <li className="flex justify-between gap-4 border-b border-white/5 pb-4">
-                <span>Rush turnaround</span>
-                <span className="shrink-0 text-violet-200/90">+25–50%</span>
-              </li>
-              <li className="flex justify-between gap-4 border-b border-white/5 pb-4">
-                <span>Project file delivery</span>
-                <span className="shrink-0 text-violet-200/90">+$500+</span>
-              </li>
-              <li className="flex justify-between gap-4 pt-1">
-                <span>Long-term archive</span>
-                <span className="shrink-0 text-neutral-400">custom</span>
-              </li>
+              {addOns.map((item, index) => (
+                <li
+                  key={item.label}
+                  className={
+                    index === addOns.length - 1
+                      ? "flex justify-between gap-4 pt-1"
+                      : "flex justify-between gap-4 border-b border-white/5 pb-4"
+                  }
+                >
+                  <span>{item.label}</span>
+                  <span
+                    className={
+                      item.accent
+                        ? "shrink-0 text-violet-200/90"
+                        : "shrink-0 text-neutral-400"
+                    }
+                  >
+                    {item.price}
+                  </span>
+                </li>
+              ))}
             </ul>
           </div>
         </section>
 
         <section className="mb-14 rounded-3xl border border-violet-400/10 bg-white/5 p-8 sm:p-10">
           <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
-            How Pricing Works
+            {pricing.howPricingWorks.eyebrow}
           </p>
           <h2 className="text-2xl font-semibold text-white sm:text-3xl">
-            Every project is different. Pricing is based on:
+            {pricing.howPricingWorks.heading}
           </h2>
           <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              "Footage volume and organization",
-              "Story complexity",
-              "Number of revisions",
-              "Graphics / finishing needs",
-              "Turnaround speed",
-            ].map((label) => (
+            {factors.map((factor) => (
               <li
-                key={label}
+                key={factor.text}
                 className="rounded-2xl border border-white/10 bg-neutral-900/60 px-5 py-4 text-sm font-medium text-neutral-200"
               >
-                {label}
+                {factor.text}
               </li>
             ))}
           </ul>
@@ -267,36 +263,23 @@ export default function PricingPage() {
 
         <section className="mb-14 border-t border-white/10 pt-14">
           <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
-            FAQ
+            {pricing.faq.eyebrow}
           </p>
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-            Common questions
+            {pricing.faq.heading}
           </h2>
           <div className="mt-10 space-y-6">
-            {[
-              {
-                q: "How many revisions are included?",
-                a: "Most projects include 1–2 rounds. Additional revisions are billed hourly.",
-              },
-              {
-                q: "Do you work hourly or per project?",
-                a: "Both. Projects are typically fixed-rate; ongoing work is often hourly or retainer-based.",
-              },
-              {
-                q: "Can you match a lower budget?",
-                a: "If scope can be adjusted, sometimes. The focus is always maintaining quality.",
-              },
-              {
-                q: "Do you handle raw footage organization?",
-                a: "Yes — but heavily disorganized footage may affect pricing.",
-              },
-            ].map((item) => (
+            {faqs.map((item) => (
               <div
-                key={item.q}
+                key={item.question}
                 className="rounded-2xl border border-white/10 bg-white/5 p-6 sm:p-8"
               >
-                <h3 className="text-lg font-semibold text-white">{item.q}</h3>
-                <p className="mt-3 text-sm leading-7 text-neutral-300">{item.a}</p>
+                <h3 className="text-lg font-semibold text-white">
+                  {item.question}
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-neutral-300">
+                  {item.answer}
+                </p>
               </div>
             ))}
           </div>
@@ -304,34 +287,43 @@ export default function PricingPage() {
 
         <section className="rounded-3xl border border-violet-400/20 bg-gradient-to-br from-violet-950/40 via-neutral-950 to-neutral-950 p-10 sm:p-12">
           <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
-            Next Step
+            {pricing.cta.eyebrow}
           </p>
           <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-            Let&apos;s talk about your project.
+            {pricing.cta.heading}
           </h2>
           <p className="mt-6 max-w-2xl text-base leading-8 text-neutral-300">
-            Tell me what you&apos;re working on, and I&apos;ll put together a
-            tailored estimate.
+            {pricing.cta.body}
           </p>
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
-            <a
-              href="mailto:hello@doubledagproductions.com?subject=Editing%20%26%20Post-Production%20Inquiry"
-              className="inline-flex h-12 items-center justify-center rounded-full bg-white px-8 text-sm font-medium text-black transition hover:opacity-90"
-            >
-              Email for a Quote
-            </a>
-            <Link
-              href="/research"
-              className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-8 text-sm font-medium text-white transition hover:bg-white/10"
-            >
-              Research &amp; Fact Checking
-            </Link>
-            <Link
-              href="/filmography"
-              className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-8 text-sm font-medium text-white transition hover:bg-white/10"
-            >
-              View Filmography
-            </Link>
+            {ctaButtons.map((button) =>
+              button.style === "primary" ? (
+                <a
+                  key={button.label}
+                  href={button.href}
+                  className="inline-flex h-12 items-center justify-center rounded-full bg-white px-8 text-sm font-medium text-black transition hover:opacity-90"
+                >
+                  {button.label}
+                </a>
+              ) : button.href.startsWith("mailto:") ||
+                button.href.startsWith("http") ? (
+                <a
+                  key={button.label}
+                  href={button.href}
+                  className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-8 text-sm font-medium text-white transition hover:bg-white/10"
+                >
+                  {button.label}
+                </a>
+              ) : (
+                <Link
+                  key={button.label}
+                  href={button.href}
+                  className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-8 text-sm font-medium text-white transition hover:bg-white/10"
+                >
+                  {button.label}
+                </Link>
+              ),
+            )}
           </div>
         </section>
       </main>

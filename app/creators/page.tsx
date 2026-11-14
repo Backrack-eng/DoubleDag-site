@@ -1,225 +1,262 @@
 import type { Metadata } from "next";
+import { loadContent } from "../../lib/content/load-content";
 
-export const metadata: Metadata = {
-  title: "Video Editing for Content Creators | Double Dag Productions",
-  description:
-    "You shoot it, I cut it. Professional video editing for YouTubers, podcasters, and creators who'd rather make content than sit in a timeline.",
+type Hideable = { hidden?: boolean };
+
+type CardItem = Hideable & {
+  title: string;
+  body: string;
 };
 
+type CtaButton = Hideable & {
+  label: string;
+  href: string;
+  style: "primary" | "secondary";
+};
+
+type FaqItem = Hideable & {
+  question: string;
+  answer: string;
+};
+
+type CreatorsData = {
+  meta: { title: string; description: string };
+  hero: {
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    intro: string;
+    buttons: CtaButton[];
+  };
+  howItWorks: {
+    id: string;
+    eyebrow: string;
+    heading: string;
+    steps: CardItem[];
+  };
+  audience: {
+    eyebrow: string;
+    heading: string;
+    items: CardItem[];
+  };
+  why: {
+    eyebrow: string;
+    heading: string;
+    body: string;
+  };
+  packages: {
+    eyebrow: string;
+    heading: string;
+    items: CardItem[];
+    pricingButton: { label: string; href: string };
+    retainerNote: {
+      before: string;
+      linkLabel: string;
+      linkHref: string;
+      after: string;
+    };
+  };
+  faq: {
+    eyebrow: string;
+    heading: string;
+    items: FaqItem[];
+  };
+  cta: {
+    eyebrow: string;
+    heading: string;
+    body: string;
+    buttons: CtaButton[];
+  };
+};
+
+function visible<T extends Hideable>(items: T[]): T[] {
+  return items.filter((item) => !item.hidden);
+}
+
+function renderButtons(buttons: CtaButton[]) {
+  return buttons.map((button) =>
+    button.style === "primary" ? (
+      <a
+        key={button.label}
+        href={button.href}
+        className="inline-flex h-12 items-center justify-center rounded-full bg-white px-8 text-sm font-medium text-black transition hover:opacity-90"
+      >
+        {button.label}
+      </a>
+    ) : (
+      <a
+        key={button.label}
+        href={button.href}
+        className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-8 text-sm font-medium text-white transition hover:bg-white/10"
+      >
+        {button.label}
+      </a>
+    ),
+  );
+}
+
+export function generateMetadata(): Metadata {
+  const content = loadContent<CreatorsData>("creators");
+  return {
+    title: content.meta.title,
+    description: content.meta.description,
+  };
+}
+
 export default function CreatorsPage() {
+  const content = loadContent<CreatorsData>("creators");
+  const heroButtons = visible(content.hero.buttons);
+  const steps = visible(content.howItWorks.steps);
+  const audience = visible(content.audience.items);
+  const packages = visible(content.packages.items);
+  const faqs = visible(content.faq.items);
+  const ctaButtons = visible(content.cta.buttons);
+  const note = content.packages.retainerNote;
+
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-100">
       <main className="mx-auto w-full max-w-6xl px-6 py-16 sm:px-10 lg:px-16 animate-fade-in-up">
         <section className="mb-16">
           <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
-            For Creators
+            {content.hero.eyebrow}
           </p>
           <h1 className="max-w-4xl text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-            You shoot it. I cut it.
+            {content.hero.heading}
           </h1>
           <p className="mt-6 max-w-3xl text-xl font-medium leading-8 text-neutral-200 sm:text-2xl">
-            You have fun. Leave the work to me.
+            {content.hero.lead}
           </p>
           <p className="mt-8 max-w-3xl text-lg leading-8 text-neutral-300 sm:text-xl">
-            Editing eats hours you don&apos;t have. Send me your footage and
-            I&apos;ll turn it into something worth posting, so you spend your
-            time filming instead of stuck in a timeline at midnight.
+            {content.hero.intro}
           </p>
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
-            <a
-              href="mailto:hello@doubledagproductions.com?subject=Creator%20Edit%20Inquiry"
-              className="inline-flex h-12 items-center justify-center rounded-full bg-white px-8 text-sm font-medium text-black transition hover:opacity-90"
-            >
-              Send Me Your Footage
-            </a>
-            <a
-              href="mailto:info@DoubleDagProductions.com?subject=Pricing%20Sheet%20Request"
-              className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-8 text-sm font-medium text-white transition hover:bg-white/10"
-            >
-              Request Pricing Sheet
-            </a>
-            <a
-              href="#how-it-works"
-              className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-8 text-sm font-medium text-white transition hover:bg-white/10"
-            >
-              How It Works
-            </a>
+            {renderButtons(heroButtons)}
           </div>
         </section>
 
         <section
-          id="how-it-works"
+          id={content.howItWorks.id}
           className="mb-14 border-t border-white/10 pt-14"
         >
           <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
-            How It Works
+            {content.howItWorks.eyebrow}
           </p>
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-            Three steps. That&apos;s it.
+            {content.howItWorks.heading}
           </h2>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
-            <div className="group rounded-3xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10">
-              <h3 className="text-xl font-semibold text-white">
-                Upload Your Footage
-              </h3>
-              <p className="mt-4 text-sm leading-7 text-neutral-300 transition group-hover:text-neutral-200">
-                Drop your raw clips in your own file-sharing service — Dropbox
-                is fine — or I can send you a link to upload everything. No
-                special export, no formatting rules. Just get it to me.
-              </p>
-            </div>
-            <div className="group rounded-3xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10">
-              <h3 className="text-xl font-semibold text-white">
-                I Cut the Story
-              </h3>
-              <p className="mt-4 text-sm leading-7 text-neutral-300 transition group-hover:text-neutral-200">
-                Not just an assembly of your clips in order. Pacing, structure,
-                hooks, the stuff that actually keeps people watching.
-              </p>
-            </div>
-            <div className="group rounded-3xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10">
-              <h3 className="text-xl font-semibold text-white">
-                You Get It Back Ready to Post
-              </h3>
-              <p className="mt-4 text-sm leading-7 text-neutral-300 transition group-hover:text-neutral-200">
-                Formatted for wherever it&apos;s going. Captions and graphics
-                included if you want them.
-              </p>
-            </div>
+            {steps.map((item) => (
+              <div
+                key={item.title}
+                className="group rounded-3xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10"
+              >
+                <h3 className="text-xl font-semibold text-white">
+                  {item.title}
+                </h3>
+                <p className="mt-4 text-sm leading-7 text-neutral-300 transition group-hover:text-neutral-200">
+                  {item.body}
+                </p>
+              </div>
+            ))}
           </div>
         </section>
 
         <section className="mb-14 border-t border-white/10 pt-14">
           <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
-            Who This Is For
+            {content.audience.eyebrow}
           </p>
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-            Long-form, short-form, or both.
+            {content.audience.heading}
           </h2>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
-            <div className="group rounded-3xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10">
-              <h3 className="text-xl font-semibold text-white">
-                Long-Form Creators
-              </h3>
-              <p className="mt-4 text-sm leading-7 text-neutral-300 transition group-hover:text-neutral-200">
-                YouTubers, podcasters, vloggers who need consistent weekly or
-                biweekly turnaround without burning out on the edit.
-              </p>
-            </div>
-            <div className="group rounded-3xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10">
-              <h3 className="text-xl font-semibold text-white">
-                Short-Form Creators
-              </h3>
-              <p className="mt-4 text-sm leading-7 text-neutral-300 transition group-hover:text-neutral-200">
-                Reels, TikTok, Shorts. High volume, fast turnaround, cut for the
-                scroll.
-              </p>
-            </div>
-            <div className="group rounded-3xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10">
-              <h3 className="text-xl font-semibold text-white">
-                Anyone Done Teaching Themselves Premiere
-              </h3>
-              <p className="mt-4 text-sm leading-7 text-neutral-300 transition group-hover:text-neutral-200">
-                You already have a full-time job being the talent. You don&apos;t
-                need a second one in the timeline.
-              </p>
-            </div>
+            {audience.map((item) => (
+              <div
+                key={item.title}
+                className="group rounded-3xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10"
+              >
+                <h3 className="text-xl font-semibold text-white">
+                  {item.title}
+                </h3>
+                <p className="mt-4 text-sm leading-7 text-neutral-300 transition group-hover:text-neutral-200">
+                  {item.body}
+                </p>
+              </div>
+            ))}
           </div>
         </section>
 
         <section className="mb-14 border-t border-white/10 pt-14">
           <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
-            Why Double Dag
+            {content.why.eyebrow}
           </p>
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-            Broadcast chops, creator turnaround.
+            {content.why.heading}
           </h2>
           <p className="mt-6 max-w-3xl text-base leading-8 text-neutral-300">
-            20+ years cutting documentaries and series for PBS, National
-            Geographic, Smithsonian, and The Great Courses. Emmy-recognized
-            editorial work. That&apos;s the same story sense going into your
-            content, not just cuts on the beat from a preset pack.
+            {content.why.body}
           </p>
         </section>
 
         <section className="mb-14 border-t border-white/10 pt-14">
           <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
-            Packages
+            {content.packages.eyebrow}
           </p>
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-            Two ways to work together.
+            {content.packages.heading}
           </h2>
           <div className="mt-10 grid gap-6 lg:grid-cols-2">
-            <div className="group rounded-3xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10">
-              <h3 className="text-xl font-semibold text-white">
-                Short-Form / Social
-              </h3>
-              <p className="mt-4 text-sm leading-7 text-neutral-300 transition group-hover:text-neutral-200">
-                Fast-turnaround edits for Reels, TikTok, and Shorts.
-              </p>
-            </div>
-            <div className="group rounded-3xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10">
-              <h3 className="text-xl font-semibold text-white">
-                Long-Form / YouTube
-              </h3>
-              <p className="mt-4 text-sm leading-7 text-neutral-300 transition group-hover:text-neutral-200">
-                Full edits for YouTube, vlogs, and episodic content.
-              </p>
-            </div>
+            {packages.map((item) => (
+              <div
+                key={item.title}
+                className="group rounded-3xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10"
+              >
+                <h3 className="text-xl font-semibold text-white">
+                  {item.title}
+                </h3>
+                <p className="mt-4 text-sm leading-7 text-neutral-300 transition group-hover:text-neutral-200">
+                  {item.body}
+                </p>
+              </div>
+            ))}
           </div>
           <div className="mt-8">
             <a
-              href="mailto:info@DoubleDagProductions.com?subject=Pricing%20Sheet%20Request"
+              href={content.packages.pricingButton.href}
               className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-8 text-sm font-medium text-white transition hover:bg-white/10"
             >
-              Request Pricing Sheet
+              {content.packages.pricingButton.label}
             </a>
           </div>
           <p className="mt-8 max-w-3xl text-sm leading-7 text-neutral-400">
-            Posting every week?{" "}
+            {note.before}
             <a
-              href="mailto:hello@doubledagproductions.com?subject=Creator%20Edit%20Inquiry"
+              href={note.linkHref}
               className="font-medium text-violet-300 underline-offset-4 transition hover:text-violet-200 hover:underline"
             >
-              Ask about a standing editorial retainer
-            </a>{" "}
-            so your queue never backs up.
+              {note.linkLabel}
+            </a>
+            {note.after}
           </p>
         </section>
 
         <section className="mb-14 border-t border-white/10 pt-14">
           <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
-            FAQ
+            {content.faq.eyebrow}
           </p>
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-            Common questions
+            {content.faq.heading}
           </h2>
           <div className="mt-10 space-y-6">
-            {[
-              {
-                q: "Do I need to shoot a certain way?",
-                a: "No. Send me what you've got. If you want shot list tips before you film, ask, happy to help.",
-              },
-              {
-                q: "How fast is turnaround?",
-                a: "Depends on length and complexity, but most short-form turns around in days, not weeks. Rush available.",
-              },
-              {
-                q: "Can you do captions, thumbnails, or graphics?",
-                a: "Yes, all add-ons. Ask for a quote with your project.",
-              },
-              {
-                q: "What if I post every week?",
-                a: "That's what the retainer option is for. Reserved editing time so you're never waiting in a queue.",
-              },
-            ].map((item) => (
+            {faqs.map((item) => (
               <div
-                key={item.q}
+                key={item.question}
                 className="rounded-2xl border border-white/10 bg-white/5 p-6 sm:p-8"
               >
-                <h3 className="text-lg font-semibold text-white">{item.q}</h3>
+                <h3 className="text-lg font-semibold text-white">
+                  {item.question}
+                </h3>
                 <p className="mt-3 text-sm leading-7 text-neutral-300">
-                  {item.a}
+                  {item.answer}
                 </p>
               </div>
             ))}
@@ -228,22 +265,16 @@ export default function CreatorsPage() {
 
         <section className="rounded-3xl border border-violet-400/20 bg-gradient-to-br from-violet-950/40 via-neutral-950 to-neutral-950 p-10 sm:p-12">
           <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
-            Next Step
+            {content.cta.eyebrow}
           </p>
           <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-            Ready to hand off the edit?
+            {content.cta.heading}
           </h2>
           <p className="mt-6 max-w-2xl text-base leading-8 text-neutral-300">
-            Send your footage and tell me what it&apos;s for. I&apos;ll take
-            it from there.
+            {content.cta.body}
           </p>
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
-            <a
-              href="mailto:hello@doubledagproductions.com?subject=Creator%20Edit%20Inquiry"
-              className="inline-flex h-12 items-center justify-center rounded-full bg-white px-8 text-sm font-medium text-black transition hover:opacity-90"
-            >
-              Email Double Dag
-            </a>
+            {renderButtons(ctaButtons)}
           </div>
         </section>
       </main>

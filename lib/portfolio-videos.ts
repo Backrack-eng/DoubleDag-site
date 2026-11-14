@@ -446,9 +446,69 @@ export function extractFeatured(videos: PortfolioVideo[]) {
   return { featured, rest };
 }
 
+export function selectDemoReels(featured: PortfolioVideo[]) {
+  const mainReel =
+    featured.find((video) => video.mainReel) ??
+    featured.find((video) => video.title.toLowerCase().includes("2023")) ??
+    featured[0];
+  const archiveReels = featured.filter((video) => video.uid !== mainReel?.uid);
+  return { mainReel, archiveReels };
+}
+
 export function groupByOrientation(videos: PortfolioVideo[]) {
   return {
     landscape: videos.filter((v) => v.orientation === "landscape"),
     portrait: videos.filter((v) => v.orientation === "portrait"),
   };
+}
+
+/** Landscape grid items for Featured/Selected Work (excludes demo reels + portrait). */
+export function getMainLandscapeGridItems(
+  gridItems: PortfolioGridItem[],
+  videos: PortfolioVideo[],
+): PortfolioGridItem[] {
+  const { featured, rest } = extractFeatured(videos);
+  const streamRest = rest.filter((video) => video.source !== "youtube");
+  const { portrait } = groupByOrientation(streamRest);
+  const demoUids = new Set(featured.map((video) => video.uid));
+  const portraitUids = new Set(portrait.map((video) => video.uid));
+
+  return gridItems.filter((item) => {
+    if (item.type === "section") {
+      return true;
+    }
+    if (demoUids.has(item.video.uid) || portraitUids.has(item.video.uid)) {
+      return false;
+    }
+    return item.video.orientation === "landscape";
+  });
+}
+
+export function splitHighlightSelected(
+  items: PortfolioGridItem[],
+  count: number,
+) {
+  const highlight: PortfolioGridItem[] = [];
+  const selected: PortfolioGridItem[] = [];
+  let videoCount = 0;
+
+  for (const item of items) {
+    if (item.type === "section") {
+      if (videoCount < count) {
+        highlight.push(item);
+      } else {
+        selected.push(item);
+      }
+      continue;
+    }
+
+    if (videoCount < count) {
+      highlight.push(item);
+      videoCount += 1;
+    } else {
+      selected.push(item);
+    }
+  }
+
+  return { highlight, selected };
 }

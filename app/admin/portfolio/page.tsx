@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type DragEvent } from "react";
 import { FEATURED_WORK_COUNT } from "../../../lib/portfolio-constants";
+import { moveItemInList } from "../lib/drag-reorder";
 
 export const dynamic = "force-dynamic";
 
@@ -803,6 +804,11 @@ export default function PortfolioAdminPage() {
       }
 
       const next = cloneGroups(current);
+      if (drag.section === section) {
+        next[section] = moveItemInList(next[section], drag.index, index);
+        return next;
+      }
+
       const [moved] = next[drag.section].splice(drag.index, 1);
       if (!moved) {
         return current;

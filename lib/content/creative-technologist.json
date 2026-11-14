@@ -1,0 +1,67 @@
+{
+  "meta": {
+    "title": "Creative Technologist | Double Dag Productions",
+    "description": "Editing tools built by an editor. DagToolkit, Script Reader, and AutoThirds for Premiere Pro workflows.",
+    "ogImage": "/og-share.jpg",
+    "ogImageAlt": "Creative Technologist | Double Dag Productions"
+  },
+  "hero": {
+    "eyebrow": "Creative Technologist",
+    "heading": "I build tools too.",
+    "intro": "Twenty years in the timeline means I've hit the same friction points every editor hits. So I build the fix. These are tools built from real production problems, and they're in daily use, not side projects."
+  },
+  "premiereTools": {
+    "eyebrow": "Premiere Pro Tools",
+    "heading": "Built in the edit bay, for the edit bay.",
+    "items": [
+      {
+        "title": "DagToolkit",
+        "body": "A full production toolkit built directly into Premiere. Import a Word script with comments, match it to captions, and drop sequence markers on the lines being spoken. Search, copy, and recolor markers from one list. Place graphics from the script, kick off After Effects renders, pull Excel bin reports, and check Photoshop stills without leaving the panel.",
+        "note": "In use on every project I edit"
+      },
+      {
+        "title": "Script Reader",
+        "body": "Loads your script and your captions, then follows the playhead live during playback, highlighting the line being spoken as it plays. Click any word and the playhead jumps straight there. It compares what was written against what was actually said and marks the differences like track changes, so nothing gets missed in review.",
+        "note": "In use on every project I edit"
+      },
+      {
+        "title": "AutoThirds",
+        "body": "For editors, by editors. AutoThirds turns scripts and transcripts into polished, broadcast-safe lower thirds in seconds, no more typing them out one at a time. Import or paste a script, style the graphics, and export PNGs, PSDs, or full sequences ready to drop straight into your timeline.",
+        "accent": true,
+        "fullWidth": true,
+        "button": {
+          "label": "Visit AutoThirds",
+          "href": "https://autothirds.com",
+          "style": "primary"
+        }
+      }
+    ]
+  },
+  "creatorTools": {
+    "eyebrow": "Creator Tools",
+    "heading": "Not every tool lives in the timeline.",
+    "items": [
+      {
+        "title": "Thinkonaut",
+        "body": "A place to capture ideas by voice or text and watch how they connect. Thinkonaut turns raw thoughts into structured notes, links them to projects, and maps the relationships in a constellation view called Galaxy. It will turn a thought into a video idea and build the hooks, tags, and key points. Built for anyone who thinks out loud, on set, in the edit bay, or in between.",
+        "button": {
+          "label": "Visit Thinkonaut",
+          "href": "https://thinkonaut.app",
+          "style": "secondary"
+        }
+      }
+    ]
+  },
+  "cta": {
+    "eyebrow": "Questions",
+    "heading": "Want to hear about what's next?",
+    "body": "More tools are in development. If you want early access or have a workflow problem worth solving, reach out.",
+    "buttons": [
+      {
+        "label": "Email Double Dag",
+        "href": "mailto:hello@doubledagproductions.com?subject=Creative%20Technologist%20Inquiry",
+        "style": "primary"
+      }
+    ]
+  }
+}

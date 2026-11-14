@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import { CollapsibleCaption } from "../components/CollapsibleCaption";
 import {
   buildPlaybackSrc,
   formatCount,
@@ -51,8 +52,15 @@ function clickPlaybackSrc(video: PortfolioVideo) {
   return `${base}${join}autoplay=true`;
 }
 
-export function ClickToPlayVideo({ video }: { video: PortfolioVideo }) {
+export function ClickToPlayVideo({
+  video,
+  objectFit = "cover",
+}: {
+  video: PortfolioVideo;
+  objectFit?: "cover" | "contain";
+}) {
   const [playing, setPlaying] = useState(false);
+  const fitClass = objectFit === "contain" ? "object-contain" : "object-cover";
 
   if (video.placeholder || !video.playbackUrl) {
     return <PlaceholderMedia title={video.title} />;
@@ -80,7 +88,7 @@ export function ClickToPlayVideo({ video }: { video: PortfolioVideo }) {
       <img
         src={video.thumbnailUrl}
         alt=""
-        className="absolute inset-0 h-full w-full object-cover"
+        className={`absolute inset-0 h-full w-full ${fitClass}`}
       />
       <span className="absolute inset-0 flex items-center justify-center">
         <span className="flex h-16 w-16 items-center justify-center rounded-full bg-black/55 transition duration-300 group-hover:bg-black/70 hover:bg-black/70">
@@ -91,77 +99,6 @@ export function ClickToPlayVideo({ video }: { video: PortfolioVideo }) {
         </span>
       </span>
     </button>
-  );
-}
-
-function SelectedWorkCaption({ caption }: { caption: string }) {
-  const [expanded, setExpanded] = useState(false);
-  const [isOverflowing, setIsOverflowing] = useState(false);
-  const captionRef = useRef<HTMLParagraphElement>(null);
-
-  useEffect(() => {
-    const el = captionRef.current;
-    if (!el) {
-      return;
-    }
-
-    const measure = () => {
-      if (expanded) {
-        return;
-      }
-      setIsOverflowing(el.scrollHeight > el.clientHeight);
-    };
-
-    measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(el);
-    window.addEventListener("resize", measure);
-    void document.fonts?.ready.then(measure);
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("resize", measure);
-    };
-  }, [caption, expanded]);
-
-  return (
-    <>
-      <p
-        ref={captionRef}
-        className={`mt-3 whitespace-pre-line text-sm leading-7 text-neutral-300 sm:text-[15px] sm:leading-8${
-          expanded ? "" : " line-clamp-3"
-        }`}
-      >
-        {caption}
-      </p>
-      {isOverflowing && (
-        <button
-          type="button"
-          onClick={() => setExpanded((open) => !open)}
-          aria-expanded={expanded}
-          aria-label={expanded ? "Show less" : "Show more"}
-          className="caption-toggle"
-        >
-          <svg
-            width="10"
-            height="10"
-            viewBox="0 0 10 10"
-            aria-hidden="true"
-            style={{
-              transform: expanded ? "rotate(180deg)" : "none",
-              transition: "transform 0.15s",
-            }}
-          >
-            <path
-              d="M1 3 L5 7 L9 3"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              fill="none"
-            />
-          </svg>
-        </button>
-      )}
-    </>
   );
 }
 
@@ -217,7 +154,7 @@ function VideoCard({
           </p>
         )}
         {video.caption && isRow && (
-          <SelectedWorkCaption caption={video.caption} />
+          <CollapsibleCaption caption={video.caption} />
         )}
         {video.caption && !isRow && (
           <p className="mt-3 whitespace-pre-line text-sm leading-7 text-neutral-300">
