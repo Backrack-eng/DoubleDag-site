@@ -2,6 +2,7 @@ import fs from "node:fs";
 import contentPricingData from "./content-pricing.json";
 import creativeTechnologistData from "./creative-technologist.json";
 import creatorsData from "./creators.json";
+import filmographyData from "./filmography.json";
 import homeData from "./home.json";
 import pricingData from "./pricing.json";
 import researchData from "./research.json";
@@ -14,6 +15,7 @@ const STATIC_CONTENT = {
   research: researchData,
   creators: creatorsData,
   "creative-technologist": creativeTechnologistData,
+  filmography: filmographyData,
 } as const satisfies Record<ContentPageKey, unknown>;
 
 /**

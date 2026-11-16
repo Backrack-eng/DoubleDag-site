@@ -6,7 +6,8 @@ export type ContentPageKey =
   | "content-pricing"
   | "research"
   | "creators"
-  | "creative-technologist";
+  | "creative-technologist"
+  | "filmography";
 
 export type ContentPageMeta = {
   key: ContentPageKey;
@@ -52,6 +53,12 @@ export const CONTENT_PAGES: ContentPageMeta[] = [
     label: "Creative Technologist",
     href: "/creative-technologist",
     fileName: "creative-technologist.json",
+  },
+  {
+    key: "filmography",
+    label: "Filmography",
+    href: "/filmography",
+    fileName: "filmography.json",
   },
 ];
 

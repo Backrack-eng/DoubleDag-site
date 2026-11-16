@@ -1,0 +1,514 @@
+{
+  "meta": {
+    "title": "Filmography | Double Dag Productions",
+    "description": "Selected documentary, docuseries, feature film, educational, and digital storytelling work by Emmy-recognized editor Ben Bacharach-White."
+  },
+  "hero": {
+    "eyebrow": "Double Dag Productions",
+    "heading": "Filmography",
+    "introParts": [
+      {
+        "text": "Selected work spanning "
+      },
+      {
+        "text": "documentary",
+        "emphasis": "strong"
+      },
+      {
+        "text": ", "
+      },
+      {
+        "text": "docuseries",
+        "emphasis": "strong"
+      },
+      {
+        "text": ", "
+      },
+      {
+        "text": "feature film",
+        "emphasis": "strong"
+      },
+      {
+        "text": ", "
+      },
+      {
+        "text": "educational programming",
+        "emphasis": "strong"
+      },
+      {
+        "text": ", and "
+      },
+      {
+        "text": "digital storytelling",
+        "emphasis": "strong"
+      },
+      {
+        "text": " for major institutions, platforms, and audiences."
+      }
+    ],
+    "planningNote": {
+      "before": "Planning a project? ",
+      "pricingLabel": "Request a pricing sheet",
+      "pricingHref": "mailto:hello@doubledagproductions.com?subject=Pricing%20Request",
+      "middle": " or explore ",
+      "researchLabel": "research & fact checking",
+      "researchHref": "/research",
+      "after": " by L. Viola Kozak, PhD."
+    }
+  },
+  "reelUid": "ecdaa3539a4fc2ec8d262505700a05ba",
+  "reelTitle": "Portfolio Highlight",
+  "selectedSeries": {
+    "heading": "Selected Series, Clients & Institutions",
+    "introParts": [
+      {
+        "text": "A broad body of work across educational programming, documentary series, branded storytelling, and digital media, including collaborations with ..."
+      },
+      {
+        "text": "The Culinary Institute of America",
+        "emphasis": "violet"
+      },
+      {
+        "text": ", "
+      },
+      {
+        "text": "National Geographic",
+        "emphasis": "violet"
+      },
+      {
+        "text": ", "
+      },
+      {
+        "text": "Smithsonian",
+        "emphasis": "violet"
+      },
+      {
+        "text": ", "
+      },
+      {
+        "text": "The Great Courses",
+        "emphasis": "violet"
+      },
+      {
+        "text": ", ",
+        "hidden": false
+      },
+      {
+        "text": "National Wildlife Foundation",
+        "emphasis": "violet"
+      },
+      {
+        "text": ", "
+      },
+      {
+        "text": "National September 11 Memorial & Museum",
+        "emphasis": "violet"
+      },
+      {
+        "text": ", and a wide range of "
+      },
+      {
+        "text": "science",
+        "emphasis": "strong"
+      },
+      {
+        "text": ", "
+      },
+      {
+        "text": "history",
+        "emphasis": "strong"
+      },
+      {
+        "text": ", "
+      },
+      {
+        "text": "language",
+        "emphasis": "strong"
+      },
+      {
+        "text": ", and "
+      },
+      {
+        "text": "cultural",
+        "emphasis": "strong"
+      },
+      {
+        "text": " programs."
+      }
+    ],
+    "columns": [
+      {
+        "title": "Highlighted Areas of Expertise",
+        "items": [
+          {
+            "text": "Documentary & Docuseries"
+          },
+          {
+            "text": "Arts & Culture"
+          },
+          {
+            "text": "Travel"
+          },
+          {
+            "text": "Food & Culinary"
+          },
+          {
+            "text": "Educational Content",
+            "hidden": false
+          },
+          {
+            "text": "Promo / Trailer Editing",
+            "hidden": false
+          }
+        ]
+      },
+      {
+        "title": "Translating Difficult Topics for Everyday Audiences ",
+        "items": [
+          {
+            "text": "Business / Financial"
+          },
+          {
+            "text": "Environmental Issues"
+          },
+          {
+            "text": "Technology & AI"
+          },
+          {
+            "text": "Sciences"
+          },
+          {
+            "text": "Historical Events",
+            "hidden": false
+          }
+        ]
+      },
+      {
+        "title": "We Work with a Wide Range of Clients",
+        "items": [
+          {
+            "text": "Non-Profits"
+          },
+          {
+            "text": "Independent Filmmakers"
+          },
+          {
+            "text": "B2B Videos"
+          },
+          {
+            "text": "Long-Form Series Work"
+          },
+          {
+            "text": "Post-Production Support, Mentorship and Leadership"
+          },
+          {
+            "text": "Social / Digital",
+            "hidden": false
+          },
+          {
+            "text": "Corporate / Branded",
+            "hidden": false
+          }
+        ]
+      }
+    ]
+  },
+  "documentary": {
+    "heading": "Documentary & Docuseries",
+    "introParts": [
+      {
+        "text": "Over two decades of documentary and educational editorial experience, with hundreds of projects completed across long-form series, feature-length documentaries, and large-scale course productions.",
+        "emphasis": "white"
+      },
+      {
+        "text": " Work spans collaborations with "
+      },
+      {
+        "text": "PBS",
+        "emphasis": "violet"
+      },
+      {
+        "text": ", "
+      },
+      {
+        "text": "National Geographic",
+        "emphasis": "violet"
+      },
+      {
+        "text": ", "
+      },
+      {
+        "text": "Smithsonian",
+        "emphasis": "violet"
+      },
+      {
+        "text": ", and "
+      },
+      {
+        "text": "The Great Courses",
+        "emphasis": "violet"
+      },
+      {
+        "text": ", covering subjects from history, science, and culture to technology, travel, and the arts."
+      }
+    ],
+    "cards": [
+      {
+        "featured": true,
+        "badge": "Emmy Winner",
+        "title": "Weaving Nature (PBS American Masters)",
+        "body": "Emmy-recognized documentary work connected to PBS American Masters, representing high-level editorial storytelling within a prestige documentary framework."
+      },
+      {
+        "title": "Reporting 9/11 and Why It Still Matters",
+        "body": "Feature-length documentary featuring major broadcast journalists reflecting on reporting through 9/11."
+      },
+      {
+        "title": "The Banjo: Music, History, and Heritage",
+        "body": "A multi-episode series hosted by Rhiannon Giddens exploring the roots and evolution of American music."
+      },
+      {
+        "title": "John Lewis: Witness to History",
+        "body": "Webby Award winning documentary that walks in the inspiring footsteps of one of the most impactful leaders in America\u2019s civil rights movement."
+      },
+      {
+        "title": "Decorate like a Designer, with Jonathan Adler",
+        "titleSemibold": true,
+        "body": "Master potter and designer Jonathan Adler leads a unique 13-episode series exploring how design and decoration can be used to express your personal style and brand."
+      }
+    ]
+  },
+  "youtube": {
+    "heading": "YouTube & Short-Form Content",
+    "introParts": [
+      {
+        "text": "Extensive experience crafting content for "
+      },
+      {
+        "text": "YouTube",
+        "emphasis": "strong"
+      },
+      {
+        "text": ", "
+      },
+      {
+        "text": "digital platforms",
+        "emphasis": "strong"
+      },
+      {
+        "text": ", and "
+      },
+      {
+        "text": "short-form media",
+        "emphasis": "strong"
+      },
+      {
+        "text": ", with a focus on "
+      },
+      {
+        "text": "engagement",
+        "emphasis": "violet"
+      },
+      {
+        "text": ", "
+      },
+      {
+        "text": "retention",
+        "emphasis": "violet"
+      },
+      {
+        "text": ", and "
+      },
+      {
+        "text": "clarity of storytelling",
+        "emphasis": "violet"
+      },
+      {
+        "text": "."
+      }
+    ],
+    "body": "Work includes editorial and finishing across educational videos, branded content, promotional cuts, and fast-turnaround social media pieces. Combining traditional storytelling instincts with modern pacing, graphics, and platform-specific optimization.",
+    "cards": [
+      {
+        "title": "Platform-Focused Editing",
+        "body": "Tailored edits for YouTube, social, and digital platforms with an emphasis on audience retention, hooks and flow."
+      },
+      {
+        "title": "Short-Form Storytelling",
+        "body": "Condensing narrative, clarity, and impact into highly efficient short-form content."
+      },
+      {
+        "title": "Modern Post Workflow",
+        "body": "Fast-turnaround pipelines integrating motion, graphics, and AI-assisted tools for scalable production."
+      }
+    ]
+  },
+  "featureFilm": {
+    "heading": "Feature Film",
+    "introParts": [
+      {
+        "text": "Narrative and feature-length storytelling with a focus on "
+      },
+      {
+        "text": "character",
+        "emphasis": "strong"
+      },
+      {
+        "text": ", "
+      },
+      {
+        "text": "timing",
+        "emphasis": "strong"
+      },
+      {
+        "text": ", and "
+      },
+      {
+        "text": "editorial rhythm",
+        "emphasis": "strong"
+      },
+      {
+        "text": "."
+      }
+    ],
+    "title": "Mock & Roll",
+    "bodyParts": [
+      {
+        "text": "Multi-award-winning mockumentary feature film. Served as "
+      },
+      {
+        "text": "Director, Editor, and Colorist",
+        "emphasis": "strong"
+      },
+      {
+        "text": "."
+      }
+    ]
+  },
+  "emmyVideoSrc": "/projects/EmmyWinner.mp4",
+  "behindTheScenes": {
+    "eyebrow": "Behind the Scenes",
+    "heading": "On set, off script.",
+    "items": [
+      {
+        "src": "/projects/Timeline1.webp",
+        "alt": "Timeline still 1"
+      },
+      {
+        "src": "/projects/MnR-poster.webp",
+        "alt": "Mock and Roll poster"
+      },
+      {
+        "src": "/projects/Premiere-Cup.webp",
+        "alt": "Premiere cup"
+      },
+      {
+        "src": "/projects/Ben-cam.webp",
+        "alt": "Ben on camera"
+      },
+      {
+        "src": "/projects/Ben-edit.webp",
+        "alt": "Ben editing"
+      },
+      {
+        "src": "/projects/Ben-Tony.webp",
+        "alt": "Ben and Tony"
+      },
+      {
+        "src": "/projects/MnR-crew.webp",
+        "alt": "Mock and Roll crew"
+      },
+      {
+        "src": "/projects/NAB.webp",
+        "alt": "NAB"
+      },
+      {
+        "src": "/projects/Outdoor.webp",
+        "alt": "Outdoor still"
+      },
+      {
+        "src": "/projects/Timeline2.webp",
+        "alt": "Timeline still 2"
+      },
+      {
+        "src": "/projects/DSCN2267.JPG",
+        "alt": "Behind the scenes on a Double Dag production"
+      },
+      {
+        "src": "/projects/IMG_1679.jpeg",
+        "alt": "Behind the scenes on a Double Dag production"
+      },
+      {
+        "src": "/projects/IMG_3002.jpeg",
+        "alt": "Behind the scenes on a Double Dag production"
+      },
+      {
+        "src": "/projects/IMG_3049.jpeg",
+        "alt": "Behind the scenes on a Double Dag production"
+      },
+      {
+        "src": "/projects/IMG_4627.JPG",
+        "alt": "Behind the scenes on a Double Dag production"
+      },
+      {
+        "src": "/projects/IMG_4713.jpeg",
+        "alt": "Behind the scenes on a Double Dag production"
+      },
+      {
+        "src": "/projects/IMG_8134.JPG",
+        "alt": "Behind the scenes on a Double Dag production"
+      },
+      {
+        "src": "/projects/IMG_8846.JPG",
+        "alt": "Behind the scenes on a Double Dag production"
+      },
+      {
+        "src": "/projects/IMG_8920.JPG",
+        "alt": "Behind the scenes on a Double Dag production"
+      },
+      {
+        "src": "/projects/IMG_9989.JPG",
+        "alt": "Behind the scenes on a Double Dag production"
+      }
+    ]
+  },
+  "cta": {
+    "eyebrow": "Explore More",
+    "heading": "Want the full credit range?",
+    "body": "This page highlights selected work, but my broader portfolio includes extensive credits across documentary, educational, institutional, branded, and digital media projects.",
+    "buttons": [
+      {
+        "label": "View IMDb",
+        "href": "https://www.imdb.com/name/nm3118409/?ref_=nv_sr_srsg_0_tt_2_nm_6_in_0_q_ben%20bacharach",
+        "style": "primary",
+        "external": true
+      },
+      {
+        "label": "LinkedIn",
+        "href": "https://www.linkedin.com/in/doubledag/",
+        "style": "secondary",
+        "external": true
+      },
+      {
+        "label": "Portfolio",
+        "href": "/portfolio",
+        "style": "secondary"
+      },
+      {
+        "label": "Get in Touch",
+        "href": "mailto:hello@doubledagproductions.com",
+        "style": "secondary"
+      },
+      {
+        "label": "Request Pricing Sheet",
+        "href": "mailto:hello@doubledagproductions.com?subject=Pricing%20Request",
+        "style": "secondary"
+      },
+      {
+        "label": "Research Services",
+        "href": "/research",
+        "style": "secondary"
+      }
+    ]
+  }
+}

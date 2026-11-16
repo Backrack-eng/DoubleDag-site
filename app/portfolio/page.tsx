@@ -9,6 +9,10 @@ import {
   getPortfolioVideos,
 } from "../../lib/portfolio-data";
 import {
+  loadPortfolioRecommendations,
+  visibleRecommendations,
+} from "../../lib/portfolio-recommendations";
+import {
   extractFeatured,
   getMainLandscapeGridItems,
   groupByOrientation,
@@ -41,6 +45,9 @@ export default async function PortfolioPage() {
   const mainGridItems = getMainLandscapeGridItems(gridItems, videos);
   const { highlight: highlightWork, selected: selectedWork } =
     splitHighlightSelected(mainGridItems, FEATURED_WORK_COUNT);
+  const recommendations = visibleRecommendations(
+    loadPortfolioRecommendations(),
+  );
   const avatarSrc = `/Portfolio_avatar.png?v=${Math.round(statSync(join(process.cwd(), "public/Portfolio_avatar.png")).mtimeMs)}`;
 
   return (
@@ -102,7 +109,7 @@ export default async function PortfolioPage() {
           </div>
         </section>
 
-        {/* Featured documentary work */}
+        {/* Featured documentary work + Recommendations directly beneath */}
         {highlightWork.length > 0 && (
           <section className="border-t border-white/10 py-16">
             <p className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80">
@@ -113,6 +120,46 @@ export default async function PortfolioPage() {
             </h2>
             <div className="mt-10">
               <PortfolioGrid items={highlightWork} />
+            </div>
+          </section>
+        )}
+
+        {recommendations.length > 0 && (
+          <section
+            className="border-t border-white/10 py-16"
+            aria-labelledby="portfolio-recommendations-heading"
+          >
+            <p
+              id="portfolio-recommendations-heading"
+              className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80"
+            >
+              Recommendations
+            </p>
+            <div className="mt-8 space-y-12">
+              {recommendations.map((item) => {
+                const quoteClass =
+                  item.color === "violet" ? "text-violet-200" : "text-white";
+                return (
+                  <blockquote key={item.id} className="max-w-3xl">
+                    <p
+                      className={`text-xl font-medium leading-9 sm:text-2xl sm:leading-10 ${quoteClass}`}
+                    >
+                      {item.quote}
+                    </p>
+                    {item.attribution.trim() && (
+                      <footer
+                        className={`mt-4 text-sm ${
+                          item.color === "violet"
+                            ? "text-violet-300/80"
+                            : "text-neutral-400"
+                        }`}
+                      >
+                        — {item.attribution}
+                      </footer>
+                    )}
+                  </blockquote>
+                );
+              })}
             </div>
           </section>
         )}

@@ -1,9 +1,13 @@
 "use client";
 
-import { useEffect, useState, type DragEvent } from "react";
+import { useEffect, useRef, useState, type DragEvent } from "react";
 import { FEATURED_WORK_COUNT } from "../../../lib/portfolio-constants";
 import { StreamThumbnailControl } from "../components/StreamThumbnailControl";
 import { moveItemInList } from "../lib/drag-reorder";
+import {
+  RecommendationsEditor,
+  type RecommendationsEditorHandle,
+} from "./RecommendationsEditor";
 
 export const dynamic = "force-dynamic";
 
@@ -624,6 +628,7 @@ export default function PortfolioAdminPage() {
   const [sectionInput, setSectionInput] = useState("");
   const [sectionMessage, setSectionMessage] = useState<string | null>(null);
   const [durations, setDurations] = useState<Record<string, number>>({});
+  const recommendationsRef = useRef<RecommendationsEditorHandle>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -1094,6 +1099,17 @@ export default function PortfolioAdminPage() {
     setMessage(null);
 
     try {
+      const recommendationsResult = recommendationsRef.current
+        ? await recommendationsRef.current.save()
+        : { ok: true as const };
+
+      if (!recommendationsResult.ok) {
+        setMessage(
+          recommendationsResult.error ?? "Failed to save recommendations.",
+        );
+        return;
+      }
+
       const response = await fetch("/api/admin/overrides", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -1175,6 +1191,8 @@ export default function PortfolioAdminPage() {
 
         {status === "ready" && (
           <div className="space-y-10">
+            <RecommendationsEditor ref={recommendationsRef} />
+
             <section className="rounded-xl border border-red-500/30 bg-red-500/5 p-5">
               <h2 className="text-sm uppercase tracking-[0.3em] text-red-400">
                 Add YouTube Video
