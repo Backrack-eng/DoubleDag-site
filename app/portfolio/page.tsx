@@ -20,6 +20,7 @@ import {
   splitHighlightSelected,
 } from "../../lib/portfolio-videos";
 import PortfolioGrid from "./PortfolioGrid";
+import { RecommendationsCarousel } from "./RecommendationsCarousel";
 
 export const metadata: Metadata = {
   title: "Video Portfolio | Double Dag Productions",
@@ -125,43 +126,7 @@ export default async function PortfolioPage() {
         )}
 
         {recommendations.length > 0 && (
-          <section
-            className="border-t border-white/10 py-16"
-            aria-labelledby="portfolio-recommendations-heading"
-          >
-            <p
-              id="portfolio-recommendations-heading"
-              className="mb-4 text-sm uppercase tracking-[0.3em] text-violet-300/80"
-            >
-              Recommendations
-            </p>
-            <div className="mt-8 space-y-12">
-              {recommendations.map((item) => {
-                const quoteClass =
-                  item.color === "violet" ? "text-violet-200" : "text-white";
-                return (
-                  <blockquote key={item.id} className="max-w-3xl">
-                    <p
-                      className={`text-xl font-medium leading-9 sm:text-2xl sm:leading-10 ${quoteClass}`}
-                    >
-                      {item.quote}
-                    </p>
-                    {item.attribution.trim() && (
-                      <footer
-                        className={`mt-4 text-sm ${
-                          item.color === "violet"
-                            ? "text-violet-300/80"
-                            : "text-neutral-400"
-                        }`}
-                      >
-                        — {item.attribution}
-                      </footer>
-                    )}
-                  </blockquote>
-                );
-              })}
-            </div>
-          </section>
+          <RecommendationsCarousel items={recommendations} />
         )}
 
         {youtubeVideos.length > 0 && (
