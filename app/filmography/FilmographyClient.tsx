@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { CollapsibleCaption } from "../components/CollapsibleCaption";
 import { buildPlaybackSrc, type PortfolioVideo } from "../../lib/portfolio-videos";
 
 export type TextPart = {
@@ -37,7 +38,10 @@ export type FilmographyClientProps = {
     };
   };
   reelUid: string;
+  reelLabel: string;
   reelTitle: string;
+  reelDescription: string;
+  reelThumbnailTime?: string | null;
   selectedSeries: {
     heading: string;
     introParts: TextPart[];
@@ -106,7 +110,22 @@ function renderParts(parts: TextPart[]) {
   });
 }
 
-function streamReelSrc(uid: string, title: string): string {
+function reelPosterUrl(uid: string, thumbnailTime?: string | null): string {
+  const base = `https://videodelivery.net/${uid}/thumbnails/thumbnail.jpg`;
+  if (thumbnailTime === null) {
+    return base;
+  }
+  if (typeof thumbnailTime === "string" && thumbnailTime.trim()) {
+    return `${base}?time=${thumbnailTime.trim()}`;
+  }
+  return `${base}?time=3s`;
+}
+
+function streamReelSrc(
+  uid: string,
+  title: string,
+  thumbnailTime?: string | null,
+): string {
   const video: PortfolioVideo = {
     uid,
     title,
@@ -119,7 +138,10 @@ function streamReelSrc(uid: string, title: string): string {
     source: "stream",
     stats: null,
   };
-  return buildPlaybackSrc(video);
+  const base = buildPlaybackSrc(video);
+  const poster = reelPosterUrl(uid, thumbnailTime);
+  const join = base.includes("?") ? "&" : "?";
+  return `${base}${join}poster=${encodeURIComponent(poster)}`;
 }
 
 function buttonClass(style: CtaButton["style"]) {
@@ -131,7 +153,10 @@ function buttonClass(style: CtaButton["style"]) {
 export default function FilmographyClient({
   hero,
   reelUid,
+  reelLabel,
   reelTitle,
+  reelDescription,
+  reelThumbnailTime,
   selectedSeries,
   documentary,
   youtube,
@@ -273,21 +298,39 @@ export default function FilmographyClient({
 
           {showReel && (
             <div className="mx-auto mt-8 max-w-4xl">
+              {reelLabel.trim() && (
+                <p className="mb-3 text-sm font-bold text-violet-300/80">
+                  {reelLabel}
+                </p>
+              )}
               <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5">
                 <div className="relative w-full pt-[56.25%]">
                   <iframe
-                    src={streamReelSrc(reelUid.trim(), reelTitle)}
+                    src={streamReelSrc(
+                      reelUid.trim(),
+                      reelTitle.trim() || reelLabel.trim() || "Filmography reel",
+                      reelThumbnailTime === ""
+                        ? undefined
+                        : reelThumbnailTime,
+                    )}
                     className="absolute left-0 top-0 h-full w-full"
                     allow="encrypted-media; fullscreen; picture-in-picture"
                     allowFullScreen
-                    title={reelTitle}
+                    title={
+                      reelTitle.trim() || reelLabel.trim() || "Filmography reel"
+                    }
                   />
                 </div>
               </div>
               {reelTitle.trim() && (
-                <p className="mt-3 text-sm font-bold text-violet-300/80">
+                <h3 className="mt-4 text-base font-medium text-white">
                   {reelTitle}
-                </p>
+                </h3>
+              )}
+              {reelDescription.trim() && (
+                <div className="mt-2">
+                  <CollapsibleCaption caption={reelDescription} />
+                </div>
               )}
             </div>
           )}

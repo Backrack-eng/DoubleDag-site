@@ -135,12 +135,21 @@ type ContentEditorProps = {
   pageKey: string;
   label: string;
   publicHref: string;
+  /** Hide these top-level keys from the generic field list (still saved). */
+  omitTopLevelKeys?: string[];
+  /** Custom block rendered above the generic fields when content is ready. */
+  renderBefore?: (helpers: {
+    content: JsonObject;
+    updatePath: (path: (string | number)[], nextValue: JsonValue) => void;
+  }) => ReactNode;
 };
 
 export function ContentEditor({
   pageKey,
   label,
   publicHref,
+  omitTopLevelKeys = [],
+  renderBefore,
 }: ContentEditorProps) {
   const [content, setContent] = useState<JsonObject | null>(null);
   const [status, setStatus] = useState<"loading" | "ready" | "error">(
@@ -477,7 +486,11 @@ export function ContentEditor({
     }
 
     if (isPlainObject(value)) {
-      const entries = Object.entries(value);
+      const omit =
+        path.length === 0 ? new Set(omitTopLevelKeys) : null;
+      const entries = Object.entries(value).filter(
+        ([childKey]) => !omit?.has(childKey),
+      );
       return (
         <div className="space-y-4">
           {entries.map(([childKey, childValue]) => {
@@ -571,7 +584,10 @@ export function ContentEditor({
           <p className="text-sm text-red-300">{message ?? "Failed to load."}</p>
         )}
         {status === "ready" && content && (
-          <div className="space-y-6">{renderValue(content, [])}</div>
+          <div className="space-y-6">
+            {renderBefore?.({ content, updatePath })}
+            {renderValue(content, [])}
+          </div>
         )}
       </div>
     </div>

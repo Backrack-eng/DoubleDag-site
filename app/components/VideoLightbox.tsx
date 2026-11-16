@@ -105,7 +105,13 @@ export function VideoLightbox({
             ✕
           </button>
         </div>
-        <div className="relative aspect-video w-full bg-black">
+        <div
+          className={`relative w-full bg-black ${
+            video.orientation === "portrait"
+              ? "mx-auto aspect-[9/16] max-h-[80vh] max-w-md"
+              : "aspect-video"
+          }`}
+        >
           <iframe
             key={video.uid}
             src={clickPlaybackSrc(video)}

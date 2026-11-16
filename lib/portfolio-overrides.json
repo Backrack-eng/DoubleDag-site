@@ -16,7 +16,8 @@
   "95c38530eb7336c2fbe7c46129bfe1a2": {
     "title": "Sizzle Reel - 2006-2012",
     "order": 20,
-    "featured": true
+    "featured": true,
+    "thumbnailTime": "74.3s"
   },
   "6a6705ced54b8829c14c7607906bce44": {
     "title": "Reporting 911 and Why it Still Matters_Sample Edit",
@@ -67,7 +68,8 @@
   "3deecf8b973280f1945aca129c47d082": {
     "title": "A Dead Husband in a Western Town",
     "order": 110,
-    "caption": "Trailer Editor"
+    "caption": "Trailer Editor",
+    "thumbnailTime": "68s"
   },
   "bb59f02a4d3d5dd200a33f4775d71a5e": {
     "title": "Loss & Love music video",
@@ -87,7 +89,8 @@
   "fa61dbc3569d6f947cd8955d82b69d80": {
     "title": "Outdoor Fundamentals",
     "order": 150,
-    "caption": "Editor, Colorist, Location camera operator, graphics"
+    "caption": "Editor, Colorist, Location camera operator, graphics",
+    "thumbnailTime": "55.1s"
   },
   "e6a74d702a586c50fae03887dd2bf4c0": {
     "title": "Decorate Like A Designer with Jonathan Adler",
@@ -107,17 +110,20 @@
   "af0db3b36f5d56bdf491985db5008cba": {
     "title": "Great Tours: England Scotland & Wales Promo",
     "order": 190,
-    "caption": "Editor, Colorist"
+    "caption": "Editor, Colorist",
+    "thumbnailTime": "39.1s"
   },
   "e421e6122b84e8f7b372676b9ba2bc5e": {
     "title": "Exploring the Mayan World",
     "order": 200,
-    "caption": "Editor, Colorist, Post-Producer\n\nDays of footage from all over the Yucatán: cenotes, ancient ruins, an archaeologist decoding Maya hieroglyphs, a stop for handmade tequila along the way. I cut and color graded all 8 episodes of this Great Courses travel series, following Dr. Edwin Barnhart, director of the Maya Exploration Center, through the past, present, and future of the Maya world.\n\nNot many editing jobs put you alongside someone who discovered a lost city. Multiple camera formats, a lot of rough source footage, a real deadline, and still delivered all 8 episodes on schedule for release."
+    "caption": "Editor, Colorist, Post-Producer\n\nDays of footage from all over the Yucatán: cenotes, ancient ruins, an archaeologist decoding Maya hieroglyphs, a stop for handmade tequila along the way. I cut and color graded all 8 episodes of this Great Courses travel series, following Dr. Edwin Barnhart, director of the Maya Exploration Center, through the past, present, and future of the Maya world.\n\nNot many editing jobs put you alongside someone who discovered a lost city. Multiple camera formats, a lot of rough source footage, a real deadline, and still delivered all 8 episodes on schedule for release.",
+    "thumbnailTime": "135.7s"
   },
   "8d6b0388d1bb7144550cff30bf900038": {
     "title": "Great Tours: Washington DC",
     "order": 210,
-    "caption": "Editor, Colorist"
+    "caption": "Editor, Colorist",
+    "thumbnailTime": "0.6s"
   },
   "section:mw3u15ei": {
     "type": "section",
@@ -127,17 +133,20 @@
   "8be235f273aae7fa86cb13d95fd46b93": {
     "title": "The Chesfsters",
     "order": 230,
-    "caption": "Editor, Colorist"
+    "caption": "Editor, Colorist",
+    "thumbnailTime": "54s"
   },
   "63d37f5767b94cc9d1c8b34fa5834d5d": {
     "title": "Cooking Across The Ages",
     "order": 240,
-    "caption": "Producer/Editor"
+    "caption": "Producer/Editor",
+    "thumbnailTime": "76.9s"
   },
   "1b941abaead007abae3495e47893d205": {
     "title": "The Everyday Gourmet Rediscovering The Lost Art Of Cooking",
     "order": 250,
-    "caption": "Producer/Editor"
+    "caption": "Producer/Editor",
+    "thumbnailTime": "99s"
   },
   "section:mw3u26gk": {
     "type": "section",
@@ -147,27 +156,32 @@
   "c987ba61091a629d09a4aef2b6d801b5": {
     "title": "Everyday Engineering: Understanding the Marvels of Daily Life",
     "order": 270,
-    "caption": "Editor, Graphics, Colorist, Studio Camera operator"
+    "caption": "Editor, Graphics, Colorist, Studio Camera operator",
+    "thumbnailTime": "12.6s"
   },
   "fdf8313f820b4d34082b68a72f693aec": {
     "title": "Do-It-Yourself Engineering",
     "order": 280,
-    "caption": "Editor, Graphics, Colorist, Field Camera operator"
+    "caption": "Editor, Graphics, Colorist, Field Camera operator",
+    "thumbnailTime": "92.7s"
   },
   "7e7f780089fa702e5427fee2b5e011e1": {
     "title": "Understanding Artificial Intelligence",
     "order": 290,
-    "caption": "Editor, Colorist, AI Generation and research"
+    "caption": "Editor, Colorist, AI Generation and research",
+    "thumbnailTime": "78.8s"
   },
   "ecdaa3539a4fc2ec8d262505700a05ba": {
     "title": "Archaeological Mysteries",
     "order": 300,
-    "caption": "Editor, Colorist"
+    "caption": "Editor, Colorist",
+    "thumbnailTime": "45s"
   },
   "b2028b3579fb6b00029fc1cc067a3edc": {
     "title": "Linear Algebra",
     "order": 310,
-    "caption": "Editor, Colorist"
+    "caption": "Editor, Colorist",
+    "thumbnailTime": "37.5s"
   },
   "section:mw42hyiy": {
     "type": "section",
@@ -178,7 +192,8 @@
     "title": "Weaving Nature End Credits",
     "order": 330,
     "emmyBadge": true,
-    "caption": "Editor, Colorist, Assistant producer"
+    "caption": "Editor, Colorist, Assistant producer",
+    "thumbnailTime": "122.7s"
   },
   "a0d5ed24ac55e4d2a9eb3b441628719c": {
     "title": "Geological Events",

@@ -13,6 +13,8 @@ type DemoReelsSectionProps = {
   archiveReels: PortfolioVideo[];
   /** Extra top border / padding variants for page context. */
   className?: string;
+  /** When true, main reel opens in the same lightbox as archive sizzle reels. */
+  mainInLightbox?: boolean;
 };
 
 function ArchiveReelCard({
@@ -63,6 +65,7 @@ export function DemoReelsSection({
   mainReel,
   archiveReels,
   className = "py-16",
+  mainInLightbox = false,
 }: DemoReelsSectionProps) {
   const [lightboxVideo, setLightboxVideo] = useState<PortfolioVideo | null>(
     null,
@@ -92,7 +95,32 @@ export function DemoReelsSection({
         <div className="featured-reel__ring">
           <div className="featured-reel__frame">
             <div className="featured-reel__media">
-              <ClickToPlayVideo video={mainReel} />
+              {mainInLightbox ? (
+                <button
+                  type="button"
+                  onClick={(event) =>
+                    openLightbox(mainReel, event.currentTarget)
+                  }
+                  aria-label={`Play ${mainReel.title}`}
+                  className="absolute inset-0"
+                >
+                  <img
+                    src={mainReel.thumbnailUrl}
+                    alt=""
+                    className="absolute inset-0 h-full w-full object-contain"
+                  />
+                  <span className="absolute inset-0 flex items-center justify-center">
+                    <span className="flex h-16 w-16 items-center justify-center rounded-full bg-black/55 transition duration-300 hover:bg-black/70 sm:h-20 sm:w-20">
+                      <span
+                        className="ml-1 h-0 w-0 border-y-8 border-y-transparent border-l-[14px] border-l-white sm:border-y-[10px] sm:border-l-[16px]"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </span>
+                </button>
+              ) : (
+                <ClickToPlayVideo video={mainReel} objectFit="contain" />
+              )}
             </div>
           </div>
         </div>

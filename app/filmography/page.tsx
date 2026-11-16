@@ -11,7 +11,10 @@ type FilmographyData = {
   meta: { title: string; description: string };
   hero: FilmographyClientProps["hero"];
   reelUid: string;
+  reelLabel?: string;
   reelTitle: string;
+  reelDescription?: string;
+  reelThumbnailTime?: string | null;
   selectedSeries: {
     heading: string;
     introParts: FilmographyClientProps["selectedSeries"]["introParts"];
@@ -80,7 +83,14 @@ export default async function FilmographyPage() {
     <FilmographyClient
       hero={content.hero}
       reelUid={content.reelUid}
+      reelLabel={content.reelLabel ?? ""}
       reelTitle={content.reelTitle}
+      reelDescription={content.reelDescription ?? ""}
+      reelThumbnailTime={
+        content.reelThumbnailTime === ""
+          ? undefined
+          : content.reelThumbnailTime
+      }
       selectedSeries={{
         heading: content.selectedSeries.heading,
         introParts: content.selectedSeries.introParts,

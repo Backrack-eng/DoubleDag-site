@@ -87,7 +87,11 @@ export default async function PortfolioPage() {
         </section>
 
         {mainReel && (
-          <DemoReelsSection mainReel={mainReel} archiveReels={archiveReels} />
+          <DemoReelsSection
+            mainReel={mainReel}
+            archiveReels={archiveReels}
+            mainInLightbox
+          />
         )}
 
         {/* Established */}
@@ -120,7 +124,7 @@ export default async function PortfolioPage() {
               Emmy-recognized editing across documentary and series work
             </h2>
             <div className="mt-10">
-              <PortfolioGrid items={highlightWork} />
+              <PortfolioGrid items={highlightWork} playbackMode="lightbox" />
             </div>
           </section>
         )}
@@ -138,7 +142,10 @@ export default async function PortfolioPage() {
               Work published to YouTube, with live view counts
             </h2>
             <div className="mt-10">
-              <PortfolioGrid videos={youtubeVideos} />
+              <PortfolioGrid
+                videos={youtubeVideos}
+                playbackMode="lightbox"
+              />
             </div>
           </section>
         )}
@@ -156,7 +163,11 @@ export default async function PortfolioPage() {
               Editorial and graphics work by Ben Bacharach-White across branded, educational, and feature-length projects for Double Dag Productions and past studio engagements.
             </p>
             <div className="mt-10">
-              <PortfolioGrid items={selectedWork} layout="row" />
+              <PortfolioGrid
+                items={selectedWork}
+                layout="row"
+                playbackMode="lightbox"
+              />
             </div>
           </section>
         )}
@@ -175,7 +186,11 @@ export default async function PortfolioPage() {
               Shorts.
             </p>
             <div className="mt-10">
-              <PortfolioGrid videos={portrait} variant="portrait" />
+              <PortfolioGrid
+                videos={portrait}
+                variant="portrait"
+                playbackMode="lightbox"
+              />
             </div>
           </section>
         )}

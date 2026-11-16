@@ -57,7 +57,10 @@
     }
   },
   "reelUid": "ecdaa3539a4fc2ec8d262505700a05ba",
-  "reelTitle": "Portfolio Highlight",
+  "reelLabel": "Portfolio Highlight",
+  "reelTitle": "Great Archaeological Mysteries: of Europe and the Mediterranean",
+  "reelDescription": "",
+  "reelThumbnailTime": "45.2s",
   "selectedSeries": {
     "heading": "Selected Series, Clients & Institutions",
     "introParts": [
@@ -269,7 +272,7 @@
       },
       {
         "title": "John Lewis: Witness to History",
-        "body": "Webby Award winning documentary that walks in the inspiring footsteps of one of the most impactful leaders in America\u2019s civil rights movement."
+        "body": "Webby Award winning documentary that walks in the inspiring footsteps of one of the most impactful leaders in America’s civil rights movement."
       },
       {
         "title": "Decorate like a Designer, with Jonathan Adler",

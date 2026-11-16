@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CollapsibleCaption } from "../components/CollapsibleCaption";
+import { VideoLightbox } from "../components/VideoLightbox";
 import {
   buildPlaybackSrc,
   clickPlaybackSrc,
   formatCount,
   PAUSE_INLINE_VIDEOS_EVENT,
+  pauseInlineVideos,
   type PortfolioGridItem,
   type PortfolioVideo,
 } from "../../lib/portfolio-videos";
@@ -98,14 +100,60 @@ export function ClickToPlayVideo({
   );
 }
 
+function LightboxThumbnail({
+  video,
+  objectFit = "cover",
+  onOpen,
+}: {
+  video: PortfolioVideo;
+  objectFit?: "cover" | "contain";
+  onOpen: (video: PortfolioVideo, trigger: HTMLButtonElement) => void;
+}) {
+  const fitClass = objectFit === "contain" ? "object-contain" : "object-cover";
+
+  if (video.placeholder || !video.playbackUrl) {
+    return <PlaceholderMedia title={video.title} />;
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={(event) => onOpen(video, event.currentTarget)}
+      aria-label={`Play ${video.title}`}
+      className="absolute inset-0"
+    >
+      <img
+        src={video.thumbnailUrl}
+        alt=""
+        className={`absolute inset-0 h-full w-full ${fitClass}`}
+      />
+      <span className="absolute inset-0 flex items-center justify-center">
+        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-black/55 transition duration-300 group-hover:bg-black/70 hover:bg-black/70">
+          <span
+            className="ml-1 h-0 w-0 border-y-8 border-y-transparent border-l-[14px] border-l-white"
+            aria-hidden="true"
+          />
+        </span>
+      </span>
+    </button>
+  );
+}
+
 function VideoCard({
   video,
   variant,
   layout,
+  playbackMode,
+  onOpenLightbox,
 }: {
   video: PortfolioVideo;
   variant: "landscape" | "portrait";
   layout: "grid" | "row";
+  playbackMode: "inline" | "lightbox";
+  onOpenLightbox: (
+    video: PortfolioVideo,
+    trigger: HTMLButtonElement,
+  ) => void;
 }) {
   const isRow = layout === "row";
   const mediaClass = [
@@ -127,7 +175,11 @@ function VideoCard({
       }
     >
       <div className={mediaClass}>
-        <ClickToPlayVideo video={video} />
+        {playbackMode === "lightbox" ? (
+          <LightboxThumbnail video={video} onOpen={onOpenLightbox} />
+        ) : (
+          <ClickToPlayVideo video={video} />
+        )}
         {video.emmyBadge && (
           <img
             src="/emmy-winner-badge.png"
@@ -182,6 +234,7 @@ export default function PortfolioGrid({
   layout = "grid",
   gridClassName,
   itemClassName,
+  playbackMode = "inline",
 }: {
   videos?: PortfolioVideo[];
   items?: PortfolioGridItem[];
@@ -191,7 +244,27 @@ export default function PortfolioGrid({
   gridClassName?: string;
   /** Optional wrapper class around each video card (e.g. fixed column widths). */
   itemClassName?: string;
+  /** inline = click-to-play in place; lightbox = same modal as Demo Reel archive cards. */
+  playbackMode?: "inline" | "lightbox";
 }) {
+  const [lightboxVideo, setLightboxVideo] = useState<PortfolioVideo | null>(
+    null,
+  );
+  const [returnFocusTo, setReturnFocusTo] = useState<HTMLElement | null>(null);
+
+  const openLightbox = useCallback(
+    (video: PortfolioVideo, trigger: HTMLButtonElement) => {
+      pauseInlineVideos();
+      setReturnFocusTo(trigger);
+      setLightboxVideo(video);
+    },
+    [],
+  );
+
+  const closeLightbox = useCallback(() => {
+    setLightboxVideo(null);
+  }, []);
+
   const resolvedItems: PortfolioGridItem[] =
     items ??
     (videos ?? []).map((video) => ({
@@ -215,27 +288,40 @@ export default function PortfolioGrid({
         : "grid gap-6 md:grid-cols-2 lg:grid-cols-3";
 
   return (
-    <div className={gridClassName ?? defaultGridClass}>
-      {resolvedItems.map((item) =>
-        item.type === "section" ? (
-          <SectionBreak key={item.uid} label={item.label} />
-        ) : itemClassName ? (
-          <div key={item.video.uid} className={itemClassName}>
+    <>
+      <div className={gridClassName ?? defaultGridClass}>
+        {resolvedItems.map((item) =>
+          item.type === "section" ? (
+            <SectionBreak key={item.uid} label={item.label} />
+          ) : itemClassName ? (
+            <div key={item.video.uid} className={itemClassName}>
+              <VideoCard
+                video={item.video}
+                variant={variant}
+                layout={layout}
+                playbackMode={playbackMode}
+                onOpenLightbox={openLightbox}
+              />
+            </div>
+          ) : (
             <VideoCard
+              key={item.video.uid}
               video={item.video}
               variant={variant}
               layout={layout}
+              playbackMode={playbackMode}
+              onOpenLightbox={openLightbox}
             />
-          </div>
-        ) : (
-          <VideoCard
-            key={item.video.uid}
-            video={item.video}
-            variant={variant}
-            layout={layout}
-          />
-        ),
+          ),
+        )}
+      </div>
+      {playbackMode === "lightbox" && lightboxVideo && (
+        <VideoLightbox
+          video={lightboxVideo}
+          onClose={closeLightbox}
+          returnFocusTo={returnFocusTo}
+        />
       )}
-    </div>
+    </>
   );
 }
